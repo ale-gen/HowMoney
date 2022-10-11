@@ -57,21 +57,16 @@ struct SlideButton: View {
                 .offset(x: Constants.Title.offset, y: .zero)
             
             ZStack {
-                let swipedWidth = Constants.Slider.height + swipeOffset.width
                 Capsule()
                     .foregroundColor(sliderColor)
-                    .frame(width: swipedWidth, height: Constants.Slider.height)
-                    .offset(x: -(width / 2) + (swipedWidth + Constants.Slider.radius) / 2)
-                ZStack {
-                    Circle()
-                        .foregroundColor(sliderColor)
-                        .frame(width: Constants.Slider.height, height: Constants.Slider.height)
-                        .shadow(color: sliderColor, radius: Constants.Slider.radius)
-                    Image(systemName: Constants.Slider.imageName)
-                        .foregroundColor(Constants.Slider.fontColor)
-                }
-                .offset(x: -(width / 2) + (Constants.Slider.height + Constants.Slider.radius) / 2 + swipeOffset.width)
+                    .frame(width: Constants.Slider.height + swipeOffset.width, height: Constants.Slider.height)
+                    .shadow(color: sliderColor, radius: Constants.Slider.radius)
+                
+                Image(systemName: Constants.Slider.imageName)
+                    .foregroundColor(Constants.Slider.fontColor)
+                    .offset(x: swipeOffset.width / 2)
             }
+            .offset(x: -(width / 2) + (Constants.Slider.height + swipeOffset.width + Constants.Slider.radius) / 2)
         }
         .animation(.spring(response: Constants.Animation.responseTime), value: swipeOffset)
         .gesture(
