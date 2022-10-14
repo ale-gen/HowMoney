@@ -21,7 +21,6 @@ struct SlideButton: View {
         enum Background {
             static let color: Color = .black
             static let opacity: CGFloat = 0.5
-            static let namespace: String = "Background"
         }
         enum Slider {
             static let height: CGFloat = General.height - 10.0
@@ -49,7 +48,6 @@ struct SlideButton: View {
                 .foregroundColor(Constants.Background.color)
                 .blendMode(.overlay)
                 .opacity(Constants.Background.opacity)
-                .coordinateSpace(name: Constants.Background.namespace)
             
             Text(title)
                 .font(.callout)
