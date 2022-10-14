@@ -59,7 +59,6 @@ struct SlideButton: View {
                     .foregroundColor(sliderColor)
                     .frame(width: Constants.Slider.height + swipeOffset.width, height: Constants.Slider.height)
                     .shadow(color: sliderColor, radius: Constants.Slider.radius)
-                
                 Image(systemName: Constants.Slider.imageName)
                     .foregroundColor(Constants.Slider.fontColor)
                     .offset(x: swipeOffset.width / 2)
@@ -116,7 +115,7 @@ struct SlideButton_Previews: PreviewProvider {
                 Spacer()
                 HStack {
                     Spacer()
-                    SlideButton(title: "Swipe to get started", sliderColor: .green, width: geo.frame(in: .global).width * 0.7)
+                    SlideButton(title: Localizable.welcomeSwipeToGetStarted.value, sliderColor: .green, width: geo.frame(in: .global).width * 0.7)
                     Spacer()
                 }
             }

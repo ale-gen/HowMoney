@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  HowMoney
+
+  Created by Aleksandra Generowicz on 14/10/2022.
+  
+*/
+
+// MARK: Welcome screen
+"welcome.swipe.to.get.started.title" = "Swipe to get started";
