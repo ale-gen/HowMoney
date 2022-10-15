@@ -8,3 +8,11 @@
 
 // MARK: Welcome screen
 "welcome.swipe.to.get.started.title" = "Swipe to get started";
+
+// MARK: Preference currency
+"name.polish.zloty.currency" = "PLN";
+"name.dollar.currency" = "USD";
+"name.euro.currency" = "EUR";
+"friendly.name.polish.zloty.currency" = "Polish Zloty";
+"friendly.name.dollar.currency" = "US Dollar";
+"friendly.name.euro.currency" = "Euro";

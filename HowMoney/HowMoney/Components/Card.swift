@@ -83,7 +83,7 @@ struct Card: View {
                     .font(Constants.Title.font)
                     .padding(.bottom, Constants.Title.insets.bottom)
                     .padding(.top, Constants.Title.insets.top)
-                Text("\(currency.rawValue) \(mainValue)")
+                Text("\(currency.symbol) \(mainValue)")
                     .foregroundColor(mainValueColor)
                     .font(Constants.MainValue.font)
                 subtitleSection
@@ -104,7 +104,7 @@ extension Card {
                     .foregroundColor(subtitleColor)
                     .font(Constants.Subtitle.font)
                     .padding(.bottom, Constants.Subtitle.bottomPadding)
-                Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text) \(currency.rawValue) \(subValue)")
+                Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text) \(currency.symbol) \(subValue)")
                     .foregroundColor(Constants.SubValue.color)
                     .font(Constants.SubValue.font)
             }

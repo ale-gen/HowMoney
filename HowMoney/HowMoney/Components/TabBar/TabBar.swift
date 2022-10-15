@@ -31,7 +31,7 @@ struct TabBar: View {
     let tabs: [TabBarItem]
     @Binding var selection: TabBarItem
     @State var localSelection: TabBarItem
-    @State var showCreationPopup: Bool = true
+    @State var showCreationPopup: Bool = false
     
     var body: some View {
         ZStack {
