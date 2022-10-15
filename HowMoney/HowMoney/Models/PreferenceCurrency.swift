@@ -15,7 +15,7 @@ enum PreferenceCurrency: String {
     var symbol: String {
         switch self {
         case .pln:
-            return Localizable.namePolishZlotyCurrency.value
+            return "zł"
         case .usd:
             return "$"
         case .eur:
