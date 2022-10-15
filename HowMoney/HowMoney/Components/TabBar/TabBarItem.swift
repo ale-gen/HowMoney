@@ -14,33 +14,33 @@ enum TabBarItem: Hashable {
     case transactions
     case profile
     
-    var iconName: String {
+    var iconName: Image {
         switch self {
         case .home:
-            return "house"
+            return Icons.house.value
         case .wallet:
-            return "dollarsign.circle"
+            return Icons.wallet.value
         case .plus:
-            return "plus"
+            return Icons.plus.value
         case .transactions:
-            return "clock"
+            return Icons.transactions.value
         case .profile:
-            return "person"
+            return Icons.profile.value
         }
     }
     
-    var selectedIcon: String {
+    var selectedIcon: Image {
         switch self {
         case .home:
-            return "house.fill"
+            return Icons.selectedHouse.value
         case .wallet:
-            return "dollarsign.circle.fill"
+            return Icons.selectedWallet.value
         case .plus:
-            return "plus"
+            return Icons.plus.value
         case .transactions:
-            return "clock.fill"
+            return Icons.selectedTransactions.value
         case .profile:
-            return "person.fill"
+            return Icons.selectedProfile.value
         }
     }
     
@@ -74,7 +74,7 @@ enum TabBarItem: Hashable {
             return AnyView(RoundedRectangle(cornerRadius: 10)
                 .fill(Color("lightPurple"))
                 .frame(width: 15.0, height: 5.0)
-                .shadow(color: Color("lightPurpleTwo"), radius: 4.0, x: 0, y: 4))
+                .shadow(color: Color("lightPurpleTwo"), radius: 4.0, x: .zero, y: 4))
         }
     }
     
@@ -82,8 +82,9 @@ enum TabBarItem: Hashable {
         switch self {
         case .plus:
             return AnyView(Circle()
-                .strokeBorder(Color("lightPurpleTwo"), lineWidth: 59.9)
-                .background(Circle().fill(Color("lightPurple"))))
+                .fill(Color("lightPurple"))
+                .background(Circle()
+                    .shadow(color: .gray, radius: 10.0, x: .zero, y: .zero)))
         default:
             return AnyView(EmptyView())
         }
@@ -97,28 +98,40 @@ enum TabBarItem: Hashable {
 
 struct TabBarItemView: View {
     
+    private enum Constants {
+        static let height: CGFloat = 60.0
+        static let imageHeight: CGFloat = height / 2.6
+        static let spacing: CGFloat = 8.0
+        static let shadowRadius: CGFloat = 10.0
+        static let rotationDegrees: CGFloat = 90.0
+    }
+    
     let tabItem: TabBarItem
     var selected: Bool
-    @Namespace private var namespace
+    @Binding var showCreationPopup: Bool
     
     var body: some View {
         VStack {
             ZStack {
-                tabItem.backgroundShape
-                    .shadow(radius: 10)
-                Image(systemName: selected ? tabItem.selectedIcon : tabItem.iconName)
+                tabBarImage
+                    .resizable()
+                    .frame(width: Constants.imageHeight, height: Constants.imageHeight)
                     .font(.subheadline)
-                    .rotationEffect(Angle(degrees: selected && tabItem.shouldRotate ? 90.0 : 0.0))
+                    .rotationEffect(Angle(degrees: showCreationPopup && tabItem.shouldRotate ? Constants.rotationDegrees : .zero))
             }
             if selected {
                 tabItem.selectionShape
             }
         }
         .foregroundColor(selected ? tabItem.selectedColor : tabItem.nonSelectedColor)
-        .padding(.vertical, 8)
+        .padding(.vertical, Constants.spacing)
         .frame(maxWidth: .infinity)
-        .frame(height: 60.0)
+        .frame(height: Constants.height)
         .background(tabItem.backgroundShape)
+    }
+    
+    private var tabBarImage: Image {
+        return selected ? tabItem.selectedIcon : tabItem.iconName
     }
     
 }
@@ -126,7 +139,11 @@ struct TabBarItemView: View {
 struct TabBarItemView_Previews: PreviewProvider {
     
     static var previews: some View {
-        TabBarItemView(tabItem: .plus, selected: true)
-            .background(.black)
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+            TabBarItemView(tabItem: .plus, selected: true, showCreationPopup: .constant(false))
+                .background(.black)
+        }
     }
 }
