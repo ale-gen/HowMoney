@@ -13,4 +13,10 @@ extension String {
         return NSLocalizedString(self, comment: "")
     }
     
+    func date() -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        return formatter.date(from: self)
+    }
+    
 }
