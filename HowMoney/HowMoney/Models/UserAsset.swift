@@ -13,10 +13,15 @@ enum UserAssetOperation {
     case update
 }
 
-struct UserAsset {
+struct UserAsset: Hashable {
+    
     let asset: Asset
     let originValue: Float
     let preferenceCurrencyValue: Float
+    
+    static func ==(lhs: UserAsset, rhs: UserAsset) -> Bool {
+        return lhs.asset.id == rhs.asset.id
+    }
     
     static let polishZloty = Asset(id: "1", name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency)
     static let americanDollar = Asset(id: "2", name: "USD", friendlyName: "US Dollar", symbol: "$", type: .currency)

@@ -13,7 +13,9 @@ struct ContentView: View {
     
     var body: some View {
         TabBarContent(selection: $selection) {
-            Color("blackTwo")
+            UserAssetsCollection()
+                .padding(.top, 200)
+                .background(.gray)
                 .tabBarItem(tab: .home, selection: $selection)
             Color("blackTwo")
                 .tabBarItem(tab: .wallet, selection: $selection)

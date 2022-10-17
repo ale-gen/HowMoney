@@ -11,17 +11,8 @@ struct UserAssetCell: View {
     
     private enum Constants {
         static let horizontalInsets: CGFloat = 20.0
+        static let height: CGFloat = 60.0
         static let spacing: CGFloat = 2.0
-        
-        enum Title {
-            static let font: Font = .caption2
-            static let color: Color = .white
-        }
-        
-        enum Subtitle {
-            static let font: Font = .caption2
-            static let color: Color = .gray
-        }
         
         enum PreferenceCurrencyValue {
             static let font: Font = .caption2
@@ -40,16 +31,7 @@ struct UserAssetCell: View {
     
     var body: some View {
         HStack {
-            // TODO: asset image/symbol/flag
-            
-            VStack(alignment: .leading, spacing: Constants.spacing) {
-                Text(userAsset.asset.friendlyName)
-                    .font(Constants.Title.font)
-                    .foregroundColor(Constants.Title.color)
-                Text(userAsset.asset.name)
-                    .font(Constants.Subtitle.font)
-                    .foregroundColor(Constants.Subtitle.color)
-            }
+            AssetView(asset: userAsset.asset)
             
             Spacer()
             
@@ -66,6 +48,7 @@ struct UserAssetCell: View {
                 } else { Text(verbatim: .empty) }
             }
         }
+        .frame(height: Constants.height)
         .padding([.leading, .trailing], Constants.horizontalInsets)
     }
 }

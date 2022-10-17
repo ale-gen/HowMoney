@@ -24,7 +24,7 @@ enum AssetType: String {
     }
 }
 
-struct Asset {
+struct Asset: Hashable {
     let id: String
     let name: String
     let friendlyName: String
