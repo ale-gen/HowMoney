@@ -11,7 +11,7 @@ struct TabBar: View {
     
     private enum Constants {
         enum General {
-            static let backgroundColor: Color = Color("blackTwo")
+            static let backgroundColor: Color = .black
             static let padding: CGFloat = 10.0
         }
         enum PlusMenu {
@@ -19,8 +19,8 @@ struct TabBar: View {
             static let offset: CGFloat = -80.0
             enum Button {
                 static let height: CGFloat = 50.0
-                static let color: Color = Color("lightPurple")
-                static let shadowColor: Color = Color("lightPurpleTwo")
+                static let color: Color = .lightBlue
+                static let shadowColor: Color = .lightBlue
                 static let shadowRadius: CGFloat = 3.0
                 static let padding: CGFloat = 15.0
                 static let fontColor: Color = .white

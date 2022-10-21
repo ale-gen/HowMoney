@@ -13,25 +13,31 @@ enum UserAssetOperation {
     case update
 }
 
-struct UserAsset {
+struct UserAsset: Hashable {
+    
     let asset: Asset
-    let value: Float
+    let originValue: Float
+    let preferenceCurrencyValue: Float
     
-    static let polishZloty = Asset(assetId: "1", assetName: "PLN", assetFriendlyName: "Polish Zloty", assetType: .currency)
-    static let americanDollar = Asset(assetId: "2", assetName: "USD", assetFriendlyName: "US Dollar", assetType: .currency)
-    static let euro = Asset(assetId: "3", assetName: "EUR", assetFriendlyName: "Euro", assetType: .currency)
-    static let switzerlandFranc = Asset(assetId: "4", assetName: "CHF", assetFriendlyName: "Swiss Franc", assetType: .currency)
+    static func ==(lhs: UserAsset, rhs: UserAsset) -> Bool {
+        return lhs.asset.id == rhs.asset.id
+    }
     
-    static let pancakeSwap = Asset(assetId: "2", assetName: "CAKE", assetFriendlyName: "PancakeSWAP", assetType: .cryptocurrency)
-    static let polygon = Asset(assetId: "3", assetName: "MATIC", assetFriendlyName: "Polygon", assetType: .cryptocurrency)
+    static let polishZloty = Asset(id: "1", name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency)
+    static let americanDollar = Asset(id: "2", name: "USD", friendlyName: "US Dollar", symbol: "$", type: .currency)
+    static let euro = Asset(id: "3", name: "EUR", friendlyName: "Euro", symbol: "€", type: .currency)
+    static let swissFranc = Asset(id: "4", name: "CHF", friendlyName: "Swiss Franc", symbol: "₣", type: .currency)
+    
+    static let pancakeSwap = Asset(id: "2", name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency)
+    static let polygon = Asset(id: "3", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency)
     
     static let UserAssetsMock: [UserAsset] = [
-        .init(asset: polishZloty, value: 2600.9),
-        .init(asset: americanDollar, value: 126.78),
-        .init(asset: euro, value: 2300.0),
-        .init(asset: switzerlandFranc, value: 0.0),
-        .init(asset: pancakeSwap, value: 10.34),
-        .init(asset: polygon, value: 12.0)
+        .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 2600.9),
+        .init(asset: americanDollar, originValue: 126.78, preferenceCurrencyValue: 609.90),
+        .init(asset: euro, originValue: 2300.0, preferenceCurrencyValue: 8900.89),
+        .init(asset: swissFranc, originValue: 0.0, preferenceCurrencyValue: 0.0),
+        .init(asset: pancakeSwap, originValue: 10.34, preferenceCurrencyValue: 390.21),
+        .init(asset: polygon, originValue: 12.0, preferenceCurrencyValue: 65.7)
     ]
 }
 

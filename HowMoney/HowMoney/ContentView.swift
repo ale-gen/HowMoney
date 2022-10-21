@@ -10,18 +10,21 @@ import SwiftUI
 struct ContentView: View {
     
     @State var selection: TabBarItem = .home
+    @State var searchText: String = ""
     
     var body: some View {
         TabBarContent(selection: $selection) {
-            Color("blackTwo")
+            HomeTabBarItem()
                 .tabBarItem(tab: .home, selection: $selection)
-            Color("blackTwo")
+                .padding(.bottom, 80)
+            UserAssetsTabBarItem(searchText: $searchText)
+                .padding(.bottom, 80)
                 .tabBarItem(tab: .wallet, selection: $selection)
-            Color("blackTwo")
+            Color.red
                 .tabBarItem(tab: .plus, selection: $selection)
-            Color("blackTwo")
+            Color.blue
                 .tabBarItem(tab: .transactions, selection: $selection)
-            Color("blackTwo")
+            Color.orange
                 .tabBarItem(tab: .profile, selection: $selection)
         }
     }

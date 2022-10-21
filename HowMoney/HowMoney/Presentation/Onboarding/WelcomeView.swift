@@ -11,7 +11,7 @@ struct WelcomeView: View {
     
     private enum Constants {
         static let title: String = "Swipe to get started"
-        static let sliderColor: Color = Color("lightPurple")
+        static let sliderColor: Color = .lightBlue
         static let backgroundColor: Color = .gray
         static let sliderWidthScaleMuliplier: CGFloat = 0.7
         static let bottomOffsetScaleMiltiplier: CGFloat = 0.1

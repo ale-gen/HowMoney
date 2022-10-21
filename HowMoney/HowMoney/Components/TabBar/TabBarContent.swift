@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TabBarContent<Content>: View where Content: View{
+struct TabBarContent<Content>: View where Content: View {
     
     @Binding private var selection: TabBarItem
     @State private var tabs: [TabBarItem] = []
@@ -20,7 +20,7 @@ struct TabBarContent<Content>: View where Content: View{
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            content.ignoresSafeArea()
+            content
             TabBar(tabs: tabs, selection: $selection, localSelection: selection)
         }
         .onPreferenceChange(TabBarItemsPreferenceKey.self) { value in
