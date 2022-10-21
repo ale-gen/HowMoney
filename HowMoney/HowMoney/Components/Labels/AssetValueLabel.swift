@@ -19,8 +19,8 @@ struct AssetValueLabel: View {
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            Text(symbol ?? .empty)
             Text(String(format: "%.\(type.decimalPlaces)f", value))
+            Text(symbol ?? .empty)
         }
     }
 }

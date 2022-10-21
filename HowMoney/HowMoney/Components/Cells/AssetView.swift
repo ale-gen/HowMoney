@@ -15,7 +15,7 @@ struct AssetView: View {
         enum Icon {
             static let height: CGFloat = Constants.height - 20.0
             static let trailingInset: CGFloat = 10.0
-            static let shadow: CGFloat = 10.0
+            static let shadow: CGFloat = 8.0
         }
         enum Title {
             static let font: Font = .system(size: 15.0, weight: .light)
@@ -97,7 +97,7 @@ struct AssetCell: View {
             changeInfo(color: color)
         }
         .frame(height: Constants.height)
-        .padding([.leading, .trailing], Constants.horizontalInsets)
+        .padding(.horizontal, Constants.horizontalInsets)
     }
     
     private func changeInfo(color: Color) -> some View { RoundedRectangle(cornerRadius: Constants.AdditionalInfo.cornerRadius)

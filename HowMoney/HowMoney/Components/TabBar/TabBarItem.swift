@@ -72,9 +72,9 @@ enum TabBarItem: Hashable {
             return AnyView(EmptyView())
         default:
             return AnyView(RoundedRectangle(cornerRadius: 10)
-                .fill(Color("lightPurple"))
+                .fill(Color.lightBlue)
                 .frame(width: 15.0, height: 5.0)
-                .shadow(color: Color("lightPurpleTwo"), radius: 4.0, x: .zero, y: 4))
+                .shadow(color: .lightBlue, radius: 4.0, x: .zero, y: 4))
         }
     }
     
@@ -82,7 +82,7 @@ enum TabBarItem: Hashable {
         switch self {
         case .plus:
             return AnyView(Circle()
-                .fill(Color("lightPurple"))
+                .fill(Color.lightBlue)
                 .background(Circle()
                     .shadow(color: .gray, radius: 10.0, x: .zero, y: .zero)))
         default:

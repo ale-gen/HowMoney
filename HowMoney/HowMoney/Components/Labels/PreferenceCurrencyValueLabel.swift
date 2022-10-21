@@ -11,7 +11,7 @@ struct PreferenceCurrencyValueLabel: View {
     
     let value: Float
     // TODO: Update preference currency from user data
-    let preferenceCurrency: PreferenceCurrency = .pln
+    let preferenceCurrency: PreferenceCurrency = .eur
     
     var body: some View {
         AssetValueLabel(value: value,

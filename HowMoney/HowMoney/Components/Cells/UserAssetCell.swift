@@ -15,7 +15,7 @@ struct UserAssetCell: View {
         static let spacing: CGFloat = 2.0
         
         enum PreferenceCurrencyValue {
-            static let font: Font = .caption2
+            static let font: Font = .system(size: 15.0, weight: .light)
             static let color: Color = .white
         }
         
@@ -49,7 +49,7 @@ struct UserAssetCell: View {
             }
         }
         .frame(height: Constants.height)
-        .padding([.leading, .trailing], Constants.horizontalInsets)
+        .padding(.horizontal, Constants.horizontalInsets)
     }
 }
 

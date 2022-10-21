@@ -17,8 +17,7 @@ struct Card: View {
         }
         enum Rectangle {
             static let cornerRadius: CGFloat = 20.0
-            static let opacity: CGFloat = 0.5
-            static let color: Color = .black
+            static let color: Color = .white
         }
         enum Title {
             static let color: Color = .white
@@ -37,6 +36,8 @@ struct Card: View {
         enum SubValue {
             static let color: Color = .black
             static let font: Font = .system(size: 15.0, weight: .light)
+            static let spacing: CGFloat = 2.0
+            static let innerContainerHorizontalInset: CGFloat = -20.0
         }
         enum Gradient {
             static let startRadius: CGFloat = 10.0
@@ -54,6 +55,10 @@ struct Card: View {
         enum AdditionalStack {
             static let insets: UIEdgeInsets = UIEdgeInsets(top: 15, left: .zero, bottom: -15, right: .zero)
         }
+        enum Animation {
+            static let damping: CGFloat = 4.5
+            static let delay: CGFloat = 0.2
+        }
     }
     
     let title: String
@@ -64,34 +69,54 @@ struct Card: View {
     let additionalValue: Int
     let isIncreased: Bool
     
+    var cardColor: Color?
     var titleColor: Color = Constants.Title.color
     var mainValueColor: Color = Constants.MainValue.color
     var subtitleColor: Color = Constants.Subtitle.color
-    var additionalLabelColor: Color = .black
-    var gradientColors: [Color] = [.white, .black]
+    var additionalLabelColor: Color = .green
+    var gradientColors: [Color] = [.lightBlue, .lightGreen]
+    
+    var screenWidth: CGFloat
+    var width: CGFloat
+    
+    @State var cardOpacity: CGFloat = .invisibleAlpha
     
     var body: some View {
-        ZStack {
-            let radialGradient = RadialGradient(colors: gradientColors, center: .center, startRadius: Constants.Gradient.startRadius, endRadius: Constants.Gradient.endRadius)
-            RoundedRectangle(cornerRadius: Constants.Rectangle.cornerRadius)
-                .fill(radialGradient)
-                .opacity(Constants.Rectangle.opacity)
-            Spacer()
-            VStack(alignment: .leading, spacing: Constants.General.spacing) {
-                Text(title)
-                    .foregroundColor(titleColor)
-                    .font(Constants.Title.font)
-                    .padding(.bottom, Constants.Title.insets.bottom)
-                    .padding(.top, Constants.Title.insets.top)
-                Text("\(currency.symbol) \(mainValue)")
-                    .foregroundColor(mainValueColor)
-                    .font(Constants.MainValue.font)
-                subtitleSection
+        GeometryReader { geo in
+            let midX: CGFloat = geo.frame(in: .global).midX
+            let distance: CGFloat = abs(screenWidth / 2 - midX)
+            let damping: CGFloat = Constants.Animation.damping
+            let percentage: CGFloat = abs(distance / (screenWidth / 2) / damping - 1)
+            ZStack {
+                let linearGradient = LinearGradient(gradient: Gradient(colors: gradientColors), startPoint: .leading, endPoint: .trailing)
+                RoundedRectangle(cornerRadius: Constants.Rectangle.cornerRadius)
+                    .fill(linearGradient)
+                    .opacity(percentage)
+                Spacer()
+                VStack(alignment: .leading, spacing: Constants.General.spacing) {
+                    Text(title)
+                        .foregroundColor(titleColor)
+                        .font(Constants.Title.font)
+                        .padding(.bottom, Constants.Title.insets.bottom)
+                        .padding(.top, Constants.Title.insets.top)
+                    PreferenceCurrencyValueLabel(value: mainValue)
+                        .foregroundColor(mainValueColor)
+                        .font(Constants.MainValue.font)
+                    subtitleSection
+                }
+                .padding(.horizontal, Constants.General.horizontalInsets)
             }
-            .padding([.leading, .trailing], Constants.General.horizontalInsets)
+            .scaleEffect(percentage)
+            .opacity(percentage)
         }
-        .frame(height: Constants.General.height)
-        .padding([.leading, .trailing], Constants.General.horizontalInsets)
+        .frame(width: width, height: Constants.General.height)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
+                withAnimation {
+                    cardOpacity = .visibleAlpha
+                }
+            }
+        }
     }
 }
 
@@ -104,9 +129,13 @@ extension Card {
                     .foregroundColor(subtitleColor)
                     .font(Constants.Subtitle.font)
                     .padding(.bottom, Constants.Subtitle.bottomPadding)
-                Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text) \(currency.symbol) \(subValue)")
-                    .foregroundColor(Constants.SubValue.color)
-                    .font(Constants.SubValue.font)
+                HStack(spacing: Constants.SubValue.spacing) {
+                    Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)")
+                    PreferenceCurrencyValueLabel(value: subValue)
+                }
+                .padding(.leading, Constants.SubValue.innerContainerHorizontalInset)
+                .foregroundColor(Constants.SubValue.color)
+                .font(Constants.SubValue.font)
             }
             Spacer()
             additionalLabel
@@ -133,10 +162,6 @@ extension Card {
 
 struct Card_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            Color.red.ignoresSafeArea()
-            Card(title: "Current Balance", mainValue: 12345.67, subtitle: "Monthly profit", subValue: 1262.5, currency: .usd, additionalValue: 28, isIncreased: true)
-        }
-        
+        Card(title: "Current Balance", mainValue: 12345.67, subtitle: "Monthly profit", subValue: 1262.5, currency: .usd, additionalValue: 28, isIncreased: true, screenWidth: UIScreen.main.bounds.width * 0.9, width: UIScreen.main.bounds.width * 0.8)
     }
 }
