@@ -22,6 +22,17 @@ enum AssetType: String {
             return 8
         }
     }
+    
+    var name: String {
+        switch self {
+        case .currency:
+            return Localizable.assetsCurrencyTypeName.value
+        case .cryptocurrency:
+            return Localizable.assetsCryptocurrencyTypeName.value
+        case .metal:
+            return Localizable.assetsMetalTypeName.value
+        }
+    }
 }
 
 struct Asset: Hashable {
