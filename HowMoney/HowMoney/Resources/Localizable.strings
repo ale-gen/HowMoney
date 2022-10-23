@@ -20,3 +20,9 @@
 
 // MARK: Authorization
 "authorization.sign.out.button.title" = "Sign out";
+
+// MARK: User profile
+"user.profile.weekly.reports.label.text" = "Weekly reports";
+"user.profile.email.alerts.label.text" = "Email alerts";
+"user.profile.preference.currency.label.text" = "Preference currency";
+"user.profile.preference.biometrics.label.text" = "Touch ID";

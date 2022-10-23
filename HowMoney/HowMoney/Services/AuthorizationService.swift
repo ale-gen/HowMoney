@@ -10,27 +10,25 @@ import Auth0
 
 struct AuthorizationService: Service {
     
-    func login(_ completion: @escaping () -> Void) {
+    func login(_ completion: @escaping (AuthUser) -> Void) {
         Auth0
             .webAuth()
             .parameters(["prompt": "login"])
             .start { result in
                 switch result {
                 case let .success(credentials):
-                    print("During login success...")
-                    print("Credentials: \(credentials)")
-                    let user = User(from: credentials.idToken)
-                    completion()
+                    Keychain.save(data: credentials.idToken)
+                    guard let user = AuthUser(from: credentials.idToken) else { return }
+                    completion(user)
                 case let .failure(error):
-                    print("During login failure...")
                     print(error)
                 }
             }
     }
     
     func logout(_ completion: @escaping () -> Void) {
+        Keychain.delete()
         completion()
-        // Clear cookies
     }
     
     func sendData(_ completion: @escaping () -> Void) { /**/ }

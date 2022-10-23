@@ -10,6 +10,7 @@ import SwiftUI
 struct AppSwitcher: View {
     
     @State private var isAuthorized: Bool = false
+    @State private var user: AuthUser? = nil
     private var authService: Service
     
     init(authService: Service) {
@@ -18,20 +19,22 @@ struct AppSwitcher: View {
     
     var body: some View {
         if isAuthorized {
-            TabBarView(onLogoutButtonTapped: endSession)
+            TabBarView(user: $user, onLogoutButtonTapped: endSession)
         } else {
             WelcomeView(didGetStarted: startSession)
         }
     }
     
     private func startSession() {
-        authService.login {
+        authService.login { user in
+            self.user = user
             isAuthorized.toggle()
         }
     }
     
     private func endSession() {
         authService.logout {
+            self.user = nil
             isAuthorized.toggle()
         }
     }
