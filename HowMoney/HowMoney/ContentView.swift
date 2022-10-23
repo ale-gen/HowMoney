@@ -6,27 +6,12 @@
 //
 
 import SwiftUI
+import Auth0
 
 struct ContentView: View {
     
-    @State var selection: TabBarItem = .home
-    @State var searchText: String = ""
-    
     var body: some View {
-        TabBarContent(selection: $selection) {
-            HomeTabBarItem()
-                .tabBarItem(tab: .home, selection: $selection)
-                .padding(.bottom, 80)
-            UserAssetsTabBarItem(searchText: $searchText)
-                .padding(.bottom, 80)
-                .tabBarItem(tab: .wallet, selection: $selection)
-            Color.red
-                .tabBarItem(tab: .plus, selection: $selection)
-            Color.blue
-                .tabBarItem(tab: .transactions, selection: $selection)
-            Color.orange
-                .tabBarItem(tab: .profile, selection: $selection)
-        }
+        AppSwitcher(authService: AuthorizationService())
     }
 }
 

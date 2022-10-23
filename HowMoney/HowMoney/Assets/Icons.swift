@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-protocol ImageTranslation {
+protocol IconsTranslation {
     var value: Image { get }
 }
 
-extension ImageTranslation where Self: RawRepresentable, Self.RawValue == String {
+extension IconsTranslation where Self: RawRepresentable, Self.RawValue == String {
     var value: Image {
         return Image(systemName: rawValue)
     }
 }
 
-enum Icons: String, ImageTranslation {
+enum Icons: String, IconsTranslation {
     
     case dollarSign = "dollarsign"
     case bell = "bell"

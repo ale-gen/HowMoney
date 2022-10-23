@@ -19,8 +19,8 @@ struct SlideButton: View {
             static let offset: CGFloat = 30.0
         }
         enum Background {
-            static let color: Color = .black
-            static let opacity: CGFloat = 0.5
+            static let color: Color = .white
+            static let opacity: CGFloat = 0.12
         }
         enum Slider {
             static let height: CGFloat = General.height - 10.0
@@ -46,7 +46,6 @@ struct SlideButton: View {
             Capsule()
                 .frame(width: width, height: Constants.General.height)
                 .foregroundColor(Constants.Background.color)
-                .blendMode(.overlay)
                 .opacity(Constants.Background.opacity)
             
             Text(title)
@@ -121,7 +120,7 @@ struct SlideButton_Previews: PreviewProvider {
             }
         }
         .padding(.bottom, 50)
-        .background(.gray)
+        .background(.black)
     }
 }
 

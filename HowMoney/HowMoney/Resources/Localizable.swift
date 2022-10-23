@@ -20,7 +20,9 @@ extension Translation where Self: RawRepresentable, Self.RawValue == String {
 
 enum Localizable: String, Translation {
     
+    // MARK: Welcome screen
     case welcomeSwipeToGetStarted = "welcome.swipe.to.get.started.title"
+    case welcomeCompanySloganText = "welcome.company.slogan.text"
     
     // MARK: Preference currency
     case namePolishZlotyCurrency = "name.polish.zloty.currency"
@@ -29,6 +31,9 @@ enum Localizable: String, Translation {
     case friendlyNamePolishZlotyCurrency = "friendly.name.polish.zloty.currency"
     case friendlyNameDollarCurrency = "friendly.name.dollar.currency"
     case friendlyNameEuroCurrency = "friendly.name.euro.currency"
+    
+    // MARK: Authorization
+    case authorizationSignOutButtonTitle = "authorization.sign.out.button.title"
     
     
 }
