@@ -35,5 +35,9 @@ enum Localizable: String, Translation {
     // MARK: Authorization
     case authorizationSignOutButtonTitle = "authorization.sign.out.button.title"
     
-    
+    // MARK: User profile
+    case userProfileWeeklyReportsLabelText = "user.profile.weekly.reports.label.text"
+    case userProfileEmailAlertsLabelText = "user.profile.email.alerts.label.text"
+    case userProfilePreferenceCurrencyLabelText = "user.profile.preference.currency.label.text"
+    case userProfileBiometricsLabelText = "user.profile.preference.biometrics.label.text"
 }

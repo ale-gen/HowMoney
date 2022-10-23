@@ -20,6 +20,7 @@ extension IconsTranslation where Self: RawRepresentable, Self.RawValue == String
 enum Icons: String, IconsTranslation {
     
     case dollarSign = "dollarsign"
+    case euroSign = "eurosign"
     case bell = "bell"
     case plus = "plus"
     case house = "house"

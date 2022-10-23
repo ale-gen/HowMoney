@@ -5,7 +5,7 @@
 //  Created by Aleksandra Generowicz on 12/10/2022.
 //
 
-import Foundation
+import SwiftUI
 
 enum PreferenceCurrency: String {
     case pln
@@ -20,6 +20,17 @@ enum PreferenceCurrency: String {
             return "$"
         case .eur:
             return "€"
+        }
+    }
+    
+    var image: Image {
+        switch self {
+        case .pln:
+            return Images.plnSymbol.value
+        case .usd:
+            return Images.usdSymbol.value
+        case .eur:
+            return Images.eurSymbol.value
         }
     }
     

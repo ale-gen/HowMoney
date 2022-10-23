@@ -11,6 +11,7 @@ struct TabBarView: View {
     
     @State var selection: TabBarItem = .home
     @State var searchText: String = ""
+    @Binding var user: AuthUser?
     var onLogoutButtonTapped: (() -> Void)?
     
     var body: some View {
@@ -24,7 +25,7 @@ struct TabBarView: View {
                 .tabBarItem(tab: .plus, selection: $selection)
             TransactionsTabBarItem()
                 .tabBarItem(tab: .transactions, selection: $selection)
-            ProfileTabBarItem(didLogoutButtonTapped: onLogoutButtonTapped)
+            ProfileTabBarItem(user: user, didLogoutButtonTapped: onLogoutButtonTapped)
                 .tabBarItem(tab: .profile, selection: $selection)
         }
     }
@@ -32,6 +33,6 @@ struct TabBarView: View {
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView()
+        TabBarView(user: .constant(AuthUser(from: "")))
     }
 }

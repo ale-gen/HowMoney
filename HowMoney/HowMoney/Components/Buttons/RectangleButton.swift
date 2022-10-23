@@ -15,7 +15,7 @@ struct RectangleButton: View {
         static let backgroundColor: Color = .lightBlue
         static let cornerRadius: CGFloat = 10.0
         static let padding: CGFloat = 20.0
-        static let shadowColor: Color = .black.opacity(0.3)
+        static let shadowColor: Color = .gray.opacity(0.6)
         static let shadowRadius: CGFloat = 5.0
     }
     

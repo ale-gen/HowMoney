@@ -22,4 +22,7 @@ enum Images: String, ImageTranslation {
     case assetsBubbles = "assetsBubbles"
     case fullLogo = "fullLogo"
     case appLogo = "logo"
+    case plnSymbol = "pln"
+    case eurSymbol = "eur"
+    case usdSymbol = "usd"
 }

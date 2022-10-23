@@ -8,9 +8,10 @@
 import Foundation
 import JWTDecode
 
-struct User {
+struct AuthUser {
     let id: String
     let name: String
+    let nickname: String
     let email: String
     let emailVerified: String
     let picture: String
@@ -20,6 +21,7 @@ struct User {
         guard let jwt = try? decode(jwt: token),
               let id = jwt.subject,
               let name = jwt["name"].string,
+              let nickname = jwt["nickname"].string,
               let email = jwt["email"].string,
               let emailVerified = jwt["email_verified"].boolean,
               let picture = jwt["picture"].string,
@@ -29,6 +31,7 @@ struct User {
         }
         self.id = id
         self.name = name
+        self.nickname = nickname
         self.email = email
         self.emailVerified = String(describing: emailVerified)
         self.picture = picture

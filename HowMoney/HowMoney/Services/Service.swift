@@ -15,7 +15,7 @@ protocol Service {
     func updateData(_ model: Model, _ completion: @escaping () -> Void) -> Model
     func deleteData(_ completion: @escaping () -> Void) -> Bool
     
-    func login(_ completion: @escaping () -> Void)
+    func login(_ completion: @escaping (AuthUser) -> Void)
     func logout(_ completion: @escaping () -> Void)
     
 }
