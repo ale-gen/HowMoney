@@ -26,3 +26,9 @@
 "user.profile.email.alerts.label.text" = "Email alerts";
 "user.profile.preference.currency.label.text" = "Preference currency";
 "user.profile.preference.biometrics.label.text" = "Touch ID";
+
+// MARK: Assets types
+"assets.all.types.text" = "All";
+"assets.currency.type.name" = "Currencies";
+"assets.cryptocurrency.type.name" = "Cryptos";
+"assets.metal.type.name" = "Metals";

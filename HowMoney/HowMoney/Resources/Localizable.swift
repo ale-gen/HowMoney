@@ -40,4 +40,10 @@ enum Localizable: String, Translation {
     case userProfileEmailAlertsLabelText = "user.profile.email.alerts.label.text"
     case userProfilePreferenceCurrencyLabelText = "user.profile.preference.currency.label.text"
     case userProfileBiometricsLabelText = "user.profile.preference.biometrics.label.text"
+    
+    // MARK: Assets types
+    case assetsAllTypesText = "assets.all.types.text"
+    case assetsCurrencyTypeName = "assets.currency.type.name"
+    case assetsCryptocurrencyTypeName = "assets.cryptocurrency.type.name"
+    case assetsMetalTypeName = "assets.metal.type.name"
 }
