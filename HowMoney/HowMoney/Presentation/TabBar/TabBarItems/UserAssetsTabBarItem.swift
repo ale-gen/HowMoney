@@ -12,7 +12,6 @@ struct UserAssetsTabBarItem: View {
     private enum Constants {
         static let verticalInsets: CGFloat = 20.0
         static let pickerVerticalInsets: CGFloat = 10.0
-        static let backgroundColor: Color = .black
     }
     
     @Binding var searchText: String
@@ -27,7 +26,6 @@ struct UserAssetsTabBarItem: View {
             .searchable(text: $searchText)
         }
         .padding(.vertical, Constants.verticalInsets)
-        .background(Constants.backgroundColor)
     }
     
     private var filterAssetTypePicker: some View {

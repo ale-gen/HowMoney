@@ -23,7 +23,6 @@ struct HomeTabBarItem: View {
             Spacer()
         }
         .padding(.vertical, Constants.verticalInsets)
-        .background(.black)
     }
 }
 

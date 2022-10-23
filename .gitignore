@@ -127,6 +127,12 @@ xcuserdata
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
+*.xcconfig
+
+## Auth 0
+
+### iOS configuration file
+*Auth0.plist
 
 # End of 
 https://www.toptal.com/developers/gitignore/api/xcode,cocoapods,swift,swiftpackagemanager
