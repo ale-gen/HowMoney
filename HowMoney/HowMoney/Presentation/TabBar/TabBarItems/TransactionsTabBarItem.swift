@@ -9,11 +9,14 @@ import SwiftUI
 
 struct TransactionsTabBarItem: View {
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Transactions history tab bar item")
-                .foregroundColor(.white)
-            Spacer()
+        ZStack {
+            Color.black.ignoresSafeArea()
+            VStack {
+                Spacer()
+                Text("Transactions history tab bar item")
+                    .foregroundColor(.white)
+                Spacer()
+            }
         }
     }
 }
