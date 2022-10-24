@@ -57,6 +57,11 @@ struct AssetCell: View {
         static let height: CGFloat = 70.0
         static let horizontalInsets: CGFloat = 20.0
         
+        enum Chart {
+            static let trailingPadding: CGFloat = 10.0
+            static let maxWidth: CGFloat = 50.0
+        }
+        
         enum AdditionalInfo {
             static let backgroundColor: Color = .black
             static let color: Color = .white
@@ -77,6 +82,7 @@ struct AssetCell: View {
     let previousPrice: Float
     let actualPrice: Float
     var additionalLabelColor: Color = .black
+    let assetHistoryData: [AssetHistoryRecord] = AssetHistoryRecord.DollarHistoryMock
     
     private var priceChange: Float {
         return actualPrice - previousPrice
@@ -91,9 +97,11 @@ struct AssetCell: View {
             AssetView(asset: asset)
             
             Spacer()
-            
-            // TODO: Chart of history of asset
             let color = priceChange > .zero ? Constants.AdditionalInfo.increaseColor : (priceChange < .zero ? Constants.AdditionalInfo.decreaseColor : Constants.AdditionalInfo.defaultColor)
+            // TODO: Chart of history of chosen asset instead mock asset
+            LineChart(data: assetHistoryData.map { $0.value },  lineColor: color)
+                .frame(maxWidth: Constants.Chart.maxWidth)
+                .padding(.trailing, Constants.Chart.trailingPadding)
             changeInfo(color: color)
         }
         .frame(height: Constants.height)
@@ -116,7 +124,7 @@ struct AssetCell: View {
                             .resizable()
                             .frame(width: Constants.AdditionalInfo.imageHeight, height: Constants.AdditionalInfo.imageHeight)
                     }
-                    Text(String(format: "%.2f", percentagePriceChange) + "%")
+                    Text(String(format: "%.2f", abs(percentagePriceChange)) + "%")
                         .font(Constants.AdditionalInfo.font)
                 }
                 .foregroundColor(color)
@@ -126,7 +134,7 @@ struct AssetCell: View {
 
 struct AssetCell_Previews: PreviewProvider {
     static var previews: some View {
-        AssetCell(asset: Asset.AssetsMock.first!, previousPrice: 4.98, actualPrice: 4.98)
+        AssetCell(asset: Asset.AssetsMock.first!, previousPrice: 4.98, actualPrice: 4.5)
             .background(.black)
     }
 }

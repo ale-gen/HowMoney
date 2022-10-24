@@ -26,14 +26,16 @@ struct LineChart: View {
         static let maxScaleFactor: CGFloat = 1.2
     }
     
-    var lineColor: Color = .white
+    var lineColor: Color
     var lineWidth: CGFloat?
     
     @State private var percentageChartShown: CGFloat = .zero
     private var data: ChartsData
     
-    init(data: ChartsData) {
+    init(data: ChartsData, lineColor: Color = .white, lineWidth: CGFloat? = nil) {
         self.data = data
+        self.lineColor = lineColor
+        self.lineWidth = lineWidth
     }
 
     var body: some View {
