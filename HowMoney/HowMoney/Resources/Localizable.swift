@@ -46,4 +46,12 @@ enum Localizable: String, Translation {
     case assetsCurrencyTypeName = "assets.currency.type.name"
     case assetsCryptocurrencyTypeName = "assets.cryptocurrency.type.name"
     case assetsMetalTypeName = "assets.metal.type.name"
+    
+    // MARK: User assets
+    case userAssetsEmptyStateTitle = "user.assets.empty.state.title"
+    case userAssetsCreateNewButtonTitle =  "user.assets.create.new.button.title"
+    
+    // MARK: Alerts
+    case alertsEmptyStateTitle = "alerts.empty.state.title"
+    case alertsCreateNewButtonTitle = "alerts.create.new.button.title"
 }

@@ -65,7 +65,17 @@ struct UserAssetsTabBarItem: View {
             VStack {
                 filterAssetTypePicker
                 
-                UserAssetsCollection(assetFilter: $selectedFilter)
+                let userAssets: [UserAsset] = UserAsset.UserAssetsMock.filter({ userAsset in
+                    selectedFilter.possibleAssetTypes.contains(userAsset.asset.type) })
+                if userAssets.count > 0 {
+                    UserAssetsCollection(userAssets: userAssets)
+                } else {
+                    VStack {
+                        Spacer()
+                        UserAssetEmptyState()
+                        Spacer()
+                    }
+                }
             }
             .searchable(text: $searchText)
         }
@@ -73,7 +83,8 @@ struct UserAssetsTabBarItem: View {
     
     private var filterAssetTypePicker: some View {
         let availableAssetFilters: [AssetFilter] = [.all, .currencies, .cryptos, .metals]
-        return HStack(spacing: Constants.Filter.spacing) {
+        return HStack(alignment: .center, spacing: Constants.Filter.spacing) {
+            Spacer()
             ForEach(availableAssetFilters, id: \.self) { type in
                 Button {
                     withAnimation {
@@ -88,9 +99,9 @@ struct UserAssetsTabBarItem: View {
                             .shadow(color: Constants.Filter.backgroundShadowColor , radius: Constants.Filter.backgroundShadowRadius))
                 }
             }
+            Spacer()
         }
         .padding(.vertical, Constants.Filter.verticalInsets)
-        .padding(.horizontal, Constants.Filter.horizontalInsets)
     }
 }
 

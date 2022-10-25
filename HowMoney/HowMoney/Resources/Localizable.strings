@@ -32,3 +32,11 @@
 "assets.currency.type.name" = "Currencies";
 "assets.cryptocurrency.type.name" = "Cryptos";
 "assets.metal.type.name" = "Metals";
+
+// MARK: User assets
+"user.assets.empty.state.title" = "Your wallet is empty";
+"user.assets.create.new.button.title" = "Create new asset";
+
+// MARK: Alerts
+"alerts.empty.state.title" = "You didn't set any alert";
+"alerts.create.new.button.title" = "Create new alert";
