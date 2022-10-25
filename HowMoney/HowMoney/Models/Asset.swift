@@ -52,20 +52,20 @@ struct Asset: Hashable {
     ]
     
     static let CryptoAssetsMocks: [Asset]  = [
-        .init(id: "1", name: "BTC", friendlyName: "Bitcoin", symbol: nil, type: .cryptocurrency),
-        .init(id: "2", name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency),
-        .init(id: "3", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency),
-        .init(id: "4", name: "ETH", friendlyName: "Ethereum", symbol: nil, type: .cryptocurrency),
-        .init(id: "5", name: "USDC", friendlyName: "USDC", symbol: nil, type: .cryptocurrency),
-        .init(id: "6", name: "USDT", friendlyName: "Tether USD", symbol: nil, type: .cryptocurrency)
+        .init(id: "7", name: "BTC", friendlyName: "Bitcoin", symbol: nil, type: .cryptocurrency),
+        .init(id: "8", name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency),
+        .init(id: "9", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency),
+        .init(id: "10", name: "ETH", friendlyName: "Ethereum", symbol: nil, type: .cryptocurrency),
+        .init(id: "11", name: "USDC", friendlyName: "USDC", symbol: nil, type: .cryptocurrency),
+        .init(id: "12", name: "USDT", friendlyName: "Tether USD", symbol: nil, type: .cryptocurrency)
     ]
     
     static let MetalAssetsMock: [Asset] = [
-        .init(id: "1", name: "ZL333", friendlyName: "Gold 333", symbol: nil, type: .metal),
-        .init(id: "2", name: "ZL900", friendlyName: "Gold 900", symbol: nil, type: .metal),
-        .init(id: "3", name: "SR800", friendlyName: "Silver 800", symbol: nil, type: .metal),
-        .init(id: "4", name: "SR925", friendlyName: "Silver 925", symbol: nil, type: .metal),
-        .init(id: "5", name: "PL950", friendlyName: "Platinium 950", symbol: nil, type: .metal)
+        .init(id: "13", name: "ZL333", friendlyName: "Gold 333", symbol: nil, type: .metal),
+        .init(id: "14", name: "ZL900", friendlyName: "Gold 900", symbol: nil, type: .metal),
+        .init(id: "15", name: "SR800", friendlyName: "Silver 800", symbol: nil, type: .metal),
+        .init(id: "16", name: "SR925", friendlyName: "Silver 925", symbol: nil, type: .metal),
+        .init(id: "17", name: "PL950", friendlyName: "Platinium 950", symbol: nil, type: .metal)
     ]
     
     static let AssetsMock: [Asset] = CurrencyAssetsMock + CryptoAssetsMocks + MetalAssetsMock

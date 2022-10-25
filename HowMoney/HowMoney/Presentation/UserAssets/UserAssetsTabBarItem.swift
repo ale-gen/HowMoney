@@ -69,6 +69,7 @@ struct UserAssetsTabBarItem: View {
                     selectedFilter.possibleAssetTypes.contains(userAsset.asset.type) })
                 if userAssets.count > 0 {
                     UserAssetsCollection(userAssets: userAssets)
+                        .transition(.opacity)
                 } else {
                     VStack {
                         Spacer()
@@ -96,7 +97,7 @@ struct UserAssetsTabBarItem: View {
                         .foregroundColor(Constants.Filter.textColor)
                         .background(RoundedRectangle(cornerRadius: Constants.Filter.backgroundCornerRadius)
                             .fill(selectedFilter == type ? Constants.Filter.selectedColor : Constants.Filter.nonSelectedColor)
-                            .shadow(color: Constants.Filter.backgroundShadowColor , radius: Constants.Filter.backgroundShadowRadius))
+                            .shadow(color: Constants.Filter.backgroundShadowColor , radius: selectedFilter == type ? Constants.Filter.backgroundShadowRadius: .zero))
                 }
             }
             Spacer()
