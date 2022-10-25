@@ -20,7 +20,7 @@ struct PreferenceCurrenciesCollection: View {
         static let nonSelectedCellColor: Color = .lightBlue.opacity(0.4)
         static let selectedCellColor: Color = .lightBlue
         static let backgroundShadowColor: Color = .lightBlue.opacity(0.7)
-        static let backgroundShadowRadius: CGFloat = 15.0
+        static let backgroundShadowRadius: CGFloat = 12.0
     }
     
     @Binding var preferenceCurrencyRequired: PreferenceCurrency
@@ -41,7 +41,13 @@ struct PreferenceCurrenciesCollection: View {
         let availableCurrencies: [PreferenceCurrency] = [.usd, .eur, .pln]
         return HStack(spacing: Constants.horizontalSpacing) {
             ForEach(availableCurrencies, id: \.self) { currency in
-                preferenceCurrencyCell(for: currency)
+                Button {
+                    withAnimation(.spring()) {
+                        preferenceCurrencyRequired = currency
+                    }
+                } label: {
+                    preferenceCurrencyCell(for: currency)
+                }
             }
         }
         .padding(.horizontal, 2 * Constants.horizontalSpacing)
@@ -65,12 +71,7 @@ struct PreferenceCurrenciesCollection: View {
         .padding(.vertical, Constants.verticalSpacing)
         .background(RoundedRectangle(cornerRadius: Constants.backgroundCornerRadius)
             .fill(currency == preferenceCurrencyRequired ? Constants.selectedCellColor : Constants.nonSelectedCellColor)
-            .shadow(color: Constants.backgroundShadowColor, radius: Constants.backgroundShadowRadius))
-        .onTapGesture {
-            withAnimation {
-                preferenceCurrencyRequired = currency
-            }
-        }
+            .shadow(color: Constants.backgroundShadowColor, radius: currency == preferenceCurrencyRequired ? Constants.backgroundShadowRadius : .zero))
     }
 }
 
