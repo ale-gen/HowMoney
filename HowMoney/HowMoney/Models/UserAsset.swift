@@ -28,8 +28,8 @@ struct UserAsset: Hashable {
     static let euro = Asset(id: "3", name: "EUR", friendlyName: "Euro", symbol: "€", type: .currency)
     static let swissFranc = Asset(id: "4", name: "CHF", friendlyName: "Swiss Franc", symbol: "₣", type: .currency)
     
-    static let pancakeSwap = Asset(id: "2", name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency)
-    static let polygon = Asset(id: "3", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency)
+    static let pancakeSwap = Asset(id: "5", name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency)
+    static let polygon = Asset(id: "6", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency)
     
     static let UserAssetsMock: [UserAsset] = [
         .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 2600.9),
