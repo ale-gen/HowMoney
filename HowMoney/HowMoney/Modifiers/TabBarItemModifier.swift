@@ -11,7 +11,7 @@ struct TabBarItemModifier: ViewModifier {
     
     private enum Constants {
         static let backgroundColor: Color = .black
-        static let bottomOffset: CGFloat = -80.0
+        static let bottomOffset: CGFloat = 80.0
     }
     
     @Binding var selection: TabBarItem

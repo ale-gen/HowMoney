@@ -23,8 +23,11 @@ struct UserAssetsCollection: View {
         }
     }
     
-    let userAssets: [UserAsset] = UserAsset.UserAssetsMock
-    @Binding var assetFilter: AssetFilter
+    let userAssets: [UserAsset]
+    
+    init(userAssets: [UserAsset]) {
+        self.userAssets = userAssets
+    }
     
     var body: some View {
         ZStack {
@@ -32,23 +35,20 @@ struct UserAssetsCollection: View {
                 .fill(Constants.Background.color)
                 .shadow(color: Constants.Shadow.color, radius: Constants.Shadow.radius)
             ScrollView {
-                ForEach(userAssets.filter({ userAsset in
-                    assetFilter.possibleAssetTypes.contains(userAsset.asset.type)
-                }), id: \.self) { userAsset in
+                ForEach(userAssets, id: \.self) { userAsset in
                     UserAssetCell(userAsset: userAsset)
                         .listRowBackground(Color.black)
                 }
             }
             .padding(.horizontal, Constants.contentHorizontalInsets)
             .padding(.vertical, Constants.contentTopInsets)
-            
         }
     }
 }
 
 struct UserAssetsCollection_Previews: PreviewProvider {
     static var previews: some View {
-        UserAssetsCollection(assetFilter: .constant(.cryptos))
+        UserAssetsCollection(userAssets: UserAsset.UserAssetsMock)
             .background(.black)
     }
 }

@@ -25,4 +25,6 @@ enum Images: String, ImageTranslation {
     case plnSymbol = "pln"
     case eurSymbol = "eur"
     case usdSymbol = "usd"
+    case noAssets = "noAssets"
+    case noAlerts = "noAlerts"
 }
