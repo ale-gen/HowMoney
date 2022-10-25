@@ -13,8 +13,8 @@ struct ProfileTabBarItem: View {
         static let spacing: CGFloat = 20.0
         
         enum AvatarImage {
-            static let width: CGFloat = 120.0
-            static let height: CGFloat = 120.0
+            static let width: CGFloat = 100.0
+            static let height: CGFloat = 100.0
             static let shadowColor: Color = .pink.opacity(0.3)
             static let shadowRadius: CGFloat = 15.0
             static let topOffset: CGFloat = 40.0
@@ -41,15 +41,18 @@ struct ProfileTabBarItem: View {
     }
     
     var body: some View {
-        VStack(spacing: Constants.spacing) {
-            if let userAvatar = user?.picture {
-                avatarImage(userAvatar)
+        ScrollView {
+            VStack(spacing: Constants.spacing) {
+                if let userAvatar = user?.picture {
+                    avatarImage(userAvatar)
+                }
+                userNameLabel
+                Divider().background(Constants.Divider.color)
+                PreferenceCurrenciesCollection(preferenceCurrencyRequired: $preferenceCurrencyRequired)
+                toggleButtons
+                RectangleButton(title: Localizable.authorizationSignOutButtonTitle.value, didButtonTapped: didLogoutButtonTapped)
+                    .padding(.bottom, 200)
             }
-            userNameLabel
-            Divider().background(Constants.Divider.color)
-            PreferenceCurrenciesCollection(preferenceCurrencyRequired: $preferenceCurrencyRequired)
-            toggleButtons
-            RectangleButton(title: Localizable.authorizationSignOutButtonTitle.value, didButtonTapped: didLogoutButtonTapped)
         }
     }
     
@@ -73,7 +76,6 @@ struct ProfileTabBarItem: View {
             Divider().background(Constants.Divider.color)
             biometrics
         }
-        .padding(.bottom, Constants.spacing)
     }
     
     private var weeklyReports: some View {

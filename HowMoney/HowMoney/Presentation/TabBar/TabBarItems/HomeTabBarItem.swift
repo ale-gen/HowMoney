@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeTabBarItem: View {
     
     private enum Constants {
-        static let verticalInsets: CGFloat = 40.0
+        static let verticalInsets: CGFloat = 20.0
         static let maxHeight: CGFloat = 250.0
     }
     

@@ -43,10 +43,10 @@ enum AssetFilter {
 struct UserAssetsTabBarItem: View {
     
     private enum Constants {
-        static let verticalInsets: CGFloat = 20.0
         enum Filter {
             static let verticalInsets: CGFloat = 30.0
-            static let spacing: CGFloat = 20.0
+            static let horizontalInsets: CGFloat = 20.0
+            static let spacing: CGFloat = 7.0
             static let textColor: Color = .white
             static let textPadding: CGFloat = 10.0
             static let selectedColor: Color = .lightBlue
@@ -69,7 +69,6 @@ struct UserAssetsTabBarItem: View {
             }
             .searchable(text: $searchText)
         }
-        .padding(.vertical, Constants.verticalInsets)
     }
     
     private var filterAssetTypePicker: some View {
@@ -91,6 +90,7 @@ struct UserAssetsTabBarItem: View {
             }
         }
         .padding(.vertical, Constants.Filter.verticalInsets)
+        .padding(.horizontal, Constants.Filter.horizontalInsets)
     }
 }
 
