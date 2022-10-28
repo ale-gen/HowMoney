@@ -10,22 +10,22 @@ import SwiftUI
 struct TabBarView: View {
     
     @EnvironmentObject var userState: UserStateViewModel
+    @StateObject var contentViewRouter: TabBarContentViewRouter = TabBarContentViewRouter()
     @State var selection: TabBarItem = .home
     @State var searchText: String = ""
     
     var body: some View {
-        TabBarContent(selection: $selection) {
-            HomeTabBarItem()
-                .tabBarItem(tab: .home, selection: $selection)
-            UserAssetsTabBarItem(searchText: $searchText)
-                .tabBarItem(tab: .wallet, selection: $selection)
-            Color.black.ignoresSafeArea()
-                .tabBarItem(tab: .plus, selection: $selection)
-            TransactionsTabBarItem()
-                .tabBarItem(tab: .transactions, selection: $selection)
-            ProfileTabBarItem()
-                .tabBarItem(tab: .profile, selection: $selection)
+        ZStack {
+            contentViewRouter.currentContent
+            VStack {
+                Spacer()
+                TabBar(tabs: [.home, .wallet, .plus, .transactions, .profile], selection: $selection, localSelection: selection)
+            }
         }
+        .onChange(of: selection) { newValue in
+            contentViewRouter.navigateToContent(newValue)
+        }
+        
     }
 }
 
