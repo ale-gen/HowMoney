@@ -30,18 +30,26 @@ struct UserAssetsCollection: View {
     }
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: Constants.Background.cornerRadius)
-                .fill(Constants.Background.color)
-                .shadow(color: Constants.Shadow.color, radius: Constants.Shadow.radius)
-            ScrollView {
-                ForEach(userAssets, id: \.self) { userAsset in
-                    UserAssetCell(userAsset: userAsset)
-                        .listRowBackground(Color.black)
+        if userAssets.count > .zero {
+            ZStack {
+                RoundedRectangle(cornerRadius: Constants.Background.cornerRadius)
+                    .fill(Constants.Background.color)
+                    .shadow(color: Constants.Shadow.color, radius: Constants.Shadow.radius)
+                ScrollView {
+                    ForEach(userAssets, id: \.self) { userAsset in
+                        UserAssetCell(userAsset: userAsset)
+                            .listRowBackground(Color.black)
+                    }
                 }
+                .padding(.horizontal, Constants.contentHorizontalInsets)
+                .padding(.vertical, Constants.contentTopInsets)
             }
-            .padding(.horizontal, Constants.contentHorizontalInsets)
-            .padding(.vertical, Constants.contentTopInsets)
+        } else {
+            VStack {
+                Spacer()
+                UserAssetEmptyState()
+                Spacer()
+            }
         }
     }
 }

@@ -25,9 +25,8 @@ struct UserAssetCell: View {
         }
     }
     
+    @EnvironmentObject var authUserVM: UserStateViewModel
     let userAsset: UserAsset
-    // TODO: Fetch real preference currency for user
-    let preferenceCurrency: PreferenceCurrency = .pln
     
     var body: some View {
         HStack {
@@ -41,7 +40,7 @@ struct UserAssetCell: View {
                                 type: userAsset.asset.type)
                     .font(Constants.PreferenceCurrencyValue.font)
                     .foregroundColor(Constants.PreferenceCurrencyValue.color)
-                if userAsset.asset.name != preferenceCurrency.name {
+                if userAsset.asset.name != authUserVM.preferenceCurrency.name {
                     PreferenceCurrencyValueLabel(value: userAsset.preferenceCurrencyValue)
                         .font(Constants.OriginValue.font)
                         .foregroundColor(Constants.OriginValue.color)

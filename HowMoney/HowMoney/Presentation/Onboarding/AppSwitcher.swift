@@ -9,42 +9,21 @@ import SwiftUI
 
 struct AppSwitcher: View {
     
-    @State private var isAuthorized: Bool = false
-    @State private var user: AuthUser? = nil
-    private var authService: Service
-    
-    init(authService: Service) {
-        self.authService = authService
-    }
+    @StateObject var vm: UserStateViewModel = UserStateViewModel(authService: AuthorizationService())
     
     var body: some View {
-        if isAuthorized {
-            TabBarView(user: $user, onLogoutButtonTapped: endSession)
+        if vm.isAuthorized {
+            TabBarView()
+                .environmentObject(vm)
         } else {
-            WelcomeView(didGetStarted: startSession)
-        }
-    }
-    
-    private func startSession() {
-        authService.login { user in
-            self.user = user
-            isAuthorized.toggle()
-        }
-    }
-    
-    private func endSession() {
-        authService.logout {
-            self.user = nil
-            isAuthorized.toggle()
+            WelcomeView(didGetStarted: vm.login)
         }
     }
 }
 
 struct AppSwitcher_Previews: PreviewProvider {
     
-    static let authService: Service = AuthorizationService()
-    
     static var previews: some View {
-        AppSwitcher(authService: authService)
+        AppSwitcher()
     }
 }

@@ -28,29 +28,22 @@ struct ProfileTabBarItem: View {
         }
     }
     
-    private let user: AuthUser?
-    private var didLogoutButtonTapped: (() -> Void)?
+    @EnvironmentObject var authUserVM: UserStateViewModel
     @State var biometricsEnabled: Bool = false
     @State var weeklyReportsRequired: Bool = true
     @State var emailAlertsRequired: Bool = true
-    @State var preferenceCurrencyRequired: PreferenceCurrency = .eur
-    
-    init(user: AuthUser?, didLogoutButtonTapped: (() -> Void)? = nil) {
-        self.user = user
-        self.didLogoutButtonTapped = didLogoutButtonTapped
-    }
     
     var body: some View {
         ScrollView {
             VStack(spacing: Constants.spacing) {
-                if let userAvatar = user?.picture {
+                if let userAvatar = authUserVM.user?.picture {
                     avatarImage(userAvatar)
                 }
                 userNameLabel
                 Divider().background(Constants.Divider.color)
-                PreferenceCurrenciesCollection(preferenceCurrencyRequired: $preferenceCurrencyRequired)
+                PreferenceCurrenciesCollection(selectedPreferenceCurrency: authUserVM.preferenceCurrency, didPreferenceCurrencyChanged: authUserVM.updateCurrencyPreference)
                 toggleButtons
-                RectangleButton(title: Localizable.authorizationSignOutButtonTitle.value, didButtonTapped: didLogoutButtonTapped)
+                RectangleButton(title: Localizable.authorizationSignOutButtonTitle.value, didButtonTapped: authUserVM.logout)
                     .padding(.bottom, 200)
             }
         }
@@ -59,7 +52,7 @@ struct ProfileTabBarItem: View {
     private var userNameLabel: some View {
         HStack {
             Spacer()
-            Text(user?.name ?? user?.nickname ?? .empty)
+            Text(authUserVM.user?.name ?? authUserVM.user?.nickname ?? .empty)
                 .foregroundColor(Constants.NameLabel.color)
                 .font(Constants.NameLabel.font)
             Spacer()

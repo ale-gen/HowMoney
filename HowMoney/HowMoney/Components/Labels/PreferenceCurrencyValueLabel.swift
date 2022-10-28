@@ -9,13 +9,12 @@ import SwiftUI
 
 struct PreferenceCurrencyValueLabel: View {
     
+    @EnvironmentObject var authUserVM: UserStateViewModel
     let value: Float
-    // TODO: Update preference currency from user data
-    let preferenceCurrency: PreferenceCurrency = .eur
     
     var body: some View {
         AssetValueLabel(value: value,
-                        symbol: preferenceCurrency.symbol,
+                        symbol: authUserVM.preferenceCurrency.symbol,
                         type: .currency)
     }
 }

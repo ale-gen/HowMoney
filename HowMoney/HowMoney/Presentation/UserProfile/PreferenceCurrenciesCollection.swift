@@ -23,7 +23,8 @@ struct PreferenceCurrenciesCollection: View {
         static let backgroundShadowRadius: CGFloat = 12.0
     }
     
-    @Binding var preferenceCurrencyRequired: PreferenceCurrency
+    var selectedPreferenceCurrency: PreferenceCurrency
+    var didPreferenceCurrencyChanged: (PreferenceCurrency) -> Void = { _ in }
     
     var body: some View {
         VStack(spacing: Constants.verticalSpacing) {
@@ -43,7 +44,7 @@ struct PreferenceCurrenciesCollection: View {
             ForEach(availableCurrencies, id: \.self) { currency in
                 Button {
                     withAnimation(.spring()) {
-                        preferenceCurrencyRequired = currency
+                        didPreferenceCurrencyChanged(currency)
                     }
                 } label: {
                     preferenceCurrencyCell(for: currency)
@@ -70,13 +71,13 @@ struct PreferenceCurrenciesCollection: View {
         }
         .padding(.vertical, Constants.verticalSpacing)
         .background(RoundedRectangle(cornerRadius: Constants.backgroundCornerRadius)
-            .fill(currency == preferenceCurrencyRequired ? Constants.selectedCellColor : Constants.nonSelectedCellColor)
-            .shadow(color: Constants.backgroundShadowColor, radius: currency == preferenceCurrencyRequired ? Constants.backgroundShadowRadius : .zero))
+            .fill(currency == selectedPreferenceCurrency ? Constants.selectedCellColor : Constants.nonSelectedCellColor)
+            .shadow(color: Constants.backgroundShadowColor, radius: currency == selectedPreferenceCurrency ? Constants.backgroundShadowRadius : .zero))
     }
 }
 
 struct PreferenceCurrenciesCollection_Previews: PreviewProvider {
     static var previews: some View {
-        PreferenceCurrenciesCollection(preferenceCurrencyRequired: .constant(.pln))
+        PreferenceCurrenciesCollection(selectedPreferenceCurrency: .pln)
     }
 }

@@ -16,7 +16,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        AppSwitcher(authService: AuthorizationService())
+        AppSwitcher()
             .padding(.top, Constants.topPadding)
             .preferredColorScheme(Constants.preferredColorScheme)
     }
