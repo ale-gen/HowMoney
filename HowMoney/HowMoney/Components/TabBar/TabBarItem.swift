@@ -107,7 +107,7 @@ struct TabBarItemView: View {
     }
     
     let tabItem: TabBarItem
-    var selected: Bool
+    let selected: Bool
     @Binding var showCreationPopup: Bool
     
     var body: some View {

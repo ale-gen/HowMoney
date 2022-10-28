@@ -49,7 +49,12 @@ struct TabBar: View {
     }
     
     private func switchToTab(tab: TabBarItem) {
+        guard tab != .plus else {
+            showCreationPopup.toggle()
+            return
+        }
         selection = tab
+        showCreationPopup = false
     }
 }
 
@@ -58,15 +63,11 @@ extension TabBar {
     private var tabBar: some View {
         HStack {
             ForEach(tabs, id: \.self) { tab in
-                TabBarItemView(tabItem: tab, selected: localSelection == tab, showCreationPopup: $showCreationPopup)
+                TabBarItemView(tabItem: tab, selected: tab != .plus && localSelection == tab, showCreationPopup: $showCreationPopup)
                     .onTapGesture {
                         tab.tabItemTapped {
-                            switchToTab(tab: tab)
                             withAnimation {
-                                guard selection == .plus else { showCreationPopup = false
-                                    return
-                                }
-                                showCreationPopup.toggle()
+                                switchToTab(tab: tab)
                             }
                         }
                     }
