@@ -33,9 +33,12 @@
 "assets.cryptocurrency.type.name" = "Cryptos";
 "assets.metal.type.name" = "Metals";
 
-// MARK: User assets
+// MARK: User assets collection
 "user.assets.empty.state.title" = "Your wallet is empty";
 "user.assets.create.new.button.title" = "Create new asset";
+
+// MARK: User asset details
+"user.asset.details.price.update.time" = "(24h)";
 
 // MARK: Alerts
 "alerts.empty.state.title" = "You didn't set any alert";

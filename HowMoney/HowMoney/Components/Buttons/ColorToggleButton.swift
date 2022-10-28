@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ToggleButton: View {
+struct ColorToggleButton: View {
     
     private enum Constants {
         static let height: CGFloat = 40.0
@@ -32,11 +32,11 @@ struct ToggleButton: View {
     }
 }
 
-struct ToggleButton_Previews: PreviewProvider {
+struct ColorToggleButton_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            ToggleButton(isOn: .constant(true), textLabel: "Toggle label")
+            ColorToggleButton(isOn: .constant(true), textLabel: "Toggle label")
         }
     }
 }

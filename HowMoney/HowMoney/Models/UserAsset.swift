@@ -32,7 +32,7 @@ struct UserAsset: Hashable {
     static let polygon = Asset(id: "6", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency)
     
     static let UserAssetsMock: [UserAsset] = [
-        .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 2600.9),
+        .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 1600.9),
         .init(asset: americanDollar, originValue: 126.78, preferenceCurrencyValue: 609.90),
         .init(asset: euro, originValue: 2300.0, preferenceCurrencyValue: 8900.89),
         .init(asset: swissFranc, originValue: 0.0, preferenceCurrencyValue: 0.0),

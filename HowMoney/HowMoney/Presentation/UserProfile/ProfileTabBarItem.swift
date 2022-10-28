@@ -72,15 +72,15 @@ struct ProfileTabBarItem: View {
     }
     
     private var weeklyReports: some View {
-        ToggleButton(isOn: $weeklyReportsRequired, textLabel: Localizable.userProfileWeeklyReportsLabelText.value)
+        ColorToggleButton(isOn: $weeklyReportsRequired, textLabel: Localizable.userProfileWeeklyReportsLabelText.value)
     }
     
     private var emailAlerts: some View {
-        ToggleButton(isOn: $emailAlertsRequired, textLabel: Localizable.userProfileEmailAlertsLabelText.value)
+        ColorToggleButton(isOn: $emailAlertsRequired, textLabel: Localizable.userProfileEmailAlertsLabelText.value)
     }
     
     private var biometrics: some View {
-        ToggleButton(isOn: $biometricsEnabled, textLabel: Localizable.userProfileBiometricsLabelText.value)
+        ColorToggleButton(isOn: $biometricsEnabled, textLabel: Localizable.userProfileBiometricsLabelText.value)
     }
     
     private func avatarImage(_ userAvatar: String) -> some View {

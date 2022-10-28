@@ -13,6 +13,10 @@ extension String {
         return ""
     }
     
+    static var percentage: String {
+        return "%"
+    }
+    
     func localized() -> String {
         return NSLocalizedString(self, comment: "")
     }
