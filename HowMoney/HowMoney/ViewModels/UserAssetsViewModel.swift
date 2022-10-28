@@ -1,5 +1,5 @@
 //
-//  UserAssetViewModel.swift
+//  UserAssetsViewModel.swift
 //  HowMoney
 //
 //  Created by Aleksandra Generowicz on 27/10/2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UserAssetViewModel: ObservableObject {
+class UserAssetsViewModel: ObservableObject {
     
     @Published var filteredUserAssets: [UserAsset] = []
     var selectedFilter: AssetFilter {

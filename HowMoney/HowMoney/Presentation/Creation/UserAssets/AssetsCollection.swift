@@ -9,12 +9,12 @@ import SwiftUI
 
 struct AssetsCollection: View {
     
-    @StateObject var vm: AssetViewModel = AssetViewModel()
+    @StateObject var vm: AssetsViewModel = AssetsViewModel()
     
     var body: some View {
         ScrollView {
             ForEach(vm.assets, id: \.self) { asset in
-                AssetCell(asset: asset, previousPrice: 4.69, actualPrice: 4.23)
+                AssetCell(assetVM: AssetViewModel(asset: asset))
             }
         }
     }

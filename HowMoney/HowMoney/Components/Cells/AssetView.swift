@@ -78,28 +78,17 @@ struct AssetCell: View {
         }
     }
     
-    let asset: Asset
-    let previousPrice: Float
-    let actualPrice: Float
+    let assetVM: AssetViewModel
     var additionalLabelColor: Color = .black
-    let assetHistoryData: [AssetHistoryRecord] = AssetHistoryRecord.DollarHistoryMock
-    
-    private var priceChange: Float {
-        return actualPrice - previousPrice
-    }
-    
-    private var percentagePriceChange: Float {
-        return priceChange / previousPrice * 100
-    }
     
     var body: some View {
         HStack {
-            AssetView(asset: asset)
+            AssetView(asset: assetVM.asset)
             
             Spacer()
-            let color = priceChange > .zero ? Constants.AdditionalInfo.increaseColor : (priceChange < .zero ? Constants.AdditionalInfo.decreaseColor : Constants.AdditionalInfo.defaultColor)
+            let color = assetVM.priceChange > .zero ? Constants.AdditionalInfo.increaseColor : (assetVM.priceChange < .zero ? Constants.AdditionalInfo.decreaseColor : Constants.AdditionalInfo.defaultColor)
             // TODO: Chart of history of chosen asset instead mock asset
-            LineChart(data: assetHistoryData.map { $0.value },  lineColor: color)
+            LineChart(data: assetVM.assetHistoryData.map { $0.value },  lineColor: color)
                 .frame(maxWidth: Constants.Chart.maxWidth)
                 .padding(.trailing, Constants.Chart.trailingPadding)
             changeInfo(color: color)
@@ -114,17 +103,12 @@ struct AssetCell: View {
             .opacity(Constants.AdditionalInfo.opacity)
             .overlay {
                 HStack {
-                    // TODO: Move logic to viewModel
-                    if priceChange > .zero {
-                        BalanceChar.positive.arrowImage
-                            .resizable()
-                            .frame(width: Constants.AdditionalInfo.imageHeight, height: Constants.AdditionalInfo.imageHeight)
-                    } else if priceChange < .zero {
-                        BalanceChar.negative.arrowImage
+                    if let arrowImage = assetVM.assetPriceChangeImage {
+                        arrowImage
                             .resizable()
                             .frame(width: Constants.AdditionalInfo.imageHeight, height: Constants.AdditionalInfo.imageHeight)
                     }
-                    Text(String(format: "%.2f", abs(percentagePriceChange)) + "%")
+                    Text(String(format: "%.2f", abs(assetVM.percentagePriceChange)) + "%")
                         .font(Constants.AdditionalInfo.font)
                 }
                 .foregroundColor(color)
@@ -134,7 +118,7 @@ struct AssetCell: View {
 
 struct AssetCell_Previews: PreviewProvider {
     static var previews: some View {
-        AssetCell(asset: Asset.AssetsMock.first!, previousPrice: 4.98, actualPrice: 4.5)
+        AssetCell(assetVM: AssetViewModel(asset: Asset.AssetsMock.first!))
             .background(.black)
     }
 }

@@ -58,7 +58,7 @@ struct UserAssetsTabBarItem: View {
     }
     
     @Binding var searchText: String
-    @StateObject var vm: UserAssetViewModel = UserAssetViewModel()
+    @StateObject var vm: UserAssetsViewModel = UserAssetsViewModel()
     
     var body: some View {
         GeometryReader { geo in
