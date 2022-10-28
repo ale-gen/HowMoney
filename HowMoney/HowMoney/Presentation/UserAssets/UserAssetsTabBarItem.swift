@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum AssetFilter {
+enum AssetFilter: CaseIterable {
     case all
     case currencies
     case cryptos
@@ -57,36 +57,27 @@ struct UserAssetsTabBarItem: View {
         }
     }
     
+    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(items: UserAsset.UserAssetsMock)
+    @State var selectedFilter: AssetFilter = .all
     @Binding var searchText: String
-    @State private var selectedFilter: AssetFilter = .all
     
     var body: some View {
         GeometryReader { geo in
             VStack {
                 filterAssetTypePicker
                 
-                let userAssets: [UserAsset] = UserAsset.UserAssetsMock.filter({ userAsset in
-                    selectedFilter.possibleAssetTypes.contains(userAsset.asset.type) })
-                if userAssets.count > 0 {
-                    UserAssetsCollection(userAssets: userAssets)
-                        .transition(.opacity)
-                } else {
-                    VStack {
-                        Spacer()
-                        UserAssetEmptyState()
-                        Spacer()
-                    }
-                }
+                let filteredItems = vm.items.filter { selectedFilter.possibleAssetTypes.contains($0.asset.type) }
+                UserAssetsCollection(userAssets: filteredItems)
+                    .transition(.opacity)
             }
             .searchable(text: $searchText)
         }
     }
     
     private var filterAssetTypePicker: some View {
-        let availableAssetFilters: [AssetFilter] = [.all, .currencies, .cryptos, .metals]
         return HStack(alignment: .center, spacing: Constants.Filter.spacing) {
             Spacer()
-            ForEach(availableAssetFilters, id: \.self) { type in
+            ForEach(AssetFilter.allCases, id: \.self) { type in
                 Button {
                     withAnimation {
                         selectedFilter = type
