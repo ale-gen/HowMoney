@@ -9,11 +9,11 @@ import SwiftUI
 
 struct AssetsCollection: View {
     
-    @StateObject var vm: AssetsViewModel = AssetsViewModel()
+    @StateObject var vm: ListViewModel<Asset> = ListViewModel(items: Asset.AssetsMock)
     
     var body: some View {
         ScrollView {
-            ForEach(vm.assets, id: \.self) { asset in
+            ForEach(vm.items, id: \.self) { asset in
                 AssetCell(assetVM: AssetViewModel(asset: asset))
             }
         }

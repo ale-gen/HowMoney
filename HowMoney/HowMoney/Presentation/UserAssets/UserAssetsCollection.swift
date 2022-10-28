@@ -25,10 +25,6 @@ struct UserAssetsCollection: View {
     
     let userAssets: [UserAsset]
     
-    init(userAssets: [UserAsset]) {
-        self.userAssets = userAssets
-    }
-    
     var body: some View {
         if userAssets.count > .zero {
             ZStack {

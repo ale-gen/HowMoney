@@ -60,6 +60,7 @@ struct UserAssetCell_Previews: PreviewProvider {
         ZStack {
             Color.black.ignoresSafeArea()
             UserAssetCell(userAsset: userAssets.first!)
+                .environmentObject(UserStateViewModel(authService: AuthorizationService()))
         }
     }
 }

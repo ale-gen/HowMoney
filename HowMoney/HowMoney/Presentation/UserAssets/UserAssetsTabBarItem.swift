@@ -57,15 +57,17 @@ struct UserAssetsTabBarItem: View {
         }
     }
     
+    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(items: UserAsset.UserAssetsMock)
+    @State var selectedFilter: AssetFilter = .all
     @Binding var searchText: String
-    @StateObject var vm: UserAssetsViewModel = UserAssetsViewModel()
     
     var body: some View {
         GeometryReader { geo in
             VStack {
                 filterAssetTypePicker
                 
-                UserAssetsCollection(userAssets: vm.filteredUserAssets)
+                let filteredItems = vm.items.filter { selectedFilter.possibleAssetTypes.contains($0.asset.type) }
+                UserAssetsCollection(userAssets: filteredItems)
                     .transition(.opacity)
             }
             .searchable(text: $searchText)
@@ -78,15 +80,15 @@ struct UserAssetsTabBarItem: View {
             ForEach(AssetFilter.allCases, id: \.self) { type in
                 Button {
                     withAnimation {
-                        vm.selectedFilter = type
+                        selectedFilter = type
                     }
                 } label: {
                     Text(type.name)
                         .padding(Constants.Filter.textPadding)
                         .foregroundColor(Constants.Filter.textColor)
                         .background(RoundedRectangle(cornerRadius: Constants.Filter.backgroundCornerRadius)
-                            .fill(vm.selectedFilter == type ? Constants.Filter.selectedColor : Constants.Filter.nonSelectedColor)
-                            .shadow(color: Constants.Filter.backgroundShadowColor , radius: vm.selectedFilter == type ? Constants.Filter.backgroundShadowRadius: .zero))
+                            .fill(selectedFilter == type ? Constants.Filter.selectedColor : Constants.Filter.nonSelectedColor)
+                            .shadow(color: Constants.Filter.backgroundShadowColor , radius: selectedFilter == type ? Constants.Filter.backgroundShadowRadius: .zero))
                 }
             }
             Spacer()
