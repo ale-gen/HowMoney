@@ -87,17 +87,21 @@ extension TabBar {
     }
     
     private func plusMenuItem(_ item: Image) -> some View {
-        ZStack {
+        Button {
+            
+        } label: {
             Circle()
                 .foregroundColor(Constants.PlusMenu.Button.color)
                 .frame(width: Constants.PlusMenu.Button.height, height: Constants.PlusMenu.Button.height)
                 .shadow(color: Constants.PlusMenu.Button.shadowColor, radius: Constants.PlusMenu.Button.shadowRadius, x: .zero, y: .zero)
-            item
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(Constants.PlusMenu.Button.padding)
-                .frame(width: Constants.PlusMenu.Button.height, height: Constants.PlusMenu.Button.height)
-                .foregroundColor(Constants.PlusMenu.Button.fontColor)
+                .overlay {
+                    item
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(Constants.PlusMenu.Button.padding)
+                        .frame(width: Constants.PlusMenu.Button.height, height: Constants.PlusMenu.Button.height)
+                        .foregroundColor(Constants.PlusMenu.Button.fontColor)
+                }
         }
     }
     
