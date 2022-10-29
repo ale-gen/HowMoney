@@ -15,8 +15,10 @@ struct AppSwitcher: View {
         if vm.isAuthorized {
             TabBarView()
                 .environmentObject(vm)
+                .transition(.opacity)
         } else {
             WelcomeView(didGetStarted: vm.login)
+                .transition(.opacity)
         }
     }
 }
@@ -25,5 +27,6 @@ struct AppSwitcher_Previews: PreviewProvider {
     
     static var previews: some View {
         AppSwitcher()
+            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
     }
 }
