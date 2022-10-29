@@ -39,6 +39,9 @@
 
 // MARK: User asset details
 "user.asset.details.price.update.time" = "(24h)";
+"user.asset.details.add.operation.title" = "Cash in";
+"user.asset.details.substract.operation.title" = "Cash out";
+"user.asset.details.edit.operation.title" = "Edit";
 
 // MARK: Alerts
 "alerts.empty.state.title" = "You didn't set any alert";

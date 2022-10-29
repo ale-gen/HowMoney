@@ -24,12 +24,15 @@ struct CurrencySymbolToggleStyle: ToggleStyle {
         }
         enum Circle {
             static let padding: CGFloat = 3.0
+            static let color: Color = .white
         }
         enum Text {
             static let font: Font = .system(.caption)
+            static let color: Color = .black
         }
     }
     
+    let canSwitch: Bool
     let isOnImage: String
     let isOffImage: String
     
@@ -39,13 +42,15 @@ struct CurrencySymbolToggleStyle: ToggleStyle {
             .frame(width: Constants.width, height: Constants.height)
             .overlay(
                 Circle()
-                    .foregroundColor(.white)
+                    .foregroundColor(Constants.Circle.color)
                     .padding(.all, Constants.Circle.padding)
                     .overlay(Text(configuration.isOn ? isOnImage : isOffImage)
-                        .font(Constants.Text.font))
+                        .font(Constants.Text.font)
+                        .foregroundColor(Constants.Text.color))
                     .offset(x: configuration.isOn ? Constants.OnMode.offset : Constants.OffMode.offset, y: .zero)
             )
             .onTapGesture {
+                guard canSwitch else { return }
                 withAnimation(.spring()) {
                     configuration.isOn.toggle()
                 }
@@ -56,12 +61,13 @@ struct CurrencySymbolToggleStyle: ToggleStyle {
 struct CurrencySymbolToggleButton: View {
     
     @Binding var isOn: Bool
+    var canSwitch: Bool = false
     let isOnImage: String
     let isOffImage: String
     
     var body: some View {
         Toggle(isOn: $isOn, label: { })
-        .toggleStyle(CurrencySymbolToggleStyle(isOnImage: isOnImage, isOffImage: isOffImage))
+        .toggleStyle(CurrencySymbolToggleStyle(canSwitch: canSwitch, isOnImage: isOnImage, isOffImage: isOffImage))
     }
 }
 

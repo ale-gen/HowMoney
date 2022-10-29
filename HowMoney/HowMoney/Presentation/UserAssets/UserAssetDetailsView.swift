@@ -47,6 +47,20 @@ struct UserAssetDetailsView: View {
             static let height: CGFloat = 30.0
             static let padding: CGFloat = 20.0
         }
+        enum Chart {
+            static let contentPadding: CGFloat = 30.0
+        }
+        enum OperationOption {
+            static let height: CGFloat = 100.0
+            static let width: CGFloat = 100.0
+            static let imageHeight: CGFloat = 30.0
+            static let color: Color = .lightBlue
+            static let opacity: CGFloat = 0.7
+            static let fontColor: Color = .white
+            static let cornerRadius: CGFloat = 15.0
+            static let shadowRadius: CGFloat = 5.0
+        }
+        static let topOffset: CGFloat = 40.0
         static let verticalSpacing: CGFloat = 5.0
         static let horizontalSpacing: CGFloat = 10.0
     }
@@ -56,23 +70,27 @@ struct UserAssetDetailsView: View {
     @State private var preferenceCurrencyRequired: Bool = true
     
     var body: some View {
-        ZStack {
+        GeometryReader { geo in
             VStack(spacing: Constants.verticalSpacing) {
                 assetTypeSwitcher
                 assetBasicInfo
                 assetValue
                 priceChangeLabel
+                graph
+                operationOptions
                 Spacer()
             }
-            graph
+            .padding(.top, Constants.topOffset)
+            .padding(.bottom, geo.safeAreaInsets.bottom)
         }
     }
     
     private var assetTypeSwitcher: some View {
         HStack {
             Spacer()
-            CurrencySymbolToggleButton(isOn: $preferenceCurrencyRequired, isOnImage: authUserVM.preferenceCurrency.symbol, isOffImage: vm.userAsset.asset.symbol ?? .empty)
+            CurrencySymbolToggleButton(isOn: $preferenceCurrencyRequired, canSwitch: vm.userAsset.asset.name == authUserVM.preferenceCurrency.name ? false : true, isOnImage: authUserVM.preferenceCurrency.symbol, isOffImage: vm.userAsset.asset.symbol ?? .empty)
         }
+        .padding(.horizontal, Constants.horizontalSpacing)
     }
     
     private var assetBasicInfo: some View {
@@ -100,32 +118,58 @@ struct UserAssetDetailsView: View {
             AssetValueLabel(value: preferenceCurrencyRequired ? vm.userAsset.preferenceCurrencyValue : vm.userAsset.originValue,
                             symbol: preferenceCurrencyRequired ? authUserVM.preferenceCurrency.symbol : vm.userAsset.asset.symbol ?? .empty,
                             type: preferenceCurrencyRequired ? .currency : vm.userAsset.asset.type)
-                .font(Constants.MainValue.font)
-                .foregroundColor(Constants.MainValue.color)
+            .font(Constants.MainValue.font)
+            .foregroundColor(Constants.MainValue.color)
         }
     }
     
     private var priceChangeLabel: some View {
-        ZStack {
-            HStack {
-                vm.assetPriceChangeImage
-                Text("\(vm.assetPricePercentageChangeValue, specifier: "%.2f")\(.percentage)")
-                Text(Localizable.userAssetDetailsPriceUpdateTime.value)
-            }
-            .foregroundColor(vm.priceChangeColor)
-            .padding(Constants.PriceChangeLabel.padding)
-            .overlay(RoundedRectangle(cornerRadius: Constants.PriceChangeLabel.cornerRadius)
-                    .frame(height: Constants.PriceChangeLabel.height)
-                    .foregroundColor(vm.priceChangeColor)
-                    .opacity(Constants.PriceChangeLabel.opacity))
+        HStack {
+            vm.assetPriceChangeImage
+            Text("\(vm.assetPricePercentageChangeValue, specifier: "%.2f")\(.percentage)")
+            Text(Localizable.userAssetDetailsPriceUpdateTime.value)
         }
+        .foregroundColor(vm.priceChangeColor)
+        .padding(Constants.PriceChangeLabel.padding)
+        .overlay(RoundedRectangle(cornerRadius: Constants.PriceChangeLabel.cornerRadius)
+            .frame(height: Constants.PriceChangeLabel.height)
+            .foregroundColor(vm.priceChangeColor)
+            .opacity(Constants.PriceChangeLabel.opacity))
     }
     
     private var graph: some View {
-        VStack {
+        LineChart(data: vm.userAssetPriceHistory)
+            .padding(.vertical, Constants.Chart.contentPadding)
+    }
+    
+    private var operationOptions: some View {
+        HStack {
             Spacer()
-            LineChart(data: vm.userAssetPriceHistory)
+            operationOption(type: .update)
             Spacer()
+            operationOption(type: .add)
+            Spacer()
+            operationOption(type: .substract)
+            Spacer()
+        }
+    }
+
+    private func operationOption(type: UserAssetOperation) -> some View {
+        Button {
+            //Navigate to edit user asset screen with properly validation turned on
+        } label: {
+            RoundedRectangle(cornerRadius: Constants.OperationOption.cornerRadius)
+                .foregroundColor(Constants.OperationOption.color)
+                .shadow(color: Constants.OperationOption.color, radius: Constants.OperationOption.shadowRadius)
+                .opacity(Constants.OperationOption.opacity)
+                .frame(width: Constants.OperationOption.width, height: Constants.OperationOption.height)
+                .overlay(VStack(spacing: Constants.verticalSpacing) {
+                    type.icon
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: Constants.OperationOption.imageHeight)
+                    Text(type.title)
+                }.foregroundColor(Constants.OperationOption.fontColor))
         }
     }
 }
@@ -135,5 +179,14 @@ struct UserAssetDetailsView_Previews: PreviewProvider {
         UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!))
             .background(.black)
             .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+    }
+}
+
+struct UserAssetDetailsViewSmallerDevices_Previews: PreviewProvider {
+    static var previews: some View {
+        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!))
+            .background(.black)
+            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
 }

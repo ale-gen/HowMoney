@@ -5,16 +5,39 @@
 //  Created by Aleksandra Generowicz on 15/10/2022.
 //
 
-import Foundation
+import SwiftUI
 
 enum UserAssetOperation {
     case add
     case substract
     case update
+    
+    var title: String {
+        switch self {
+        case .add:
+            return Localizable.userAssetDetailsAddOperationTitle.value
+        case .substract:
+            return Localizable.userAssetDetailsSubstractOperationTitle.value
+        case .update:
+            return Localizable.userAssetDetailsEditOperationTitle.value
+        }
+    }
+    
+    var icon: Image {
+        switch self {
+        case .add:
+            return Images.cashIn.value
+        case .substract:
+            return Images.cashOut.value
+        case .update:
+            return Images.cashEdit.value
+        }
+    }
 }
 
-struct UserAsset: Hashable {
+struct UserAsset: Identifiable, Hashable {
     
+    var id: String { return asset.id }
     let asset: Asset
     let originValue: Float
     let preferenceCurrencyValue: Float

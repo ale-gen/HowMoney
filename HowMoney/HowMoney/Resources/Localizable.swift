@@ -53,6 +53,9 @@ enum Localizable: String, Translation {
     
     // MARK: User asset details
     case userAssetDetailsPriceUpdateTime = "user.asset.details.price.update.time"
+    case userAssetDetailsAddOperationTitle = "user.asset.details.add.operation.title"
+    case userAssetDetailsSubstractOperationTitle = "user.asset.details.substract.operation.title"
+    case userAssetDetailsEditOperationTitle = "user.asset.details.edit.operation.title"
     
     // MARK: Alerts
     case alertsEmptyStateTitle = "alerts.empty.state.title"
