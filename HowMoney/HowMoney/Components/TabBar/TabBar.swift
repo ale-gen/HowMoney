@@ -33,6 +33,9 @@ struct TabBar: View {
     @State var localSelection: TabBarItem
     @State var showCreationPopup: Bool = false
     
+    @State private var showCreationView: Bool = false
+    @State private var selectedContext: CreationContext?
+    
     var body: some View {
         ZStack {
             if showCreationPopup {
@@ -45,6 +48,9 @@ struct TabBar: View {
                         localSelection = newValue
                     }
                 }
+        }
+        .sheet(isPresented: $showCreationView) {
+            selectedContext?.destinationView
         }
     }
     
@@ -80,22 +86,23 @@ extension TabBar {
     
     private var plusMenu: some View {
         HStack(spacing: Constants.PlusMenu.spacing) {
-            plusMenuItem(Icons.dollarSign.value)
-            plusMenuItem(Icons.bell.value)
+            plusMenuItem(context: .asset)
+            plusMenuItem(context: .alert)
         }
         .transition(.scale)
     }
     
-    private func plusMenuItem(_ item: Image) -> some View {
+    private func plusMenuItem(context: CreationContext) -> some View {
         Button {
-            
+            selectedContext = context
+            showCreationView = true
         } label: {
             Circle()
                 .foregroundColor(Constants.PlusMenu.Button.color)
                 .frame(width: Constants.PlusMenu.Button.height, height: Constants.PlusMenu.Button.height)
                 .shadow(color: Constants.PlusMenu.Button.shadowColor, radius: Constants.PlusMenu.Button.shadowRadius, x: .zero, y: .zero)
                 .overlay {
-                    item
+                    context.image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .padding(Constants.PlusMenu.Button.padding)

@@ -7,50 +7,6 @@
 
 import SwiftUI
 
-struct AssetView: View {
-    
-    private enum Constants {
-        static let height: CGFloat = 60.0
-        static let spacing: CGFloat = 2.0
-        enum Icon {
-            static let height: CGFloat = Constants.height - 20.0
-            static let trailingInset: CGFloat = 10.0
-            static let shadow: CGFloat = 8.0
-        }
-        enum Title {
-            static let font: Font = .system(size: 15.0, weight: .light)
-            static let color: Color = .white
-        }
-        enum Subtitle {
-            static let font: Font = .caption2
-            static let color: Color = .gray
-        }
-    }
-    
-    let asset: Asset
-    
-    var body: some View {
-        HStack {
-            // TODO: asset image/symbol/flag
-            Image("bitcoin")
-                .resizable()
-                .scaledToFit()
-                .frame(width: Constants.Icon.height, height: Constants.Icon.height)
-                .shadow(color: .orange, radius: Constants.Icon.shadow)
-            
-            VStack(alignment: .leading, spacing: Constants.spacing) {
-                Text(asset.friendlyName)
-                    .font(Constants.Title.font)
-                    .foregroundColor(Constants.Title.color)
-                Text(asset.name)
-                    .font(Constants.Subtitle.font)
-                    .foregroundColor(Constants.Subtitle.color)
-            }
-            .padding(.leading, Constants.Icon.trailingInset)
-        }
-    }
-}
-
 struct AssetCell: View {
     
     private enum Constants {
@@ -59,6 +15,7 @@ struct AssetCell: View {
         
         enum Chart {
             static let trailingPadding: CGFloat = 10.0
+            static let verticalPadding: CGFloat = 20.0
             static let maxWidth: CGFloat = 50.0
         }
         
@@ -83,7 +40,7 @@ struct AssetCell: View {
     
     var body: some View {
         HStack {
-            AssetView(asset: assetVM.asset)
+            AssetInfoView(asset: assetVM.asset)
             
             Spacer()
             let color = assetVM.priceChange > .zero ? Constants.AdditionalInfo.increaseColor : (assetVM.priceChange < .zero ? Constants.AdditionalInfo.decreaseColor : Constants.AdditionalInfo.defaultColor)
@@ -91,8 +48,10 @@ struct AssetCell: View {
             LineChart(data: assetVM.assetHistoryData.map { $0.value },  lineColor: color)
                 .frame(maxWidth: Constants.Chart.maxWidth)
                 .padding(.trailing, Constants.Chart.trailingPadding)
+                .padding(.vertical, Constants.Chart.verticalPadding)
             changeInfo(color: color)
         }
+        .contentShape(Rectangle())
         .frame(height: Constants.height)
         .padding(.horizontal, Constants.horizontalInsets)
     }

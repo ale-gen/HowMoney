@@ -30,7 +30,7 @@ struct UserAssetCell: View {
     
     var body: some View {
         HStack {
-            AssetView(asset: userAsset.asset)
+            AssetInfoView(asset: userAsset.asset)
             
             Spacer()
             
