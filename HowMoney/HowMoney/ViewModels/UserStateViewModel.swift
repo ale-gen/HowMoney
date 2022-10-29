@@ -21,14 +21,18 @@ class UserStateViewModel: ObservableObject {
     func login() {
         authService.login { [weak self] user in
             self?.user = user
-            self?.isAuthorized.toggle()
+            withAnimation(.easeOut) {
+                self?.isAuthorized.toggle()
+            }
         }
     }
     
     func logout() {
         authService.logout { [weak self] in
             self?.user = nil
-            self?.isAuthorized.toggle()
+            withAnimation() {
+                self?.isAuthorized.toggle()
+            }
         }
     }
     

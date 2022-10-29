@@ -15,17 +15,13 @@ struct TabBarView: View {
     @State var searchText: String = ""
     
     var body: some View {
-        ZStack {
+        VStack {
             contentViewRouter.currentContent
-            VStack {
-                Spacer()
-                TabBar(tabs: [.home, .wallet, .plus, .transactions, .profile], selection: $selection, localSelection: selection)
-            }
+            TabBar(tabs: [.home, .wallet, .plus, .transactions, .profile], selection: $selection, localSelection: selection)
         }
         .onChange(of: selection) { newValue in
             contentViewRouter.navigateToContent(newValue)
         }
-        
     }
 }
 
@@ -33,5 +29,6 @@ struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView()
             .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+//            .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
 }
