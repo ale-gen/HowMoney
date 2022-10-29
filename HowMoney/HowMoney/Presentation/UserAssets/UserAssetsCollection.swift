@@ -24,6 +24,7 @@ struct UserAssetsCollection: View {
     }
     
     let userAssets: [UserAsset]
+    @State var selectedUserAsset: UserAsset?
     
     var body: some View {
         if userAssets.count > .zero {
@@ -35,10 +36,18 @@ struct UserAssetsCollection: View {
                     ForEach(userAssets, id: \.self) { userAsset in
                         UserAssetCell(userAsset: userAsset)
                             .listRowBackground(Color.black)
+                            .onTapGesture {
+                                withAnimation {
+                                    selectedUserAsset = userAsset
+                                }
+                            }
                     }
                 }
                 .padding(.horizontal, Constants.contentHorizontalInsets)
                 .padding(.vertical, Constants.contentTopInsets)
+            }
+            .sheet(item: $selectedUserAsset) { userAsset in
+                UserAssetDetailsView(vm: UserAssetViewModel(userAsset: userAsset))
             }
         } else {
             VStack {
@@ -54,5 +63,6 @@ struct UserAssetsCollection_Previews: PreviewProvider {
     static var previews: some View {
         UserAssetsCollection(userAssets: UserAsset.UserAssetsMock)
             .background(.black)
+            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
     }
 }

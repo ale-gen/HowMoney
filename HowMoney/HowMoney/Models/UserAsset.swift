@@ -5,16 +5,39 @@
 //  Created by Aleksandra Generowicz on 15/10/2022.
 //
 
-import Foundation
+import SwiftUI
 
 enum UserAssetOperation {
     case add
     case substract
     case update
+    
+    var title: String {
+        switch self {
+        case .add:
+            return Localizable.userAssetDetailsAddOperationTitle.value
+        case .substract:
+            return Localizable.userAssetDetailsSubstractOperationTitle.value
+        case .update:
+            return Localizable.userAssetDetailsEditOperationTitle.value
+        }
+    }
+    
+    var icon: Image {
+        switch self {
+        case .add:
+            return Images.cashIn.value
+        case .substract:
+            return Images.cashOut.value
+        case .update:
+            return Images.cashEdit.value
+        }
+    }
 }
 
-struct UserAsset: Hashable {
+struct UserAsset: Identifiable, Hashable {
     
+    var id: String { return asset.id }
     let asset: Asset
     let originValue: Float
     let preferenceCurrencyValue: Float
@@ -32,7 +55,7 @@ struct UserAsset: Hashable {
     static let polygon = Asset(id: "6", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency)
     
     static let UserAssetsMock: [UserAsset] = [
-        .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 2600.9),
+        .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 1600.9),
         .init(asset: americanDollar, originValue: 126.78, preferenceCurrencyValue: 609.90),
         .init(asset: euro, originValue: 2300.0, preferenceCurrencyValue: 8900.89),
         .init(asset: swissFranc, originValue: 0.0, preferenceCurrencyValue: 0.0),

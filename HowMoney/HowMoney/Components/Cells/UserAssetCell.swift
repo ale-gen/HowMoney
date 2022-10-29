@@ -47,6 +47,7 @@ struct UserAssetCell: View {
                 } else { Text(verbatim: .empty) }
             }
         }
+        .contentShape(Rectangle())
         .frame(height: Constants.height)
         .padding(.horizontal, Constants.horizontalInsets)
     }

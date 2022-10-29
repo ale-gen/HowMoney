@@ -22,8 +22,6 @@ struct LineChart: View {
             static let lineJoin: CGLineJoin = .round
             static let radius: CGFloat = 10.0
         }
-        static let minScaleFactor: CGFloat = 0.8
-        static let maxScaleFactor: CGFloat = 1.2
     }
     
     var lineColor: Color
@@ -40,8 +38,8 @@ struct LineChart: View {
 
     var body: some View {
         GeometryReader { geo in
-            let min = Constants.minScaleFactor * (data.min() ?? .zero)
-            let max = Constants.maxScaleFactor * (data.max() ?? .zero)
+            let min = data.min() ?? .zero
+            let max = data.max() ?? .zero
             let yRange = max - min
             Path { path in
                 for (index, value) in data.enumerated() {
