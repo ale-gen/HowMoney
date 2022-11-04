@@ -103,5 +103,6 @@ struct UserAssetTabBar_Previews: PreviewProvider {
             Color.black.ignoresSafeArea()
             UserAssetsTabBarItem(searchText: .constant(""))
         }
+        .environmentObject(UserStateViewModel(authService: AuthorizationService()))
     }
 }

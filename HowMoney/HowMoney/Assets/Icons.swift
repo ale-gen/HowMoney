@@ -31,4 +31,5 @@ enum Icons: String, IconsTranslation {
     case selectedWallet = "dollarsign.circle.fill"
     case selectedTransactions = "clock.fill"
     case selectedProfile = "person.fill"
+    case rightArrow = "chevron.right"
 }

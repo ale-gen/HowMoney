@@ -14,14 +14,21 @@ struct TabBarView: View {
     @State var selection: TabBarItem = .home
     @State var searchText: String = ""
     
+    @State private var showCreationView: Bool = false
+    @State private var selectedContext: CreationContext = .asset
+    
     var body: some View {
         VStack {
             contentViewRouter.currentContent
-            TabBar(tabs: [.home, .wallet, .plus, .transactions, .profile], selection: $selection, localSelection: selection)
+            TabBar(tabs: [.home, .wallet, .plus, .transactions, .profile], selection: $selection, localSelection: selection, selectedContext: $selectedContext, showCreationView: $showCreationView)
         }
         .onChange(of: selection) { newValue in
             contentViewRouter.navigateToContent(newValue)
         }
+        .navigate(destination: selectedContext.destinationView,
+                  when: $showCreationView,
+                  hideNavBar: false,
+                  destinationNavBarTitle: selectedContext.navBarTitle)
     }
 }
 

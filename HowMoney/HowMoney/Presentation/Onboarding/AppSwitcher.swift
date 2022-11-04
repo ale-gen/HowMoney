@@ -13,7 +13,7 @@ struct AppSwitcher: View {
     
     var body: some View {
         if vm.isAuthorized {
-            TabBarView()
+            UserCustomizationView()
                 .environmentObject(vm)
                 .transition(.opacity)
         } else {

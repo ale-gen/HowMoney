@@ -24,16 +24,19 @@ struct PreferenceCurrenciesCollection: View {
     }
     
     var selectedPreferenceCurrency: PreferenceCurrency
+    var shouldTitleVisible: Bool = true
     var didPreferenceCurrencyChanged: (PreferenceCurrency) -> Void = { _ in }
     
     var body: some View {
         VStack(spacing: Constants.verticalSpacing) {
-            HStack {
-                Text(Localizable.userProfilePreferenceCurrencyLabelText.value)
-                    .foregroundColor(Constants.textColor)
-                Spacer()
+            if shouldTitleVisible {
+                HStack {
+                    Text(Localizable.userProfilePreferenceCurrencyLabelText.value)
+                        .foregroundColor(Constants.textColor)
+                    Spacer()
+                }
+                .padding(.horizontal, Constants.horizontalSpacing)
             }
-            .padding(.horizontal, Constants.horizontalSpacing)
             preferenceCurrencies
         }
     }

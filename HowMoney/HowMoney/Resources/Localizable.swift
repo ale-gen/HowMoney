@@ -24,6 +24,11 @@ enum Localizable: String, Translation {
     case welcomeSwipeToGetStarted = "welcome.swipe.to.get.started.title"
     case welcomeCompanySloganText = "welcome.company.slogan.text"
     
+    // MARK: Onboarding user customization
+    case onboardingUserCustomizationPreferenceCurrencyDescription = "onboarding.user.customization.preference.currency.description"
+    case onboardingUserCustomizationEmailAlertsDescription = "onboarding.user.customization.email.alerts.description"
+    case onboardingUserCustomizationWeeklyReportsDescription = "onboarding.user.customization.weekly.reports.description"
+    
     // MARK: Preference currency
     case namePolishZlotyCurrency = "name.polish.zloty.currency"
     case nameDollarCurrency = "name.dollar.currency"
@@ -60,4 +65,16 @@ enum Localizable: String, Translation {
     // MARK: Alerts
     case alertsEmptyStateTitle = "alerts.empty.state.title"
     case alertsCreateNewButtonTitle = "alerts.create.new.button.title"
+    
+    // MARK: User assets creation
+    case userAssetsCreationSelectionPromptText = "user.assets.creation.selection.prompt.text"
+    case userAssetsCreationNavBarTitle = "user.assets.creation.nav.bar.title"
+    case userAssetsCreationAddToMyWalletButtonTitle = "user.assets.creation.add.to.my.wallet.button.title"
+    case userAssetsCreationDecimalPlacesValidation = "user.assets.creation.decimal.places.validation"
+    case userAssetsCreationPositiveNumberValidation = "user.assets.creation.positive.number.validation"
+    case userAssetsCreationAssetSelectionValidation = "user.assets.creation.asset.selection.validation"
+    
+    // MARK: Alerts creation
+    case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"
+    
 }

@@ -10,6 +10,11 @@
 "welcome.swipe.to.get.started.title" = "Swipe to get started";
 "welcome.company.slogan.text" = "Let us help you count \nyour all resources in one chosen currency!";
 
+// MARK: Onboarding user customization
+"onboarding.user.customization.preference.currency.description" = "Your total balance will be counted\nin 1 of 3 available currencies";
+"onboarding.user.customization.email.alerts.description" = "We can simply inform you\nwhen your chosen asset achieve target value.\nWe share notifications and email alerts options";
+"onboarding.user.customization.weekly.reports.description" = "More complex statistics\nare shared in weekly reports, \nwhich can help you analyze your wallet balance";
+
 // MARK: Preference currency
 "name.polish.zloty.currency" = "PLN";
 "name.dollar.currency" = "USD";
@@ -46,3 +51,14 @@
 // MARK: Alerts
 "alerts.empty.state.title" = "You didn't set any alert";
 "alerts.create.new.button.title" = "Create new alert";
+
+// MARK: User assets creation
+"user.assets.creation.selection.prompt.text" = "Which asset would you like to add?";
+"user.assets.creation.nav.bar.title" = "Create asset";
+"user.assets.creation.add.to.my.wallet.button.title" = "Add to my wallet";
+"user.assets.creation.decimal.places.validation" = "Invalid format for available asset types.";
+"user.assets.creation.positive.number.validation" = "Entered value has to be positive number";
+"user.assets.creation.asset.selection.validation" = "Asset selection is required.";
+
+// MARK: Alerts creation
+"alerts.creation.nav.bar.title" = "Create alert";
