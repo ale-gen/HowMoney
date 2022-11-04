@@ -89,20 +89,15 @@ struct UserAssetCreationView: View {
     
     private var valueLabel: some View {
         ZStack {
-            if let asset = vm.selectedAsset {
-                // TODO: Ensure typing correct number of decimal places depends on chosen asset type
-                HStack {
-                    Spacer()
-                    Text(vm.assetValueLabel)
-                    Text(asset.symbol ?? .empty)
-                    Spacer()
-                }
-                    .foregroundColor(Constants.ValueLabel.color)
-                    .font(Constants.ValueLabel.font)
-            } else {
-                // TODO: Show popup when asset is not selected
-                Text("Please select asset at first")
+            // TODO: Ensure typing correct number of decimal places depends on chosen asset type
+            HStack {
+                Spacer()
+                Text(vm.assetValueLabel)
+                Text(vm.selectedAsset?.symbol ?? .empty)
+                Spacer()
             }
+            .foregroundColor(Constants.ValueLabel.color)
+            .font(Constants.ValueLabel.font)
         }
     }
     

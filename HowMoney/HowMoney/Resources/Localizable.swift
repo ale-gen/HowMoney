@@ -70,6 +70,9 @@ enum Localizable: String, Translation {
     case userAssetsCreationSelectionPromptText = "user.assets.creation.selection.prompt.text"
     case userAssetsCreationNavBarTitle = "user.assets.creation.nav.bar.title"
     case userAssetsCreationAddToMyWalletButtonTitle = "user.assets.creation.add.to.my.wallet.button.title"
+    case userAssetsCreationDecimalPlacesValidation = "user.assets.creation.decimal.places.validation"
+    case userAssetsCreationPositiveNumberValidation = "user.assets.creation.positive.number.validation"
+    case userAssetsCreationAssetSelectionValidation = "user.assets.creation.asset.selection.validation"
     
     // MARK: Alerts creation
     case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"

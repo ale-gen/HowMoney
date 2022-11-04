@@ -9,15 +9,21 @@ import Foundation
 
 class UserAssetCreationViewModel: ObservableObject {
     
-    @Published var assets: [Asset]
-    @Published var selectedAsset: Asset = Asset.AssetsMock.first!
+    private enum Constants {
+        static let defaultValue: String = "0.00"
+        static let defaultPossibleDecimalPlaces: Int = 8
+    }
     
-    @Published var assetValueLabel: String = .empty
-    @Published var assetValue: Float = 0.00
+    @Published var assets: [Asset]
+    @Published var selectedAsset: Asset?
+    
+    @Published var assetValueLabel: String = Constants.defaultValue
+    @Published var assetValue: Float = .zero
+    @Published var errorMessage: String = .empty
+    
     
     init(/*assetService: AssetService*/) {
         self.assets = Asset.AssetsMock
-        self.assetValueLabel = "\(assetValue)"
     }
     
     func prepareAssetsCollectionViewModel() -> ListViewModel<Asset> {
@@ -28,10 +34,19 @@ class UserAssetCreationViewModel: ObservableObject {
         // TODO: Make complex validation
         switch tappedButton {
         case let .number(stringNumber):
-            assetValueLabel += stringNumber
+            guard assetValueLabel != Constants.defaultValue else {
+                assetValueLabel = stringNumber
+                return
+            }
+            if let currentDecimalPlaces = assetValueLabel.split(separator: ".").last?.count,
+               currentDecimalPlaces < selectedAsset?.type.decimalPlaces ?? Constants.defaultPossibleDecimalPlaces {
+                assetValueLabel += stringNumber
+            } else {
+                errorMessage = Localizable.userAssetsCreationDecimalPlacesValidation.value
+            }
         case .clear:
             guard assetValueLabel.count > 1 else {
-                assetValueLabel = "0.00"
+                assetValueLabel = Constants.defaultValue
                 return
             }
             assetValueLabel.removeLast()
@@ -42,7 +57,22 @@ class UserAssetCreationViewModel: ObservableObject {
     }
     
     func createAsset(_ successCompletion: @escaping () -> Void) {
+        convertEnteredValue()
+        guard selectedAsset != nil else {
+            errorMessage = Localizable.userAssetsCreationAssetSelectionValidation.value
+            return
+        }
+        guard assetValue > .zero else {
+            errorMessage = Localizable.userAssetsCreationPositiveNumberValidation.value
+            return
+        }
         successCompletion()
+    }
+    
+    private func convertEnteredValue() {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        assetValue = numberFormatter.number(from: assetValueLabel)?.floatValue ?? .zero
     }
     
     private func didSelectAsset(_ asset: Asset) {

@@ -56,6 +56,9 @@
 "user.assets.creation.selection.prompt.text" = "Which asset would you like to add?";
 "user.assets.creation.nav.bar.title" = "Create asset";
 "user.assets.creation.add.to.my.wallet.button.title" = "Add to my wallet";
+"user.assets.creation.decimal.places.validation" = "Invalid format for available asset types.";
+"user.assets.creation.positive.number.validation" = "Entered value has to be positive number";
+"user.assets.creation.asset.selection.validation" = "Asset selection is required.";
 
 // MARK: Alerts creation
 "alerts.creation.nav.bar.title" = "Create alert";
