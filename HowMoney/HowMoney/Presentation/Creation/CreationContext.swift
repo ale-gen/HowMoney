@@ -28,4 +28,13 @@ enum CreationContext {
             return AnyView(EmptyView())
         }
     }
+    
+    var navBarTitle: String {
+        switch self {
+        case .asset:
+            return Localizable.userAssetsCreationNavBarTitle.value
+        case .alert:
+            return Localizable.alertsCreationNavBarTitle.value
+        }
+    }
 }

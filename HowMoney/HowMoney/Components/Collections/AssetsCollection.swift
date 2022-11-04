@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AssetsCollection: View {
     
+    @Environment(\.presentationMode) var presentationMode
     var vm: ListViewModel<Asset>
     
     init(listViewModel: ListViewModel<Asset>) {
@@ -21,6 +22,7 @@ struct AssetsCollection: View {
                 AssetCell(assetVM: AssetViewModel(asset: asset))
                     .onTapGesture {
                         vm.didSelectItem(asset)
+                        presentationMode.wrappedValue.dismiss()
                     }
             }
         }

@@ -32,7 +32,7 @@ struct RectangleButton: View {
                 .foregroundColor(Constants.fontColor)
                 .background(Constants.backgroundColor)
                 .cornerRadius(Constants.cornerRadius)
-                .padding(Constants.padding)
+                .padding(.horizontal, Constants.padding)
                 .shadow(color: Constants.shadowColor, radius: Constants.shadowRadius)
         })
     }

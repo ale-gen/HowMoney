@@ -33,8 +33,8 @@ struct TabBar: View {
     @State var localSelection: TabBarItem
     @State var showCreationPopup: Bool = false
     
-    @State private var showCreationView: Bool = false
-    @State private var selectedContext: CreationContext?
+    @Binding var selectedContext: CreationContext
+    @Binding var showCreationView: Bool
     
     var body: some View {
         ZStack {
@@ -48,9 +48,6 @@ struct TabBar: View {
                         localSelection = newValue
                     }
                 }
-        }
-        .sheet(isPresented: $showCreationView) {
-            selectedContext?.destinationView
         }
     }
     
@@ -119,6 +116,6 @@ struct TabBar_Previews: PreviewProvider {
     static let tabs: [TabBarItem] = [.home, .wallet, .plus, .transactions, .profile]
     
     static var previews: some View {
-        TabBar(tabs: tabs, selection: .constant(.home), localSelection: .home)
+        TabBar(tabs: tabs, selection: .constant(.home), localSelection: .home, selectedContext: .constant(.asset), showCreationView: .constant(false))
     }
 }

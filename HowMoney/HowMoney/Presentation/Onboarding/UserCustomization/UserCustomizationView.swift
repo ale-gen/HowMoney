@@ -16,6 +16,9 @@ struct UserCustomizationView: View {
             static let font: Font = .subheadline
             static let color: Color = .white.opacity(0.9)
         }
+        enum Button {
+            static let topOffset: CGFloat = 20.0
+        }
     }
     
     @StateObject var vm: UserCustomizationViewModel = UserCustomizationViewModel()
@@ -49,6 +52,7 @@ struct UserCustomizationView: View {
                         shouldNavigateToNextStep.toggle()
                     }
                 }
+                .padding(.top, Constants.Button.topOffset)
             }
             .transition(.asymmetric(insertion: .move(edge: .trailing),
                                     removal: .move(edge: .leading)))

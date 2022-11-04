@@ -29,6 +29,9 @@ struct AssetInfoView: View {
     
     let asset: Asset
     
+    var titleColor: Color?
+    var subtitleColor: Color?
+    
     var body: some View {
         HStack {
             // TODO: asset image/symbol/flag
@@ -41,10 +44,10 @@ struct AssetInfoView: View {
             VStack(alignment: .leading, spacing: Constants.spacing) {
                 Text(asset.friendlyName)
                     .font(Constants.Title.font)
-                    .foregroundColor(Constants.Title.color)
+                    .foregroundColor(titleColor ?? Constants.Title.color)
                 Text(asset.name)
                     .font(Constants.Subtitle.font)
-                    .foregroundColor(Constants.Subtitle.color)
+                    .foregroundColor(subtitleColor ?? Constants.Subtitle.color)
             }
             .padding(.leading, Constants.Icon.trailingInset)
         }

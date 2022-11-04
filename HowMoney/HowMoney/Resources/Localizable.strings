@@ -51,3 +51,11 @@
 // MARK: Alerts
 "alerts.empty.state.title" = "You didn't set any alert";
 "alerts.create.new.button.title" = "Create new alert";
+
+// MARK: User assets creation
+"user.assets.creation.selection.prompt.text" = "Which asset would you like to add?";
+"user.assets.creation.nav.bar.title" = "Create asset";
+"user.assets.creation.add.to.my.wallet.button.title" = "Add to my wallet";
+
+// MARK: Alerts creation
+"alerts.creation.nav.bar.title" = "Create alert";
