@@ -23,16 +23,18 @@ struct RectangleButton: View {
     var didButtonTapped: (() -> Void)?
     
     var body: some View {
-        Button(title) {
+        Button(action: {
             didButtonTapped?()
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: Constants.height)
-        .foregroundColor(Constants.fontColor)
-        .background(Constants.backgroundColor)
-        .cornerRadius(Constants.cornerRadius)
-        .padding(Constants.padding)
-        .shadow(color: Constants.shadowColor, radius: Constants.shadowRadius)
+        }, label: {
+            Text(title)
+                .frame(maxWidth: .infinity)
+                .frame(height: Constants.height)
+                .foregroundColor(Constants.fontColor)
+                .background(Constants.backgroundColor)
+                .cornerRadius(Constants.cornerRadius)
+                .padding(Constants.padding)
+                .shadow(color: Constants.shadowColor, radius: Constants.shadowRadius)
+        })
     }
 }
 

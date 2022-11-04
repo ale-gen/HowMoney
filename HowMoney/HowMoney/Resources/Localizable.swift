@@ -24,6 +24,11 @@ enum Localizable: String, Translation {
     case welcomeSwipeToGetStarted = "welcome.swipe.to.get.started.title"
     case welcomeCompanySloganText = "welcome.company.slogan.text"
     
+    // MARK: Onboarding user customization
+    case onboardingUserCustomizationPreferenceCurrencyDescription = "onboarding.user.customization.preference.currency.description"
+    case onboardingUserCustomizationEmailAlertsDescription = "onboarding.user.customization.email.alerts.description"
+    case onboardingUserCustomizationWeeklyReportsDescription = "onboarding.user.customization.weekly.reports.description"
+    
     // MARK: Preference currency
     case namePolishZlotyCurrency = "name.polish.zloty.currency"
     case nameDollarCurrency = "name.dollar.currency"

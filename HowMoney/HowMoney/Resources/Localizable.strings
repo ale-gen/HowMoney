@@ -10,6 +10,11 @@
 "welcome.swipe.to.get.started.title" = "Swipe to get started";
 "welcome.company.slogan.text" = "Let us help you count \nyour all resources in one chosen currency!";
 
+// MARK: Onboarding user customization
+"onboarding.user.customization.preference.currency.description" = "Your total balance will be counted\nin 1 of 3 available currencies";
+"onboarding.user.customization.email.alerts.description" = "We can simply inform you\nwhen your chosen asset achieve target value.\nWe share notifications and email alerts options";
+"onboarding.user.customization.weekly.reports.description" = "More complex statistics\nare shared in weekly reports, \nwhich can help you analyze your wallet balance";
+
 // MARK: Preference currency
 "name.polish.zloty.currency" = "PLN";
 "name.dollar.currency" = "USD";
