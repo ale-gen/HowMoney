@@ -10,15 +10,19 @@ import SwiftUI
 struct AssetCell: View {
     
     private enum Constants {
-        static let height: CGFloat = 70.0
+        static let height: CGFloat = 110.0
         static let horizontalInsets: CGFloat = 20.0
+        static let cornerRadius: CGFloat = 25.0
         
+        enum Background {
+            static let color: Color = .black.opacity(0.3)
+            static let blurRadius: CGFloat = 5.0
+        }
         enum Chart {
-            static let trailingPadding: CGFloat = 10.0
-            static let verticalPadding: CGFloat = 20.0
+            static let trailingPadding: CGFloat = 15.0
+            static let verticalPadding: CGFloat = 35.0
             static let maxWidth: CGFloat = 50.0
         }
-        
         enum AdditionalInfo {
             static let backgroundColor: Color = .black
             static let color: Color = .white
@@ -39,21 +43,29 @@ struct AssetCell: View {
     var additionalLabelColor: Color = .black
     
     var body: some View {
-        HStack {
-            AssetInfoView(asset: assetVM.asset)
+        ZStack {
+            Rectangle()
+                .fill(Constants.Background.color)
+                .background(.ultraThinMaterial)
+                .blur(radius: Constants.Background.blurRadius)
             
-            Spacer()
-            let color = assetVM.priceChange > .zero ? Constants.AdditionalInfo.increaseColor : (assetVM.priceChange < .zero ? Constants.AdditionalInfo.decreaseColor : Constants.AdditionalInfo.defaultColor)
-            // TODO: Chart of history of chosen asset instead mock asset
-            LineChart(data: assetVM.assetHistoryData.map { $0.value },  lineColor: color)
-                .frame(maxWidth: Constants.Chart.maxWidth)
-                .padding(.trailing, Constants.Chart.trailingPadding)
-                .padding(.vertical, Constants.Chart.verticalPadding)
-            changeInfo(color: color)
+            HStack {
+                AssetInfoView(asset: assetVM.asset)
+                
+                Spacer()
+                let color = assetVM.priceChange > .zero ? Constants.AdditionalInfo.increaseColor : (assetVM.priceChange < .zero ? Constants.AdditionalInfo.decreaseColor : Constants.AdditionalInfo.defaultColor)
+                // TODO: Chart of history of chosen asset instead mock asset
+                LineChart(data: assetVM.assetHistoryData.map { $0.value },  lineColor: color)
+                    .frame(maxWidth: Constants.Chart.maxWidth)
+                    .padding(.trailing, Constants.Chart.trailingPadding)
+                    .padding(.vertical, Constants.Chart.verticalPadding)
+                changeInfo(color: color)
+            }
+            .padding(.horizontal, Constants.horizontalInsets)
         }
         .contentShape(Rectangle())
         .frame(height: Constants.height)
-        .padding(.horizontal, Constants.horizontalInsets)
+        .cornerRadius(Constants.cornerRadius, [.allCorners])
     }
     
     private func changeInfo(color: Color) -> some View { RoundedRectangle(cornerRadius: Constants.AdditionalInfo.cornerRadius)
@@ -78,6 +90,5 @@ struct AssetCell: View {
 struct AssetCell_Previews: PreviewProvider {
     static var previews: some View {
         AssetCell(assetVM: AssetViewModel(asset: Asset.AssetsMock.first!))
-            .background(.black)
     }
 }

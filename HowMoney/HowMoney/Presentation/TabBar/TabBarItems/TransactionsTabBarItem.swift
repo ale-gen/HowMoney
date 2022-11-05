@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct TransactionsTabBarItem: View {
+    
+    @StateObject var vm: TransactionsListViewModel = TransactionsListViewModel(items: Transaction.TransactionsMock)
+    
     var body: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
-            VStack {
-                Spacer()
-                Text("Transactions history tab bar item")
-                    .foregroundColor(.white)
-                Spacer()
+        ScrollView(showsIndicators: false) {
+            ForEach(vm.items, id: \.self) { transaction in
+                if let transactionVM = vm.prepareTransactionViewModel(for: transaction) {
+                    TransactionCell(vm: transactionVM)
+                }
             }
         }
+        .padding()
     }
 }
 
