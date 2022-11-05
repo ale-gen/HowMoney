@@ -17,6 +17,14 @@ extension String {
         return "%"
     }
     
+    static var plus: String {
+        return "+"
+    }
+    
+    static var minus: String {
+        return "-"
+    }
+    
     func localized() -> String {
         return NSLocalizedString(self, comment: "")
     }

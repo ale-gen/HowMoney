@@ -79,7 +79,7 @@ struct UserAssetsHistoryRecord {
     static let UserAssetsHistoryRecordsMock: [UserAssetsHistoryRecord] = zip(ValuesMock, DatesMock).map { .init(value: $0, date: $1) }
 }
 
-struct Transaction {
+struct Transaction: Hashable {
     let assetName: String
     let value: Float
     let date: Date
