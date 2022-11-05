@@ -15,16 +15,6 @@ struct TransactionCell: View {
             static let height: CGFloat = 110.0
             static let cornerRadius: CGFloat = 20.0
         }
-        enum Gradient {
-            static let firstStopLocation: CGFloat = -0.4
-            static let firstStopColor: Color = .black
-            static let secondStopLocation: CGFloat = 1.0
-            static let secondStopOpacity: CGFloat = 0.4
-        }
-        enum Rectangle {
-            static let cornerRadius: CGFloat = 20.0
-            static let color: Color = .black.opacity(0.25)
-        }
         enum ValueLabel {
             static let font: Font = .headline
         }
@@ -34,15 +24,7 @@ struct TransactionCell: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(stops: [
-                .init(color: Constants.Gradient.firstStopColor, location: Constants.Gradient.firstStopLocation),
-                .init(color: vm.transactionTypeColor.opacity(Constants.Gradient.secondStopOpacity), location: Constants.Gradient.secondStopLocation)],
-                           startPoint: .leading, endPoint: .trailing)
-            
-            
-            RoundedRectangle(cornerRadius: Constants.Rectangle.cornerRadius)
-                .fill(Constants.Rectangle.color)
-                .background(.ultraThinMaterial)
+            GradientCell(gradientColor: vm.transactionTypeColor)
             
             HStack {
                 AssetInfoView(asset: vm.asset)

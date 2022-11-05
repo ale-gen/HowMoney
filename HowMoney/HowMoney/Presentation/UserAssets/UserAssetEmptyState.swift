@@ -10,9 +10,15 @@ import SwiftUI
 struct UserAssetEmptyState: View {
     
     let noUserAssetModel = EmptyStateModel(image: Images.noAssets.value, title: Localizable.userAssetsEmptyStateTitle.value, buttonTitle: Localizable.userAssetsCreateNewButtonTitle.value)
+    @State private var shouldShowAssetCreationView: Bool = false
     
     var body: some View {
-            EmptyStateView(model: noUserAssetModel)
+        EmptyStateView(model: noUserAssetModel, didButtonTapped: {
+            shouldShowAssetCreationView.toggle()
+        })
+        .sheet(isPresented: $shouldShowAssetCreationView) {
+            UserAssetCreationView()
+        }
     }
     
 }

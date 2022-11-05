@@ -11,6 +11,7 @@ struct UserCustomizationView: View {
     
     private enum Constants {
         static let horizontalPadding: CGFloat = 10.0
+        static let namespaceId: String = "slideAnimation"
         
         enum Description {
             static let font: Font = .subheadline
@@ -23,6 +24,7 @@ struct UserCustomizationView: View {
     
     @StateObject var vm: UserCustomizationViewModel = UserCustomizationViewModel()
     @State private var shouldNavigateToNextStep: Bool = false
+    @Namespace var animation
     
     var body: some View {
         GeometryReader { geo in
@@ -52,7 +54,7 @@ struct UserCustomizationView: View {
                         shouldNavigateToNextStep.toggle()
                     }
                 }
-                .padding(.top, Constants.Button.topOffset)
+                .padding(.vertical, Constants.Button.topOffset)
             }
             .transition(.asymmetric(insertion: .move(edge: .trailing),
                                     removal: .move(edge: .leading)))

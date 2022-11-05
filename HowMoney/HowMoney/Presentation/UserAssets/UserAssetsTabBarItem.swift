@@ -75,25 +75,15 @@ struct UserAssetsTabBarItem: View {
     }
     
     private var filterAssetTypePicker: some View {
-        return HStack(alignment: .center, spacing: Constants.Filter.spacing) {
-            Spacer()
-            ForEach(AssetFilter.allCases, id: \.self) { type in
-                Button {
-                    withAnimation {
-                        selectedFilter = type
-                    }
-                } label: {
-                    Text(type.name)
-                        .padding(Constants.Filter.textPadding)
-                        .foregroundColor(Constants.Filter.textColor)
-                        .background(RoundedRectangle(cornerRadius: Constants.Filter.backgroundCornerRadius)
-                            .fill(selectedFilter == type ? Constants.Filter.selectedColor : Constants.Filter.nonSelectedColor)
-                            .shadow(color: Constants.Filter.backgroundShadowColor , radius: selectedFilter == type ? Constants.Filter.backgroundShadowRadius: .zero))
-                }
-            }
-            Spacer()
-        }
-        .padding(.vertical, Constants.Filter.verticalInsets)
+        SegmentedPickerView(items: AssetFilter.allCases.map { $0.name },
+                            didSelectItem: didFilterTapped,
+                            font: .footnote,
+                            fontWeight: .medium)
+            .padding(.vertical, Constants.Filter.verticalInsets)
+    }
+    
+    private func didFilterTapped(_ index: Int) {
+        selectedFilter = AssetFilter.allCases[index]
     }
 }
 

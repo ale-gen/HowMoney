@@ -32,7 +32,7 @@ struct UserAssetsCollection: View {
                 RoundedRectangle(cornerRadius: Constants.Background.cornerRadius)
                     .fill(Constants.Background.color)
                     .shadow(color: Constants.Shadow.color, radius: Constants.Shadow.radius)
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     ForEach(userAssets, id: \.self) { userAsset in
                         UserAssetCell(userAsset: userAsset)
                             .listRowBackground(Color.black)
