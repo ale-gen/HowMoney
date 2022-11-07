@@ -77,4 +77,18 @@ enum Localizable: String, Translation {
     // MARK: Alerts creation
     case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"
     
+    // MARK: Toast view
+    case toastViewErrorTitle = "toast.view.error.title"
+    case toastViewSuccessTitle = "toast.view.success.title"
+    
+    // MARK: Change password
+    case changePasswordLabel = "change.password.label"
+    case changePasswordSaveButtonTitle = "change.password.save.button.title"
+    case changePasswordCurrentPasswordPlaceholder = "change.password.current.password.placeholder"
+    case changePasswordNewPasswordPlaceholder = "change.password.new.password.placeholder"
+    case changePasswordConfirmedNewPasswordPlaceholder = "change.password.confirmed.new.password.placeholder"
+    case changePasswordCompatibilityValidationText = "change.password.compatibility.validation.text"
+    case changePasswordEmptyFieldValidationText = "change.password.empty.field.validation.text"
+    case changePasswordCurrentPasswordValidationText = "change.password.current.password.validation.text"
+    
 }
