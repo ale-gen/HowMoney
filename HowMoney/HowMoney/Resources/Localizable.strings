@@ -62,3 +62,18 @@
 
 // MARK: Alerts creation
 "alerts.creation.nav.bar.title" = "Create alert";
+
+// MARK: Toast view
+"toast.view.error.title" = "Error";
+"toast.view.success.title" = "Success";
+
+// MARK: Change password
+"change.password.label" = "Change password...";
+"change.password.save.button.title" = "Save";
+"change.password.current.password.placeholder" = "Current password";
+"change.password.new.password.placeholder" = "New password";
+"change.password.confirmed.new.password.placeholder" = "Confirmed new password";
+"change.password.compatibility.validation.text" = "Passwords have to be identical";
+"change.password.empty.field.validation.text" = "Please enter all fields";
+"change.password.current.password.validation.text" = "Incorrect current password. Please try again.";
+

@@ -33,4 +33,5 @@ enum Images: String, ImageTranslation {
     case preferenceCurrencyIllustration = "preferenceCurrencyIllustration"
     case alertsIllustration = "alertsIllustration"
     case weeklyReportsIllustration = "weeklyReportsIllustration"
+    case changePasswordIllustration = "changePasswordIllustration"
 }

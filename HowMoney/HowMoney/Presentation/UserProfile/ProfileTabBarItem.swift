@@ -11,6 +11,7 @@ struct ProfileTabBarItem: View {
     
     private enum Constants {
         static let spacing: CGFloat = 20.0
+        static let bottomSpace: CGFloat = 200.0
         
         enum AvatarImage {
             static let width: CGFloat = 100.0
@@ -26,12 +27,17 @@ struct ProfileTabBarItem: View {
         enum Divider {
             static let color: Color = .white.opacity(0.8)
         }
+        enum ChangePasswordButton {
+            static let height: CGFloat = 40.0
+        }
     }
     
     @EnvironmentObject var authUserVM: UserStateViewModel
     @State var biometricsEnabled: Bool = false
     @State var weeklyReportsRequired: Bool = true
     @State var emailAlertsRequired: Bool = true
+    
+    @State private var changePasswordRequired: Bool = false
     
     var body: some View {
         ScrollView {
@@ -43,9 +49,13 @@ struct ProfileTabBarItem: View {
                 Divider().background(Constants.Divider.color)
                 PreferenceCurrenciesCollection(selectedPreferenceCurrency: authUserVM.preferenceCurrency, didPreferenceCurrencyChanged: authUserVM.updateCurrencyPreference)
                 toggleButtons
+                changePasswordButton
                 RectangleButton(title: Localizable.authorizationSignOutButtonTitle.value, didButtonTapped: authUserVM.logout)
-                    .padding(.bottom, 200)
+                    .padding(.bottom, Constants.bottomSpace)
             }
+        }
+        .sheet(isPresented: $changePasswordRequired) {
+            ChangePassword()
         }
     }
     
@@ -81,6 +91,24 @@ struct ProfileTabBarItem: View {
     
     private var biometrics: some View {
         ColorToggleButton(isOn: $biometricsEnabled, textLabel: Localizable.userProfileBiometricsLabelText.value)
+    }
+    
+    private var changePasswordButton: some View {
+        VStack {
+            Divider().background(Constants.Divider.color)
+            HStack {
+                Text(Localizable.changePasswordLabel.value)
+                Spacer()
+                Icons.rightArrow.value
+            }
+            .contentShape(Rectangle())
+            .frame(height: Constants.ChangePasswordButton.height)
+            .padding(.horizontal, Constants.spacing)
+            .onTapGesture {
+                changePasswordRequired = true
+            }
+            Divider().background(Constants.Divider.color)
+        }
     }
     
     private func avatarImage(_ userAvatar: String) -> some View {
