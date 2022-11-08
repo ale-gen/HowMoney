@@ -31,6 +31,9 @@ enum Images: String, ImageTranslation {
     case cashIn = "cashIn"
     case cashOut = "cashOut"
     case cashEdit = "cashEdit"
+    case loader = "loader"
+    
+    // MARK: Illustrations
     case preferenceCurrencyIllustration = "preferenceCurrencyIllustration"
     case alertsIllustration = "alertsIllustration"
     case weeklyReportsIllustration = "weeklyReportsIllustration"
