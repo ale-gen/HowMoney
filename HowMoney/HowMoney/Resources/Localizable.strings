@@ -51,6 +51,10 @@
 // MARK: Alerts
 "alerts.empty.state.title" = "You didn't set any alert";
 "alerts.create.new.button.title" = "Create new alert";
+"alerts.notify.when.text" = "Notify when:";
+"alerts.asset.type.text" = "Asset type:";
+"alerts.collection.title" = "Your alerts:";
+"alerts.collection.see.all.button.title" = "See all";
 
 // MARK: User assets creation
 "user.assets.creation.selection.prompt.text" = "Which asset would you like to add?";

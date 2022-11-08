@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Alert {
+struct Alert: Hashable {
+    
     let targetValue: Float
     let originAssetName: String
     let originAssetType: AssetType
