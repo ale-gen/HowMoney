@@ -65,6 +65,10 @@ enum Localizable: String, Translation {
     // MARK: Alerts
     case alertsEmptyStateTitle = "alerts.empty.state.title"
     case alertsCreateNewButtonTitle = "alerts.create.new.button.title"
+    case alertsNotifyWhenText = "alerts.notify.when.text"
+    case alertsAssetTypeText = "alerts.asset.type.text"
+    case alertsCollectionTitle = "alerts.collection.title"
+    case alertsCollectionSeeAllButtonTitle = "alerts.collection.see.all.button.title"
     
     // MARK: User assets creation
     case userAssetsCreationSelectionPromptText = "user.assets.creation.selection.prompt.text"
