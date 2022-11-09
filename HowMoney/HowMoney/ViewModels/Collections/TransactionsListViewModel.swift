@@ -11,8 +11,8 @@ class TransactionsListViewModel: ListViewModel<Transaction> {
     
     private var assets: [Asset] = []
     
-    override init(items: [Transaction]) {
-        super.init(items: items)
+    override init(service: (any Service)?) {
+        super.init(service: service)
         fetchAssets()
     }
     

@@ -13,13 +13,24 @@ class ListViewModel<Element>: ObservableObject {
     @Published var items: [Element] = []
     var didSelectItem: (Asset) -> Void = { _ in }
     
-    init(items: [Element]) {
-        self.items = items
+    private var service: (any Service)?
+    
+    init(service: (any Service)? = nil) {
+        self.service = service
     }
     
-    init(items: [Element], didSelectItem: @escaping (Asset) -> Void) {
-        self.items = items
+    init(service: (any Service)? = nil,
+         didSelectItem: @escaping (Asset) -> Void) {
+        self.service = service
         self.didSelectItem = didSelectItem
+    }
+    
+    func getItems() {
+        let fetchedItems = service?.getData {
+            print("Data was fetched!")
+        }
+        guard let fetchedItems = fetchedItems as? [Element] else { return }
+        self.items = fetchedItems
     }
     
 }

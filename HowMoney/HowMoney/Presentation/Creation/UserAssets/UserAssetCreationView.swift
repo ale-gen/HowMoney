@@ -38,7 +38,7 @@ struct UserAssetCreationView: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var vm: UserAssetCreationViewModel = UserAssetCreationViewModel()
+    @StateObject var vm: UserAssetCreationViewModel = UserAssetCreationViewModel(assetService: AssetService())
     
     var body: some View {
         VStack {

@@ -27,7 +27,7 @@ struct HomeTabBarItem: View {
         }
     }
     
-    var alertsVM: ListViewModel<Alert> = ListViewModel(items: Alert.AlertsMock)
+    var alertsVM: ListViewModel<Alert> = ListViewModel()
     
     var body: some View {
         VStack(spacing: Constants.spacing) {

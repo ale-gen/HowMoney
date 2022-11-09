@@ -57,7 +57,7 @@ struct UserAssetsTabBarItem: View {
         }
     }
     
-    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(items: UserAsset.UserAssetsMock)
+    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel()
     @State var selectedFilter: AssetFilter = .all
     @Binding var searchText: String
     

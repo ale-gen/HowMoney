@@ -23,6 +23,7 @@ struct AssetsCollection: View {
     
     init(listViewModel: ListViewModel<Asset>) {
         self.vm = listViewModel
+        vm.getItems()
     }
     
     var body: some View {
@@ -60,6 +61,6 @@ struct AssetsCollection: View {
 
 struct AssetsCollection_Previews: PreviewProvider {
     static var previews: some View {
-        AssetsCollection(listViewModel: ListViewModel(items: Asset.AssetsMock))
+        AssetsCollection(listViewModel: ListViewModel(service: AssetService()))
     }
 }

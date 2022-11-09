@@ -31,6 +31,6 @@ struct AlertsCollection: View {
 
 struct AlertsCollection_Previews: PreviewProvider {
     static var previews: some View {
-        AlertsCollection(vm: ListViewModel(items: Alert.AlertsMock))
+        AlertsCollection(vm: ListViewModel())
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TransactionsTabBarItem: View {
     
-    @StateObject var vm: TransactionsListViewModel = TransactionsListViewModel(items: Transaction.TransactionsMock)
+    @StateObject var vm: TransactionsListViewModel = TransactionsListViewModel(service: nil)
     
     var body: some View {
         VStack {
