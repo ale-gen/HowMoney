@@ -11,7 +11,6 @@ struct UserCustomizationView: View {
     
     private enum Constants {
         static let horizontalPadding: CGFloat = 10.0
-        static let namespaceId: String = "slideAnimation"
         
         enum Description {
             static let font: Font = .subheadline
@@ -24,30 +23,33 @@ struct UserCustomizationView: View {
     
     @StateObject var vm: UserCustomizationViewModel = UserCustomizationViewModel()
     @State private var shouldNavigateToNextStep: Bool = false
-    @Namespace var animation
+    private let transition: AnyTransition = .asymmetric(insertion: .move(edge: .trailing),
+                                                        removal: .move(edge: .leading))
     
     var body: some View {
         GeometryReader { geo in
             VStack {
-                vm.presentStep.image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: geo.size.height / 2)
-                
-                Spacer()
-                
-                descriptionLabel
-                
-                Spacer()
-                
-                switch vm.presentStep {
-                case .preferenceCurrency:
-                    preferenceCurrencyContent
-                case .emailAlert:
-                    emailAlertsContent
-                case .weeklyReports:
-                    weeklyReportsContent
+                VStack {
+                    vm.presentStep.image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: geo.size.height / 2)
+                    Spacer()
+
+                    descriptionLabel
+
+                    Spacer()
+
+                    switch vm.presentStep {
+                    case .preferenceCurrency:
+                        preferenceCurrencyContent
+                    case .emailAlert:
+                        emailAlertsContent
+                    case .weeklyReports:
+                        weeklyReportsContent
+                    }
                 }
+                .transition(transition)
                 
                 RectangleButton(title: vm.presentStep.buttonTitle) {
                     vm.performNextStep() {
@@ -55,9 +57,8 @@ struct UserCustomizationView: View {
                     }
                 }
                 .padding(.vertical, Constants.Button.topOffset)
+                .animation(nil, value: vm.presentStep)
             }
-            .transition(.asymmetric(insertion: .move(edge: .trailing),
-                                    removal: .move(edge: .leading)))
         }
         .navigate(destination: TabBarView(), when: $shouldNavigateToNextStep)
     }
