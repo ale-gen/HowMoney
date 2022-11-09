@@ -7,16 +7,39 @@
 
 import Foundation
 
+enum RequestType: String {
+    case get
+    case post
+    case patch
+    case put
+    case delete
+    
+    var value: String {
+        switch self {
+        case .get:
+            return "GET"
+        case .post:
+            return "POST"
+        case .patch:
+            return "PATCH"
+        case .put:
+            return "PUT"
+        case .delete:
+            return "DELETE"
+        }
+    }
+}
+
 protocol RequestProtocol {
-    func createRequest(url: URL, token: Data?, method: String?, body: [String: Any]?) -> URLRequest
+    func createRequest(url: URL, token: Data?, method: RequestType, body: [String: Any]?) -> URLRequest
     func createPatchRequest(url: URL, token: Data, patchBody: [[String: String]]) -> URLRequest
 }
 
 extension RequestProtocol {
     
-    func createRequest(url: URL, token: Data? = nil, method: String?, body: [String: Any]? = nil) -> URLRequest {
+    func createRequest(url: URL, token: Data? = nil, method: RequestType, body: [String: Any]? = nil) -> URLRequest {
         var request = URLRequest(url: url)
-        request.httpMethod = method
+        request.httpMethod = method.value
         if let definedBody = body {
             request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
             let bodyData = try? JSONSerialization.data(

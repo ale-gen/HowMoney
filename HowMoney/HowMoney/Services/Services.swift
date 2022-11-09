@@ -8,8 +8,10 @@
 import Foundation
 
 struct Services {
+    
     static let authService: AuthorizationService = AuthorizationService()
     static let assetService: AssetService = AssetService()
+    
 }
 
 
