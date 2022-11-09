@@ -20,14 +20,8 @@ class UserAssetCreationViewModel: ObservableObject {
     @Published var assetValue: Float = .zero
     @Published var errorMessage: String = .empty
     
-    private var service: any Service
-    
-    init(assetService: any Service) {
-        self.service = assetService
-    }
-    
     func prepareAssetsCollectionViewModel() -> ListViewModel<Asset> {
-        return ListViewModel(service: service,
+        return ListViewModel(service: Services.assetService,
                              didSelectItem: didSelectAsset)
     }
     

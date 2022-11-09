@@ -31,9 +31,9 @@ struct AuthorizationService: Service {
         completion()
     }
     
-    func sendData(_ completion: @escaping () -> Void) { /**/ }
-    func getData(_ completion: @escaping () -> Void) -> [Model] { return [] }
-    func updateData(_ model: Model, _ completion: @escaping () -> Void) -> Model { return Model() }
-    func deleteData(_ completion: @escaping () -> Void) -> Bool { return true }
+    func sendData() { /**/ }
+    func getData() -> [Model] { return [] }
+    func updateData(_ model: Model) -> Model { return Model() }
+    func deleteData() -> Bool { return true }
     
 }

@@ -57,7 +57,7 @@ struct UserAssetsTabBarItem: View {
         }
     }
     
-    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel()
+    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(service: AssetService())
     @State var selectedFilter: AssetFilter = .all
     @Binding var searchText: String
     

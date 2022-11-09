@@ -9,24 +9,32 @@ import Foundation
 
 class AssetService: Service {
     
+    private let session = URLSession.shared
+    private let urlString = "/api/assets"
+    
     typealias ServiceType = Asset
     
-    func sendData(_ completion: @escaping () -> Void) {
+    func sendData() {
         /* */
     }
     
-    func getData(_ completion: @escaping () -> Void) -> [Asset] {
-        print("Getting data in asset service")
-        completion()
-        return Asset.AssetsMock
+    func getData() async throws -> [Asset] {
+        guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
+        let request = createRequest(url: url, method: "GET")
+        let (data, _) = try await session.data(for: request)
+        guard let assets = try? JSONDecoder().decode([AssetDTO].self, from: data) else { throw NetworkError.invalidData }
+        print(assets)
+        return assets.map { Asset(id: $0.name, name: $0.name, friendlyName: $0.friendlyName, symbol: "fdsa", type: .currency)}
+//        print("Getting data in asset service")
+//        return Asset.AssetsMock
     }
     
-    func updateData(_ model: Asset, _ completion: @escaping () -> Void) -> Asset {
+    func updateData(_ model: Asset) -> Asset {
         /* */
         return Asset.AssetsMock.first!
     }
     
-    func deleteData(_ completion: @escaping () -> Void) -> Bool {
+    func deleteData() -> Bool {
         /* */
         return false
     }

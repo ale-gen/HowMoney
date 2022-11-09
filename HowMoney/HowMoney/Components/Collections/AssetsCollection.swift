@@ -20,10 +20,12 @@ struct AssetsCollection: View {
     
     @Environment(\.presentationMode) var presentationMode
     var vm: ListViewModel<Asset>
+
+    @State private var loaderView: LoaderView? = LoaderView()
+    @State private var loading: Bool = false
     
     init(listViewModel: ListViewModel<Asset>) {
         self.vm = listViewModel
-        vm.getItems()
     }
     
     var body: some View {
@@ -39,6 +41,14 @@ struct AssetsCollection: View {
                         }
                         .padding(.horizontal)
                         .padding(.vertical, Constants.verticalInsets)
+                }
+            }
+        }
+        .loader(loader: $loaderView, shouldHideLoader: $loading)
+        .onAppear {
+            vm.getItems {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    loading.toggle()
                 }
             }
         }
