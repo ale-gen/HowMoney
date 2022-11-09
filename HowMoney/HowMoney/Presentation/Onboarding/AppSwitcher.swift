@@ -15,7 +15,6 @@ struct AppSwitcher: View {
         if vm.isAuthorized {
             UserCustomizationView()
                 .environmentObject(vm)
-                .transition(.opacity)
         } else {
             WelcomeView(didGetStarted: vm.login)
                 .transition(.opacity)
