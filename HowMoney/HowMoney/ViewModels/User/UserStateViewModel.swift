@@ -9,12 +9,12 @@ import SwiftUI
 
 class UserStateViewModel: ObservableObject {
     
-    @Published var isAuthorized: Bool = false
+    @Published var isAuthorized: Bool = true
     @Published var user: AuthUser? = nil
     @Published var preferenceCurrency: PreferenceCurrency = .usd
-    private var authService: Service
+    private var authService: any Service
     
-    init(authService: Service) {
+    init(authService: any Service) {
         self.authService = authService
     }
     

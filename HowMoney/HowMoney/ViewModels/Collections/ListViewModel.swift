@@ -7,19 +7,35 @@
 
 import Foundation
 
-
 class ListViewModel<Element>: ObservableObject {
     
     @Published var items: [Element] = []
-    var didSelectItem: (Asset) -> Void = { _ in }
     
-    init(items: [Element]) {
-        self.items = items
+    var didSelectItem: (Element) -> Void = { _ in }
+    
+    private var service: any Service
+    private var task: Task<(), Never>?
+    
+    init(service: any Service) {
+        self.service = service
     }
     
-    init(items: [Element], didSelectItem: @escaping (Asset) -> Void) {
-        self.items = items
+    init(service: any Service,
+         didSelectItem: @escaping (Element) -> Void) {
+        self.service = service
         self.didSelectItem = didSelectItem
+    }
+    
+    @MainActor func getItems(_ completion: @escaping () -> Void) {
+        task = Task {
+            do {
+                self.items = try await service.getData() as! [Element]
+                completion()
+            } catch let error {
+                print("Error during assets fetching: \(error.localizedDescription)")
+                completion()
+            }
+        }
     }
     
 }

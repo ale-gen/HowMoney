@@ -42,7 +42,7 @@ struct UserAssetCreationView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: AssetsCollection(listViewModel: vm.prepareAssetsCollectionViewModel())) {
+            NavigationLink(destination: AssetsCollection(vm: vm.prepareAssetsCollectionViewModel())) {
                 RoundedRectangle(cornerRadius: Constants.SelectionButton.cornerRadius)
                     .fill(Constants.SelectionButton.color)
                     .frame(height: Constants.SelectionButton.height)

@@ -23,6 +23,7 @@ struct ChangePassword: View {
         }
         enum Toast {
             static let bottomOffset: CGFloat = -10.0
+            static let animationDelay: CGFloat = 2.0
         }
         enum TextField {
             static let height: CGFloat = 55.0
@@ -103,10 +104,17 @@ struct ChangePassword: View {
         vm.changePassword({
             print("Password is successfully changed!")
         }, {
-            withAnimation(.spring()) {
-                shouldShowToast = true
+            animateToastState(for: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Toast.animationDelay) {
+                animateToastState(for: false)
             }
         })
+    }
+    
+    private func animateToastState(for showing: Bool) {
+        withAnimation(.spring()) {
+            shouldShowToast = showing
+        }
     }
 }
 

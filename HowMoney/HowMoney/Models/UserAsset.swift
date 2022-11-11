@@ -37,7 +37,7 @@ enum UserAssetOperation {
 
 struct UserAsset: Identifiable, Hashable {
     
-    var id: String { return asset.id }
+    var id: UUID { return asset.id }
     let asset: Asset
     let originValue: Float
     let preferenceCurrencyValue: Float
@@ -46,13 +46,13 @@ struct UserAsset: Identifiable, Hashable {
         return lhs.asset.id == rhs.asset.id
     }
     
-    static let polishZloty = Asset(id: "1", name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency)
-    static let americanDollar = Asset(id: "2", name: "USD", friendlyName: "US Dollar", symbol: "$", type: .currency)
-    static let euro = Asset(id: "3", name: "EUR", friendlyName: "Euro", symbol: "€", type: .currency)
-    static let swissFranc = Asset(id: "4", name: "CHF", friendlyName: "Swiss Franc", symbol: "₣", type: .currency)
+    static let polishZloty = Asset(name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency)
+    static let americanDollar = Asset(name: "USD", friendlyName: "US Dollar", symbol: "$", type: .currency)
+    static let euro = Asset(name: "EUR", friendlyName: "Euro", symbol: "€", type: .currency)
+    static let swissFranc = Asset(name: "CHF", friendlyName: "Swiss Franc", symbol: "₣", type: .currency)
     
-    static let pancakeSwap = Asset(id: "5", name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency)
-    static let polygon = Asset(id: "6", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency)
+    static let pancakeSwap = Asset(name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency)
+    static let polygon = Asset(name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency)
     
     static let UserAssetsMock: [UserAsset] = [
         .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 1600.9),

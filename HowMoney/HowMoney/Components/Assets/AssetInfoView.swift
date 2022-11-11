@@ -45,7 +45,7 @@ struct AssetInfoView: View {
                 Text(asset.friendlyName)
                     .font(Constants.Title.font)
                     .foregroundColor(titleColor ?? Constants.Title.color)
-                Text(asset.name)
+                Text(asset.name.uppercased())
                     .font(Constants.Subtitle.font)
                     .foregroundColor(subtitleColor ?? Constants.Subtitle.color)
             }

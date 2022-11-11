@@ -44,7 +44,6 @@ struct UserAssetsTabBarItem: View {
     
     private enum Constants {
         enum Filter {
-            static let verticalInsets: CGFloat = 30.0
             static let horizontalInsets: CGFloat = 20.0
             static let spacing: CGFloat = 7.0
             static let textColor: Color = .white
@@ -57,7 +56,7 @@ struct UserAssetsTabBarItem: View {
         }
     }
     
-    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(items: UserAsset.UserAssetsMock)
+    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(service: AssetService())
     @State var selectedFilter: AssetFilter = .all
     @Binding var searchText: String
     
@@ -79,7 +78,6 @@ struct UserAssetsTabBarItem: View {
                             didSelectItem: didFilterTapped,
                             font: .footnote,
                             fontWeight: .medium)
-            .padding(.vertical, Constants.Filter.verticalInsets)
     }
     
     private func didFilterTapped(_ index: Int) {

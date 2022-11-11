@@ -14,20 +14,15 @@ class UserAssetCreationViewModel: ObservableObject {
         static let defaultPossibleDecimalPlaces: Int = 8
     }
     
-    @Published var assets: [Asset]
     @Published var selectedAsset: Asset?
     
     @Published var assetValueLabel: String = Constants.defaultValue
     @Published var assetValue: Float = .zero
     @Published var errorMessage: String = .empty
     
-    
-    init(/*assetService: AssetService*/) {
-        self.assets = Asset.AssetsMock
-    }
-    
     func prepareAssetsCollectionViewModel() -> ListViewModel<Asset> {
-        return ListViewModel(items: assets, didSelectItem: didSelectAsset)
+        return ListViewModel(service: Services.assetService,
+                             didSelectItem: didSelectAsset)
     }
     
     func updateAssetValueLabel(_ tappedButton: KeyboardButtonType) {

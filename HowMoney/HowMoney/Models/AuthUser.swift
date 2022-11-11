@@ -9,6 +9,9 @@ import Foundation
 import JWTDecode
 
 struct AuthUser {
+    
+    static var loggedUser: AuthUser?
+    
     let id: String
     let name: String
     let nickname: String
@@ -36,5 +39,6 @@ struct AuthUser {
         self.emailVerified = String(describing: emailVerified)
         self.picture = picture
         self.updatedAt = updatedAt
+        AuthUser.loggedUser = self
     }
 }
