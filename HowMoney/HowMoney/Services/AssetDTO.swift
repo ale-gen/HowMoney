@@ -8,9 +8,8 @@
 import Foundation
 
 struct AssetDTO: Decodable {
-//    let id: String
     let name: String
     let friendlyName: String
-//    let symbol: String?
+    let symbol: String?
     let category: String
 }

@@ -36,36 +36,36 @@ enum AssetType: String {
 }
 
 struct Asset: Hashable {
-    let id: String
+    let id = UUID()
     let name: String
     let friendlyName: String
     let symbol: String?
     let type: AssetType
     
     static let CurrencyAssetsMock: [Asset] = [
-        .init(id: "1", name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency),
-        .init(id: "2", name: "USD", friendlyName: "US Dollar", symbol: "$", type: .currency),
-        .init(id: "3", name: "EUR", friendlyName: "Euro", symbol: "€", type: .currency),
-        .init(id: "4", name: "CHF", friendlyName: "Swiss Franc", symbol: "₣", type: .currency),
-        .init(id: "5", name: "AUD", friendlyName: "Australian Dollar", symbol: "$", type: .currency),
-        .init(id: "6", name: "NPR", friendlyName: "Nepalese rupee", symbol: "रु", type: .currency)
+        .init(name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency),
+        .init(name: "USD", friendlyName: "US Dollar", symbol: "$", type: .currency),
+        .init(name: "EUR", friendlyName: "Euro", symbol: "€", type: .currency),
+        .init(name: "CHF", friendlyName: "Swiss Franc", symbol: "₣", type: .currency),
+        .init(name: "AUD", friendlyName: "Australian Dollar", symbol: "$", type: .currency),
+        .init(name: "NPR", friendlyName: "Nepalese rupee", symbol: "रु", type: .currency)
     ]
     
     static let CryptoAssetsMocks: [Asset]  = [
-        .init(id: "7", name: "BTC", friendlyName: "Bitcoin", symbol: nil, type: .cryptocurrency),
-        .init(id: "8", name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency),
-        .init(id: "9", name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency),
-        .init(id: "10", name: "ETH", friendlyName: "Ethereum", symbol: nil, type: .cryptocurrency),
-        .init(id: "11", name: "USDC", friendlyName: "USDC", symbol: nil, type: .cryptocurrency),
-        .init(id: "12", name: "USDT", friendlyName: "Tether USD", symbol: nil, type: .cryptocurrency)
+        .init(name: "BTC", friendlyName: "Bitcoin", symbol: nil, type: .cryptocurrency),
+        .init(name: "CAKE", friendlyName: "PancakeSWAP", symbol: nil, type: .cryptocurrency),
+        .init(name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency),
+        .init(name: "ETH", friendlyName: "Ethereum", symbol: nil, type: .cryptocurrency),
+        .init(name: "USDC", friendlyName: "USDC", symbol: nil, type: .cryptocurrency),
+        .init(name: "USDT", friendlyName: "Tether USD", symbol: nil, type: .cryptocurrency)
     ]
     
     static let MetalAssetsMock: [Asset] = [
-        .init(id: "13", name: "ZL333", friendlyName: "Gold 333", symbol: nil, type: .metal),
-        .init(id: "14", name: "ZL900", friendlyName: "Gold 900", symbol: nil, type: .metal),
-        .init(id: "15", name: "SR800", friendlyName: "Silver 800", symbol: nil, type: .metal),
-        .init(id: "16", name: "SR925", friendlyName: "Silver 925", symbol: nil, type: .metal),
-        .init(id: "17", name: "PL950", friendlyName: "Platinium 950", symbol: nil, type: .metal)
+        .init(name: "ZL333", friendlyName: "Gold 333", symbol: nil, type: .metal),
+        .init(name: "ZL900", friendlyName: "Gold 900", symbol: nil, type: .metal),
+        .init(name: "SR800", friendlyName: "Silver 800", symbol: nil, type: .metal),
+        .init(name: "SR925", friendlyName: "Silver 925", symbol: nil, type: .metal),
+        .init(name: "PL950", friendlyName: "Platinium 950", symbol: nil, type: .metal)
     ]
     
     static let AssetsMock: [Asset] = CurrencyAssetsMock + CryptoAssetsMocks + MetalAssetsMock

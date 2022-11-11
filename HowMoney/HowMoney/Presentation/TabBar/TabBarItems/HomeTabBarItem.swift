@@ -13,6 +13,7 @@ struct HomeTabBarItem: View {
         static let verticalInsets: CGFloat = 20.0
         static let maxHeight: CGFloat = 250.0
         static let spacing: CGFloat = 20.0
+        static let background: Color = .black
         
         enum Section {
             static let horizontalInsets: CGFloat = 2.0
@@ -27,7 +28,9 @@ struct HomeTabBarItem: View {
         }
     }
     
-    var alertsVM: ListViewModel<Alert> = ListViewModel(service: AssetService())
+    @StateObject var alertsVM: ListViewModel<Alert> = ListViewModel(service: Services.alertService)
+    
+    @State private var showAlertList: Bool = false
     
     var body: some View {
         VStack(spacing: Constants.spacing) {
@@ -39,6 +42,13 @@ struct HomeTabBarItem: View {
             Spacer()
         }
         .padding(.vertical, Constants.verticalInsets)
+        .sheet(isPresented: $showAlertList) {
+            NavigationView {
+                AlertsCollection(vm: alertsVM, scrollAxis: .vertical)
+                    .navigationTitle(Localizable.alertsCollectionTitle.value)
+                    .background(Constants.background)
+            }
+        }
     }
     
     private var alertsSection: some View {
@@ -54,7 +64,7 @@ struct HomeTabBarItem: View {
                     .foregroundColor(Constants.Section.Title.color)
                 Spacer()
                 Button {
-                    
+                    showAlertList = true
                 } label: {
                     Text(Localizable.alertsCollectionSeeAllButtonTitle.value)
                         .foregroundColor(Constants.Section.SupplementaryButton.color)

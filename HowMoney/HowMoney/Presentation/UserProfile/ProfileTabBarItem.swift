@@ -50,6 +50,7 @@ struct ProfileTabBarItem: View {
                 PreferenceCurrenciesCollection(selectedPreferenceCurrency: authUserVM.preferenceCurrency, didPreferenceCurrencyChanged: authUserVM.updateCurrencyPreference)
                 toggleButtons
                 changePasswordButton
+                    .padding(.top, -Constants.spacing / 2)
                 RectangleButton(title: Localizable.authorizationSignOutButtonTitle.value, didButtonTapped: authUserVM.logout)
                     .padding(.bottom, Constants.bottomSpace)
             }
@@ -78,6 +79,7 @@ struct ProfileTabBarItem: View {
             emailAlerts
             Divider().background(Constants.Divider.color)
             biometrics
+            Divider().background(Constants.Divider.color)
         }
     }
     
@@ -95,7 +97,6 @@ struct ProfileTabBarItem: View {
     
     private var changePasswordButton: some View {
         VStack {
-            Divider().background(Constants.Divider.color)
             HStack {
                 Text(Localizable.changePasswordLabel.value)
                 Spacer()

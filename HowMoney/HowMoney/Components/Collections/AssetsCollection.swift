@@ -16,17 +16,16 @@ struct AssetsCollection: View {
             static let blurRadius: CGFloat = 150.0
             static let offset: CGFloat = 100.0
         }
+        enum Animation {
+            static let delay: CGFloat = 0.2
+        }
     }
     
     @Environment(\.presentationMode) var presentationMode
-    var vm: ListViewModel<Asset>
+    @StateObject var vm: ListViewModel<Asset>
 
     @State private var loaderView: LoaderView? = LoaderView()
     @State private var loading: Bool = false
-    
-    init(listViewModel: ListViewModel<Asset>) {
-        self.vm = listViewModel
-    }
     
     var body: some View {
         ZStack {
@@ -47,7 +46,7 @@ struct AssetsCollection: View {
         .loader(loader: $loaderView, shouldHideLoader: $loading)
         .onAppear {
             vm.getItems {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
                     loading.toggle()
                 }
             }
@@ -71,6 +70,6 @@ struct AssetsCollection: View {
 
 struct AssetsCollection_Previews: PreviewProvider {
     static var previews: some View {
-        AssetsCollection(listViewModel: ListViewModel(service: AssetService()))
+        AssetsCollection(vm: ListViewModel(service: AssetService()))
     }
 }

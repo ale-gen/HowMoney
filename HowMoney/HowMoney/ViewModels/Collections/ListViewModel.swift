@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class ListViewModel<Element>: ObservableObject {
     
     @Published var items: [Element] = []
@@ -27,10 +26,10 @@ class ListViewModel<Element>: ObservableObject {
         self.didSelectItem = didSelectItem
     }
     
-    func getItems(_ completion: @escaping () -> Void) {
+    @MainActor func getItems(_ completion: @escaping () -> Void) {
         task = Task {
             do {
-                items = try await service.getData() as? [Element] ?? []
+                self.items = try await service.getData() as! [Element]
                 completion()
             } catch let error {
                 print("Error during assets fetching: \(error.localizedDescription)")
