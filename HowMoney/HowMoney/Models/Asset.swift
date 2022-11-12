@@ -42,6 +42,21 @@ struct Asset: Hashable {
     let symbol: String?
     let type: AssetType
     
+    static func parse(from assetDto: AssetDTO) -> Asset {
+        var type: AssetType
+        switch assetDto.category {
+        case "crypto":
+            type = .cryptocurrency
+        case "currency":
+            type = .currency
+        case "metal":
+            type = .metal
+        default:
+            type = .currency
+        }
+        return Asset(name: assetDto.name, friendlyName: assetDto.friendlyName, symbol: assetDto.symbol, type: type)
+    }
+    
     static let CurrencyAssetsMock: [Asset] = [
         .init(name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency),
         .init(name: "USD", friendlyName: "US Dollar", symbol: "$", type: .currency),

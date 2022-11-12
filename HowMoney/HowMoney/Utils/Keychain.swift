@@ -37,7 +37,7 @@ class Keychain {
         guard status == errSecSuccess else {
             throw KeychainError.unknown(status)
         }
-        print("Token saved!")
+        print("Token saved! ✅")
     }
     
     static func get(account: String, service: String) throws -> Data {
@@ -64,15 +64,15 @@ class Keychain {
     
     static func logout()  {
         let secItemClasses =  [
-          kSecClassGenericPassword,
-          kSecClassInternetPassword,
-          kSecClassCertificate,
-          kSecClassKey,
-          kSecClassIdentity,
+            kSecClassGenericPassword,
+            kSecClassInternetPassword,
+            kSecClassCertificate,
+            kSecClassKey,
+            kSecClassIdentity,
         ]
         for itemClass in secItemClasses {
-          let spec: NSDictionary = [kSecClass: itemClass]
-          SecItemDelete(spec)
+            let spec: NSDictionary = [kSecClass: itemClass]
+            SecItemDelete(spec)
         }
-      }
+    }
 }

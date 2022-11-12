@@ -67,6 +67,8 @@ struct UserAssetDetailsView: View {
     
     @EnvironmentObject var authUserVM: UserStateViewModel
     @StateObject var vm: UserAssetViewModel
+    @Binding var editUserAsset: Bool
+    
     @State private var preferenceCurrencyRequired: Bool = true
     
     var body: some View {
@@ -157,6 +159,7 @@ struct UserAssetDetailsView: View {
     private func operationOption(type: UserAssetOperation) -> some View {
         Button {
             //Navigate to edit user asset screen with properly validation turned on
+            editUserAsset = true
         } label: {
             RoundedRectangle(cornerRadius: Constants.OperationOption.cornerRadius)
                 .foregroundColor(Constants.OperationOption.color)
@@ -176,7 +179,7 @@ struct UserAssetDetailsView: View {
 
 struct UserAssetDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!))
+        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!), editUserAsset: .constant(false))
             .background(.black)
             .environmentObject(UserStateViewModel(authService: AuthorizationService()))
     }
@@ -184,7 +187,7 @@ struct UserAssetDetailsView_Previews: PreviewProvider {
 
 struct UserAssetDetailsViewSmallerDevices_Previews: PreviewProvider {
     static var previews: some View {
-        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!))
+        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!), editUserAsset: .constant(false))
             .background(.black)
             .environmentObject(UserStateViewModel(authService: AuthorizationService()))
             .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))

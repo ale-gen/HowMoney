@@ -42,6 +42,10 @@ struct UserAsset: Identifiable, Hashable {
     let originValue: Float
     let preferenceCurrencyValue: Float
     
+    static func parse(from userAsset: UserAssetDTO) -> UserAsset {
+        UserAsset(asset: Asset.parse(from: userAsset.asset), originValue: userAsset.originValue, preferenceCurrencyValue: userAsset.userCurrencyValue)
+    }
+    
     static func ==(lhs: UserAsset, rhs: UserAsset) -> Bool {
         return lhs.asset.id == rhs.asset.id
     }

@@ -30,6 +30,27 @@ enum RequestType: String {
     }
 }
 
+enum RequestValues {
+    case userAsset(assetName: String, value: Float, type: String)
+    case userPreferences(preferenceCurrency: String, weeklyReports: Bool, alertsOnEmail: Bool)
+    case alert
+    
+    var body: [String: Any] {
+        switch self {
+        case let .userAsset(assetName, value, type):
+            return ["assetName": assetName,
+                    "value": value,
+                    "type": type] as [String: Any]
+        case let .userPreferences(preferenceCurrency, weeklyReports, alertsOnEmail):
+            return ["preferenceCurrency": preferenceCurrency,
+                    "weeklyReports": weeklyReports,
+                    "alertsOnEmail": alertsOnEmail] as [String: Any]
+        case .alert:
+            return [:] as [String: Any]
+        }
+    }
+}
+
 protocol RequestProtocol {
     func createRequest(url: URL, token: Data?, method: RequestType, body: [String: Any]?) -> URLRequest
     func createPatchRequest(url: URL, token: Data, patchBody: [[String: String]]) -> URLRequest

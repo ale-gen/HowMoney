@@ -11,8 +11,9 @@ class AlertService: Service {
     
     typealias ServiceType = Alert
     
-    func sendData() {
+    func sendData(requestValues: RequestValues) async throws -> Alert? {
         /* */
+        return nil
     }
     
     func getData() async throws -> [Alert] {

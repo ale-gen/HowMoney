@@ -9,13 +9,14 @@ import SwiftUI
 
 class AssetService: Service {
     
+    typealias ServiceType = Asset
+    
     private let session = URLSession.shared
     private let urlString = "\(NetworkEndpoints.assets.rawValue)"
     
-    typealias ServiceType = Asset
-    
-    func sendData() {
+    func sendData(requestValues: RequestValues) async throws -> Asset? {
         /* */
+        return nil
     }
     
     func getData() async throws -> [Asset] {
@@ -26,7 +27,7 @@ class AssetService: Service {
         let request = createRequest(url: url, token: token, method: .get)
         let (data, _) = try await session.data(for: request)
         guard let assets = try? JSONDecoder().decode([AssetDTO].self, from: data) else { throw NetworkError.invalidData }
-        return assets.map { Asset(name: $0.name, friendlyName: $0.friendlyName, symbol: $0.symbol, type: .currency) }
+        return assets.map { Asset.parse(from: $0) }
     }
     
     func updateData(_ model: Asset) -> Asset? {

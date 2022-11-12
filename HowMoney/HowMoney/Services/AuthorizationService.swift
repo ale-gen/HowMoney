@@ -21,6 +21,7 @@ struct AuthorizationService: Service {
                 switch result {
                 case let .success(credentials):
                     guard let user = AuthUser(from: credentials.idToken) else { return }
+                    print(credentials.accessToken)
                     if !saveToken(credentials.accessToken, for: user) { return }
                     completion(user)
                 case let .failure(error):
@@ -34,7 +35,7 @@ struct AuthorizationService: Service {
         completion()
     }
     
-    func sendData() { /**/ }
+    func sendData(requestValues: RequestValues) async throws -> Model? { return nil }
     func getData() -> [Model] { return [] }
     func updateData(_ model: Model) -> Model? { return nil }
     func deleteData() -> Bool { return false }
