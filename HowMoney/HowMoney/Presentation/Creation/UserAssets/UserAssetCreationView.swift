@@ -39,7 +39,7 @@ struct UserAssetCreationView: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var vm: UserAssetCreationViewModel = UserAssetCreationViewModel()
+    @StateObject var vm: UserAssetCreationViewModel = UserAssetCreationViewModel(service: Services.userAssetService)
     @State var textValue: String = Constants.ValueLabel.defaultValue
     
     var body: some View {
@@ -104,9 +104,14 @@ struct UserAssetCreationView: View {
     }
     
     private func sendForm() {
-        vm.createAsset {
-            presentationMode.wrappedValue.dismiss()
-        }
+        vm.createAsset(successCompletion: {
+            print("Success 🥳")
+            DispatchQueue.main.async {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }, failureCompletion: {
+            print("Failure 🫠")
+        })
     }
 }
 

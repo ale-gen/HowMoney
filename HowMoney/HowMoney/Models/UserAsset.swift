@@ -42,6 +42,15 @@ enum UserAssetOperation {
             return -1.0
         }
     }
+    
+    var requestValueType: String {
+        switch self {
+        case .add, .substract:
+            return "Update"
+        case .update:
+            return "Set"
+        }
+    }
 }
 
 struct UserAsset: Identifiable, Hashable {

@@ -24,14 +24,6 @@ class UserAssetEditingViewModel: ObservableObject {
     private var service: any Service
     private var task: Task<(), Never>?
     private var keyboardViewModel: KeyboardViewModel?
-    private var operationTypeRequestValue: String {
-        switch operation {
-        case .add, .substract:
-            return "Update"
-        case .update:
-            return "Set"
-        }
-    }
     
     init(service: any Service, userAsset: UserAsset, operation: UserAssetOperation) {
         self.service = service
@@ -53,13 +45,12 @@ class UserAssetEditingViewModel: ObservableObject {
             failureCompletion()
             return
         }
-        print(value)
         
         task = Task {
             do {
                 let result = try await service.sendData(requestValues: .userAsset(assetName: userAsset.asset.name.lowercased(),
                                                                                   value: value * operation.multiplier,
-                                                                                  type: operationTypeRequestValue))
+                                                                                  type: operation.requestValueType))
                 guard let result = result as? UserAsset else {
                     failureCompletion()
                     return
