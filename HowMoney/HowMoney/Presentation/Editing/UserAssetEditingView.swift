@@ -16,17 +16,23 @@ struct UserAssetEditingView: View {
             static let maxHeight: CGFloat = 150.0
             static let font: Font = .system(size: 40.0)
             static let color: Color = .white
+            static let defaultValue: String = "0.00"
         }
         enum TipLabel {
             static let textColor: Color = .white.opacity(0.7)
             static let horizontalInsets: CGFloat = 20.0
+            static let spacing: CGFloat = 5.0
+            static let finalValueFont: Font = .headline.weight(.semibold)
+            static let finalValueColor: Color = .white.opacity(0.9)
         }
         enum Keyboard {
             static let maxHeight: CGFloat = 300.0
         }
     }
     
+    @Environment(\.presentationMode) var presentationMode
     @StateObject var vm: UserAssetEditingViewModel
+    @State private var textValue: String = Constants.ValueLabel.defaultValue
     
     var body: some View {
         VStack {
@@ -38,7 +44,8 @@ struct UserAssetEditingView: View {
             RectangleButton(title: vm.operation.title, didButtonTapped: sendForm)
                 .padding(.bottom, Constants.spacing)
             
-            KeyboardView()
+            KeyboardView(vm: vm.prepareKeyboardViewModel(),
+                         textValue: $textValue)
                 .frame(maxHeight: Constants.Keyboard.maxHeight)
         }
         .navigationTitle(vm.userAsset.asset.friendlyName)
@@ -47,10 +54,10 @@ struct UserAssetEditingView: View {
     
     private var valueLabel: some View {
         ZStack {
-            // TODO: Ensure typing correct number of decimal places depends on chosen asset type
             HStack {
                 Spacer()
-                Text("0.00")
+                Text(vm.operation == .substract ? BalanceChar.negative.text : BalanceChar.positive.text)
+                Text(textValue)
                 Text(vm.userAsset.asset.symbol ?? .empty)
                 Spacer()
             }
@@ -60,15 +67,25 @@ struct UserAssetEditingView: View {
     }
     
     private var tipLabel: some View {
-        Text("After operation asset balance will be equal \(vm.finalValue)")
-            .multilineTextAlignment(.center)
-            .foregroundColor(Constants.TipLabel.textColor)
-            .padding(.horizontal, Constants.TipLabel.horizontalInsets)
+        VStack(spacing: Constants.TipLabel.spacing) {
+            Text(vm.operation == .update ? Localizable.userAssetsEditingNewValueLabel.value : Localizable.userAssetsEditingFinalValueLabel.value)
+                .foregroundColor(Constants.TipLabel.textColor)
+            AssetValueLabel(value: vm.finalValue,
+                            symbol: vm.userAsset.asset.symbol,
+                            type: vm.userAsset.asset.type)
+                .font(Constants.TipLabel.finalValueFont)
+                .foregroundColor(Constants.TipLabel.finalValueColor)
+        }
+        .multilineTextAlignment(.center)
+        .padding(.horizontal, Constants.TipLabel.horizontalInsets)
     }
     
     private func sendForm() {
         vm.updateUserAsset(successCompletion: {
             print("Success 🥳")
+            DispatchQueue.main.async {
+                presentationMode.wrappedValue.dismiss()
+            }
         }, failureCompletion: {
             print("Failure 🫠")
         })

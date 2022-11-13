@@ -25,30 +25,8 @@ class UserAssetCreationViewModel: ObservableObject {
                              didSelectItem: didSelectAsset)
     }
     
-    func updateAssetValueLabel(_ tappedButton: KeyboardButtonType) {
-        // TODO: Make complex validation
-        switch tappedButton {
-        case let .number(stringNumber):
-            guard assetValueLabel != Constants.defaultValue else {
-                assetValueLabel = stringNumber
-                return
-            }
-            if let currentDecimalPlaces = assetValueLabel.split(separator: ".").last?.count,
-               currentDecimalPlaces < selectedAsset?.type.decimalPlaces ?? Constants.defaultPossibleDecimalPlaces {
-                assetValueLabel += stringNumber
-            } else {
-                errorMessage = Localizable.userAssetsCreationDecimalPlacesValidation.value
-            }
-        case .clear:
-            guard assetValueLabel.count > 1 else {
-                assetValueLabel = Constants.defaultValue
-                return
-            }
-            assetValueLabel.removeLast()
-        case let .decimalComma(char):
-            guard !assetValueLabel.contains(char) else { return }
-            assetValueLabel.append(char)
-        }
+    func prepareKeyboardViewModel() -> KeyboardViewModel {
+        return KeyboardViewModel(assetType: selectedAsset?.type ?? .currency)
     }
     
     func createAsset(_ successCompletion: @escaping () -> Void) {

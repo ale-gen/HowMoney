@@ -33,6 +33,15 @@ enum UserAssetOperation {
             return Images.cashEdit.value
         }
     }
+    
+    var multiplier: Float {
+        switch self {
+        case .add, .update:
+            return 1.0
+        case .substract:
+            return -1.0
+        }
+    }
 }
 
 struct UserAsset: Identifiable, Hashable {

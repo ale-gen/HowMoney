@@ -31,6 +31,7 @@ struct UserAssetCreationView: View {
             static let maxHeight: CGFloat = 150.0
             static let font: Font = .system(size: 40.0)
             static let color: Color = .white
+            static let defaultValue: String = "0.00"
         }
         enum Keyboard {
             static let maxHeight: CGFloat = 300.0
@@ -39,6 +40,7 @@ struct UserAssetCreationView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @StateObject var vm: UserAssetCreationViewModel = UserAssetCreationViewModel()
+    @State var textValue: String = Constants.ValueLabel.defaultValue
     
     var body: some View {
         VStack {
@@ -71,7 +73,7 @@ struct UserAssetCreationView: View {
             RectangleButton(title: Localizable.userAssetsCreationAddToMyWalletButtonTitle.value, didButtonTapped: sendForm)
                 .padding(.bottom, Constants.spacing)
             
-            KeyboardView(didTapItem: vm.updateAssetValueLabel)
+            KeyboardView(vm: vm.prepareKeyboardViewModel(), textValue: $textValue)
                 .frame(maxHeight: Constants.Keyboard.maxHeight)
         }
     }
@@ -92,7 +94,7 @@ struct UserAssetCreationView: View {
             // TODO: Ensure typing correct number of decimal places depends on chosen asset type
             HStack {
                 Spacer()
-                Text(vm.assetValueLabel)
+                Text(textValue)
                 Text(vm.selectedAsset?.symbol ?? .empty)
                 Spacer()
             }
