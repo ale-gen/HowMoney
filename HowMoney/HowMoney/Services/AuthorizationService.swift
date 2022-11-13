@@ -51,7 +51,7 @@ struct AuthorizationService: Service {
     
     private func saveToken(_ accessToken: String, for user: AuthUser) -> Bool {
         do {
-            try Keychain.save(account: user.email, service: "HowMoney", token: accessToken)
+            try Keychain.save(account: user.email, token: accessToken)
             return true
         } catch {
             print("Token wasn't saved ⚠️")

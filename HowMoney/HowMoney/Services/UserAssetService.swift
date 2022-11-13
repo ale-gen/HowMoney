@@ -18,7 +18,7 @@ class UserAssetService: Service {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
         guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
         
-        let token = try Keychain.get(account: email, service: "HowMoney")
+        let token = try Keychain.get(account: email)
         let request = createRequest(url: url, token: token, method: .patch, body: requestValues.body)
         let (data, _) = try await session.data(for: request)
         guard let newUserAsset = try? JSONDecoder().decode([UserAssetDTO].self, from: data).first else { throw NetworkError.invalidData }
@@ -29,7 +29,7 @@ class UserAssetService: Service {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
         guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
         
-        let token = try Keychain.get(account: email, service: "HowMoney")
+        let token = try Keychain.get(account: email)
         let request = createRequest(url: url, token: token, method: .get)
         let (data, _) = try await session.data(for: request)
         guard let userAssets = try? JSONDecoder().decode([UserAssetDTO].self, from: data) else { throw NetworkError.invalidData }
@@ -38,7 +38,7 @@ class UserAssetService: Service {
     
     func updateData(_ model: UserAsset) -> UserAsset? {
         /* */
-        return nil //sendData(requestValues: .userAsset(assetName: model.asset.name, value: 20, type: "Update"))
+        return nil
     }
     
     func deleteData(_ parameters: Any...) -> Bool {

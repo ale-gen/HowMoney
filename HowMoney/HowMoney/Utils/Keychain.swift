@@ -16,7 +16,9 @@ enum KeychainError: Error {
 
 class Keychain {
     
-    static func save(account: String, service: String, token: String) throws {
+    private static var service: String = "HowMoney"
+    
+    static func save(account: String, token: String) throws {
         
         guard let tokenData = token.data(using: .utf8) else {
             throw KeychainError.badData
@@ -40,7 +42,7 @@ class Keychain {
         print("Token saved! ✅")
     }
     
-    static func get(account: String, service: String) throws -> Data {
+    static func get(account: String) throws -> Data {
         let query: [String: AnyObject] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: account as AnyObject,

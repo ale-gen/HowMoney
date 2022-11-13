@@ -16,7 +16,7 @@ struct UserAssetEditingView: View {
             static let maxHeight: CGFloat = 150.0
             static let font: Font = .system(size: 40.0)
             static let color: Color = .white
-            static let defaultValue: String = "0.00"
+            static let defaultValue: String = .zero
         }
         enum TipLabel {
             static let textColor: Color = .white.opacity(0.7)

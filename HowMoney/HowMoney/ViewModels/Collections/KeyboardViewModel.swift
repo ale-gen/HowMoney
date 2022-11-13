@@ -10,7 +10,7 @@ import SwiftUI
 class KeyboardViewModel: ObservableObject {
     
     private enum Constants {
-        static let defaultTextValue: String = "0.00"
+        static let defaultTextValue: String = .zero
     }
     
     private(set) var textValue: String = Constants.defaultTextValue
@@ -26,26 +26,26 @@ class KeyboardViewModel: ObservableObject {
             if textValue == Constants.defaultTextValue {
                 textValue = stringNumber
                 return
-            } else if !textValue.contains(".") || textValue.last == "." {
+            } else if !textValue.contains(.dot) || textValue.last == .dot {
                 textValue += stringNumber
                 return
             }
             
-            guard let currentDecimalPlaces = textValue.split(separator: ".").last?.count,
+            guard let currentDecimalPlaces = textValue.split(separator: .dot).last?.count,
                     currentDecimalPlaces < assetType.decimalPlaces
             else { return }
             
             textValue += stringNumber
         case .clear:
             if textValue != Constants.defaultTextValue {
-                if textValue.count > 1 {
+                if textValue.count > .one {
                     textValue.removeLast()
                 } else {
                     textValue = Constants.defaultTextValue
                 }
             }
         case let .decimalComma(char):
-            guard !textValue.contains(char) && (textValue.count > 0) else { return }
+            guard !textValue.contains(char) && (textValue.count > .zero) else { return }
             textValue.append(char)
         }
     }

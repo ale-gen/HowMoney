@@ -11,5 +11,4 @@ import Foundation
 struct AssetHistoryDTO: Decodable {
     let assetIdentifier: String
     let value: Float
-//    let timeStamp: Date
 }

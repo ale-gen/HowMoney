@@ -23,7 +23,7 @@ class AssetService: Service {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
         guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
         
-        let token = try Keychain.get(account: email, service: "HowMoney")
+        let token = try Keychain.get(account: email)
         let request = createRequest(url: url, token: token, method: .get)
         let (data, _) = try await session.data(for: request)
         guard let assets = try? JSONDecoder().decode([AssetDTO].self, from: data) else { throw NetworkError.invalidData }

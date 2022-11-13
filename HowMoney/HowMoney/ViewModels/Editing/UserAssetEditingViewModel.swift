@@ -12,9 +12,9 @@ class UserAssetEditingViewModel: ObservableObject {
     var finalValue: Float {
         switch operation {
         case .add, .substract:
-            return userAsset.originValue + operation.multiplier * (Float(keyboardViewModel?.textValue ?? "0.00") ?? 0.0)
+            return userAsset.originValue + operation.multiplier * (Float(keyboardViewModel?.textValue ?? .zero) ?? .zero)
         case .update:
-            return Float(keyboardViewModel?.textValue ?? "0.00") ?? 0.0
+            return Float(keyboardViewModel?.textValue ?? .zero) ?? .zero
         }
     }
     
