@@ -15,14 +15,22 @@ struct TransactionsTabBarItem: View {
         VStack {
             SegmentedPickerView(items: ["D", "W", "M", "6M", "Y"])
             
-            ScrollView(showsIndicators: false) {
-                ForEach(vm.items, id: \.self) { transaction in
-                    if let transactionVM = vm.prepareTransactionViewModel(for: transaction) {
-                        TransactionCell(vm: transactionVM)
+            if vm.items.count > .zero {
+                ScrollView(showsIndicators: false) {
+                    ForEach(vm.items, id: \.self) { transaction in
+                        if let transactionVM = vm.prepareTransactionViewModel(for: transaction) {
+                            TransactionCell(vm: transactionVM)
+                        }
                     }
                 }
+                .padding()
+            } else {
+                VStack {
+                    Spacer()
+                    TransactionsEmptyState()
+                    Spacer()
+                }
             }
-            .padding()
         }
     }
 }

@@ -70,6 +70,9 @@ enum Localizable: String, Translation {
     case alertsCollectionTitle = "alerts.collection.title"
     case alertsCollectionSeeAllButtonTitle = "alerts.collection.see.all.button.title"
     
+    // MARK: Transactions
+    case transactionsEmptyStateTitle = "transactions.empty.state.title"
+    
     // MARK: User assets creation
     case userAssetsCreationSelectionPromptText = "user.assets.creation.selection.prompt.text"
     case userAssetsCreationNavBarTitle = "user.assets.creation.nav.bar.title"
