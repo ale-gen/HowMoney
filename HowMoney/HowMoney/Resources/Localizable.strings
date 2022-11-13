@@ -56,6 +56,9 @@
 "alerts.collection.title" = "Your alerts:";
 "alerts.collection.see.all.button.title" = "See all";
 
+// MARK: Transactions
+"transactions.empty.state.title" = "You hadn't made any transactions";
+
 // MARK: User assets creation
 "user.assets.creation.selection.prompt.text" = "Which asset would you like to add?";
 "user.assets.creation.nav.bar.title" = "Create asset";
