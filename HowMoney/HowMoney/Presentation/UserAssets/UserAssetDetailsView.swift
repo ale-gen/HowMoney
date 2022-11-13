@@ -88,6 +88,9 @@ struct UserAssetDetailsView: View {
             .navigationTitle("")
             .navigationBarHidden(true)
         }
+        .onAppear {
+            vm.fetchPriceHistory()
+        }
     }
     
     private var assetTypeSwitcher: some View {

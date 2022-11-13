@@ -10,13 +10,14 @@ import SwiftUI
 
 class UserAssetViewModel: ObservableObject {
     
+    
+    @Published var userAssetPriceHistory: [Float] = []
+    
     var userAsset: UserAsset {
         editingViewModel?.userAsset ?? localUserAsset
     }
     
-    var userAssetPriceHistory: [CGFloat]
-    
-    var assetPricePercentageChangeValue: CGFloat {
+    var assetPricePercentageChangeValue: Float {
         assetVM.percentagePriceChange
     }
     
@@ -34,7 +35,6 @@ class UserAssetViewModel: ObservableObject {
     
     init(userAsset: UserAsset) {
         self.localUserAsset = userAsset
-        self.userAssetPriceHistory = AssetHistoryRecord.DollarHistoryMock.map { $0.value }
         self.assetVM = AssetViewModel(asset: userAsset.asset)
     }
     
@@ -42,6 +42,14 @@ class UserAssetViewModel: ObservableObject {
         let editingVM = UserAssetEditingViewModel(service: Services.userAssetService, userAsset: userAsset, operation: type)
         self.editingViewModel = editingVM
         return editingVM
+    }
+    
+    @MainActor func fetchPriceHistory() {
+        assetVM.getExchangeRateHistory({ [weak self] in
+            self?.userAssetPriceHistory = self?.assetVM.assetHistoryData.map { $0.value } ?? []
+        }, { [weak self] in
+            print("Cannot fetch exchange rates for asset: \(self?.userAsset.asset.friendlyName) 🫠")
+        })
     }
     
 }

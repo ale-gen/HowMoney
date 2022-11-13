@@ -39,7 +39,7 @@ struct AssetCell: View {
         }
     }
     
-    let assetVM: AssetViewModel
+    @StateObject var assetVM: AssetViewModel
     var additionalLabelColor: Color = .black
     
     var body: some View {
@@ -66,6 +66,13 @@ struct AssetCell: View {
         .contentShape(Rectangle())
         .frame(height: Constants.height)
         .cornerRadius(Constants.cornerRadius, [.allCorners])
+        .onAppear {
+            assetVM.getExchangeRateHistory({
+                // print("Everything works great! 🎉")
+            }, {
+                // TODO: Show error toast
+            })
+        }
     }
     
     private func changeInfo(color: Color) -> some View { RoundedRectangle(cornerRadius: Constants.AdditionalInfo.cornerRadius)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-typealias ChartsData = [CGFloat]
+typealias ChartsData = [Float]
 
 struct LineChart: View {
     
@@ -44,7 +44,7 @@ struct LineChart: View {
             Path { path in
                 for (index, value) in data.enumerated() {
                     let xPosition = geo.size.width / CGFloat(data.count) * CGFloat(index + 1)
-                    let yPosition = (1 - (value - min) / yRange) * geo.size.height
+                    let yPosition = (1 - CGFloat((value - min) / yRange)) * geo.size.height
                     
                     if index == .zero {
                         path.move(to: CGPoint(x: .zero, y: yPosition))

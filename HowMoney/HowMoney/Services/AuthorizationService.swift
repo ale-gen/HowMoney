@@ -36,9 +36,9 @@ struct AuthorizationService: Service {
     }
     
     func sendData(requestValues: RequestValues) async throws -> Model? { return nil }
-    func getData() -> [Model] { return [] }
+    func getData(_ parameters: Any...) -> [Model] { return [] }
     func updateData(_ model: Model) -> Model? { return nil }
-    func deleteData() -> Bool { return false }
+    func deleteData(_ parameters: Any...) -> Bool { return false }
     
     private func extractAudienceValue() -> String? {
         guard let path = Bundle.main.path(forResource: "Auth0", ofType: "plist"),

@@ -22,7 +22,7 @@ struct AssetsCollection: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var vm: ListViewModel<Asset>
+    @StateObject var assetVM: ListViewModel<Asset>
 
     @State private var loaderView: LoaderView? = LoaderView()
     @State private var loading: Bool = false
@@ -32,20 +32,20 @@ struct AssetsCollection: View {
             backgroundCircles
             
             ScrollView(showsIndicators: false) {
-                ForEach(vm.items, id: \.self) { asset in
+                ForEach(assetVM.items, id: \.self) { asset in
                     AssetCell(assetVM: AssetViewModel(asset: asset))
-                        .onTapGesture {
-                            vm.didSelectItem(asset)
-                            presentationMode.wrappedValue.dismiss()
-                        }
                         .padding(.horizontal)
                         .padding(.vertical, Constants.verticalInsets)
+                        .onTapGesture {
+                            assetVM.didSelectItem(asset)
+                            presentationMode.wrappedValue.dismiss()
+                        }
                 }
             }
         }
         .loader(loader: $loaderView, shouldHideLoader: $loading)
         .onAppear {
-            vm.getItems {
+            assetVM.getItems {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
                     loading.toggle()
                 }
@@ -70,6 +70,6 @@ struct AssetsCollection: View {
 
 struct AssetsCollection_Previews: PreviewProvider {
     static var previews: some View {
-        AssetsCollection(vm: ListViewModel(service: AssetService()))
+        AssetsCollection(assetVM: ListViewModel(service: AssetService()))
     }
 }

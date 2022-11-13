@@ -19,7 +19,7 @@ class AssetService: Service {
         return nil
     }
     
-    func getData() async throws -> [Asset] {
+    func getData(_ parameters: Any...) async throws -> [Asset] {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
         guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
         
@@ -35,7 +35,7 @@ class AssetService: Service {
         return nil
     }
     
-    func deleteData() -> Bool {
+    func deleteData(_ parameters: Any...) -> Bool {
         /* */
         return false
     }

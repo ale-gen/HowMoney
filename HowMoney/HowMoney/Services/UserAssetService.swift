@@ -25,7 +25,7 @@ class UserAssetService: Service {
         return UserAsset.parse(from: newUserAsset)
     }
     
-    func getData() async throws -> [UserAsset] {
+    func getData(_ parameters: Any...) async throws -> [UserAsset] {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
         guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
         
@@ -41,7 +41,7 @@ class UserAssetService: Service {
         return nil //sendData(requestValues: .userAsset(assetName: model.asset.name, value: 20, type: "Update"))
     }
     
-    func deleteData() -> Bool {
+    func deleteData(_ parameters: Any...) -> Bool {
         /* */
         return false
     }
