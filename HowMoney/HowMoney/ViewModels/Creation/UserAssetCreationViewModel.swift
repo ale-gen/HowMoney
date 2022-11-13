@@ -15,59 +15,58 @@ class UserAssetCreationViewModel: ObservableObject {
     }
     
     @Published var selectedAsset: Asset?
-    
-    @Published var assetValueLabel: String = Constants.defaultValue
-    @Published var assetValue: Float = .zero
     @Published var errorMessage: String = .empty
+    
+    private let operation: UserAssetOperation
+    private var service: any Service
+    private var keyboardViewModel: KeyboardViewModel?
+    private var task: Task<(), Never>?
+    
+    init(service: any Service) {
+        self.operation = .add
+        self.service = service
+    }
     
     func prepareAssetsCollectionViewModel() -> ListViewModel<Asset> {
         return ListViewModel(service: Services.assetService,
                              didSelectItem: didSelectAsset)
     }
     
-    func updateAssetValueLabel(_ tappedButton: KeyboardButtonType) {
-        // TODO: Make complex validation
-        switch tappedButton {
-        case let .number(stringNumber):
-            guard assetValueLabel != Constants.defaultValue else {
-                assetValueLabel = stringNumber
-                return
-            }
-            if let currentDecimalPlaces = assetValueLabel.split(separator: ".").last?.count,
-               currentDecimalPlaces < selectedAsset?.type.decimalPlaces ?? Constants.defaultPossibleDecimalPlaces {
-                assetValueLabel += stringNumber
-            } else {
-                errorMessage = Localizable.userAssetsCreationDecimalPlacesValidation.value
-            }
-        case .clear:
-            guard assetValueLabel.count > 1 else {
-                assetValueLabel = Constants.defaultValue
-                return
-            }
-            assetValueLabel.removeLast()
-        case let .decimalComma(char):
-            guard !assetValueLabel.contains(char) else { return }
-            assetValueLabel.append(char)
-        }
+    func prepareKeyboardViewModel() -> KeyboardViewModel {
+        let keyboardVM = KeyboardViewModel(assetType: selectedAsset?.type ?? .currency)
+        self.keyboardViewModel = keyboardVM
+        return keyboardVM
     }
     
-    func createAsset(_ successCompletion: @escaping () -> Void) {
-        convertEnteredValue()
-        guard selectedAsset != nil else {
+    func createAsset(successCompletion: @escaping () -> Void,
+                     failureCompletion: @escaping () -> Void) {
+        guard let selectedAsset = selectedAsset else {
             errorMessage = Localizable.userAssetsCreationAssetSelectionValidation.value
             return
         }
-        guard assetValue > .zero else {
-            errorMessage = Localizable.userAssetsCreationPositiveNumberValidation.value
+        guard let keyboardViewModel = keyboardViewModel,
+              let value = Float(keyboardViewModel.textValue)
+        else {
+            errorMessage = "Value has to be in correct format"
+            failureCompletion()
             return
         }
-        successCompletion()
-    }
-    
-    private func convertEnteredValue() {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        assetValue = numberFormatter.number(from: assetValueLabel)?.floatValue ?? .zero
+        
+        task = Task {
+            do {
+                let result = try await service.sendData(requestValues: .userAsset(assetName: selectedAsset.name.lowercased(),
+                                                                                  value: value * operation.multiplier,
+                                                                                  type: operation.requestValueType))
+                guard let _ = result as? UserAsset else {
+                    failureCompletion()
+                    return
+                }
+                successCompletion()
+            } catch let error {
+                print("Error during user asset creation: \(error.localizedDescription)")
+                failureCompletion()
+            }
+        }
     }
     
     private func didSelectAsset(_ asset: Asset) {

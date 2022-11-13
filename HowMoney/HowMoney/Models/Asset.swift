@@ -42,6 +42,21 @@ struct Asset: Hashable {
     let symbol: String?
     let type: AssetType
     
+    static func parse(from assetDto: AssetDTO) -> Asset {
+        var type: AssetType
+        switch assetDto.category {
+        case "crypto":
+            type = .cryptocurrency
+        case "currency":
+            type = .currency
+        case "metal":
+            type = .metal
+        default:
+            type = .currency
+        }
+        return Asset(name: assetDto.name, friendlyName: assetDto.friendlyName, symbol: assetDto.symbol, type: type)
+    }
+    
     static let CurrencyAssetsMock: [Asset] = [
         .init(name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency),
         .init(name: "USD", friendlyName: "US Dollar", symbol: "$", type: .currency),
@@ -73,21 +88,14 @@ struct Asset: Hashable {
 
 struct AssetHistoryRecord: Hashable {
     
-    let date: Date
-    let value: CGFloat
+    let assetName: String
+    let value: Float
     
-    init(date: Date, value: CGFloat) {
-        self.date = date
-        self.value = value
+    static func parse(from assetHistory: AssetHistoryDTO) -> AssetHistoryRecord {
+        AssetHistoryRecord(assetName: assetHistory.assetIdentifier, value: assetHistory.value)
     }
     
-    private static let DatesMock: [Date] = [
-        "26/09/2022", "27/09/2022", "28/09/2022", "29/09/2022", "30/09/2022", "01/10/2022", "02/10/2022", "03/10/2022", "04/10/2022", "05/10/2022", "06/10/2022", "07/10/2022", "08/10/2022", "09/10/2022", "10/10/2022", "11/10/2022", "12/10/2022", "13/10/2022", "14/10/2022", "15/10/2022"
-    ].compactMap { $0.date() }
-    
-    private static let ValuesMock: [CGFloat] = [
+    static let DollarHistoryMock: [AssetHistoryRecord] = [
         4.9462, 4.9854, 4.9329, 4.9491, 4.9491, 4.9491, 4.9116, 4.8160, 4.8719, 4.9890, 4.9860, 4.9860, 4.9860, 5.0021, 4.9927, 4.9908, 4.9091, 4.9363, 4.5908, 4.6709
-    ]
-    
-    static let DollarHistoryMock: [AssetHistoryRecord] = zip(DatesMock, ValuesMock).map { AssetHistoryRecord(date: $0, value: $1) }
+    ].map { AssetHistoryRecord(assetName: "USD", value: $0) }
 }

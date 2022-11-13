@@ -21,6 +21,7 @@ struct AuthorizationService: Service {
                 switch result {
                 case let .success(credentials):
                     guard let user = AuthUser(from: credentials.idToken) else { return }
+                    print(credentials.accessToken)
                     if !saveToken(credentials.accessToken, for: user) { return }
                     completion(user)
                 case let .failure(error):
@@ -34,10 +35,10 @@ struct AuthorizationService: Service {
         completion()
     }
     
-    func sendData() { /**/ }
-    func getData() -> [Model] { return [] }
+    func sendData(requestValues: RequestValues) async throws -> Model? { return nil }
+    func getData(_ parameters: Any...) -> [Model] { return [] }
     func updateData(_ model: Model) -> Model? { return nil }
-    func deleteData() -> Bool { return false }
+    func deleteData(_ parameters: Any...) -> Bool { return false }
     
     private func extractAudienceValue() -> String? {
         guard let path = Bundle.main.path(forResource: "Auth0", ofType: "plist"),
@@ -50,7 +51,7 @@ struct AuthorizationService: Service {
     
     private func saveToken(_ accessToken: String, for user: AuthUser) -> Bool {
         do {
-            try Keychain.save(account: user.email, service: "HowMoney", token: accessToken)
+            try Keychain.save(account: user.email, token: accessToken)
             return true
         } catch {
             print("Token wasn't saved ⚠️")

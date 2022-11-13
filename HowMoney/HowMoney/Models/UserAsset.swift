@@ -33,6 +33,24 @@ enum UserAssetOperation {
             return Images.cashEdit.value
         }
     }
+    
+    var multiplier: Float {
+        switch self {
+        case .add, .update:
+            return 1.0
+        case .substract:
+            return -1.0
+        }
+    }
+    
+    var requestValueType: String {
+        switch self {
+        case .add, .substract:
+            return "Update"
+        case .update:
+            return "Set"
+        }
+    }
 }
 
 struct UserAsset: Identifiable, Hashable {
@@ -41,6 +59,10 @@ struct UserAsset: Identifiable, Hashable {
     let asset: Asset
     let originValue: Float
     let preferenceCurrencyValue: Float
+    
+    static func parse(from userAsset: UserAssetDTO) -> UserAsset {
+        UserAsset(asset: Asset.parse(from: userAsset.asset), originValue: userAsset.originValue, preferenceCurrencyValue: userAsset.userCurrencyValue)
+    }
     
     static func ==(lhs: UserAsset, rhs: UserAsset) -> Bool {
         return lhs.asset.id == rhs.asset.id

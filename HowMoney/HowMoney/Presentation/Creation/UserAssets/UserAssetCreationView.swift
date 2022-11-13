@@ -31,6 +31,7 @@ struct UserAssetCreationView: View {
             static let maxHeight: CGFloat = 150.0
             static let font: Font = .system(size: 40.0)
             static let color: Color = .white
+            static let defaultValue: String = "0.00"
         }
         enum Keyboard {
             static let maxHeight: CGFloat = 300.0
@@ -38,11 +39,12 @@ struct UserAssetCreationView: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var vm: UserAssetCreationViewModel = UserAssetCreationViewModel()
+    @StateObject var vm: UserAssetCreationViewModel = UserAssetCreationViewModel(service: Services.userAssetService)
+    @State var textValue: String = Constants.ValueLabel.defaultValue
     
     var body: some View {
         VStack {
-            NavigationLink(destination: AssetsCollection(vm: vm.prepareAssetsCollectionViewModel())) {
+            NavigationLink(destination: AssetsCollection(assetVM: vm.prepareAssetsCollectionViewModel())) {
                 RoundedRectangle(cornerRadius: Constants.SelectionButton.cornerRadius)
                     .fill(Constants.SelectionButton.color)
                     .frame(height: Constants.SelectionButton.height)
@@ -71,7 +73,7 @@ struct UserAssetCreationView: View {
             RectangleButton(title: Localizable.userAssetsCreationAddToMyWalletButtonTitle.value, didButtonTapped: sendForm)
                 .padding(.bottom, Constants.spacing)
             
-            KeyboardView(didTapItem: vm.updateAssetValueLabel)
+            KeyboardView(vm: vm.prepareKeyboardViewModel(), textValue: $textValue)
                 .frame(maxHeight: Constants.Keyboard.maxHeight)
         }
     }
@@ -92,7 +94,7 @@ struct UserAssetCreationView: View {
             // TODO: Ensure typing correct number of decimal places depends on chosen asset type
             HStack {
                 Spacer()
-                Text(vm.assetValueLabel)
+                Text(textValue)
                 Text(vm.selectedAsset?.symbol ?? .empty)
                 Spacer()
             }
@@ -102,9 +104,14 @@ struct UserAssetCreationView: View {
     }
     
     private func sendForm() {
-        vm.createAsset {
-            presentationMode.wrappedValue.dismiss()
-        }
+        vm.createAsset(successCompletion: {
+            print("Success 🥳")
+            DispatchQueue.main.async {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }, failureCompletion: {
+            print("Failure 🫠")
+        })
     }
 }
 

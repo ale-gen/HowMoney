@@ -19,24 +19,39 @@ class AssetViewModel: ObservableObject {
     }
     @Published var assetPriceChangeImage: Image? = nil
     
-    private var previousPrice: CGFloat?
-    private var actualPrice: CGFloat?
+    private let service: any Service
+    private var previousPrice: Float?
+    private var actualPrice: Float?
+    private var task: Task<(), Never>?
     
-    var priceChange: CGFloat {
+    var priceChange: Float {
         guard let actualPrice = actualPrice,
                 let previousPrice = previousPrice
         else { return .zero }
         return actualPrice - previousPrice
     }
     
-    var percentagePriceChange: CGFloat {
+    var percentagePriceChange: Float {
         guard let previousPrice = previousPrice else { return .zero }
         return priceChange / previousPrice * 100
     }
     
     init(asset: Asset) {
+        self.service = Services.assetHistoryService
         self.asset = asset
-        self.assetHistoryData = AssetHistoryRecord.DollarHistoryMock
+    }
+    
+    @MainActor func getExchangeRateHistory(_ successCompletion: @escaping () -> Void,
+                                           _ failureCompletion: @escaping () -> Void) {
+        task = Task {
+            do {
+                self.assetHistoryData = try await service.getData(asset.name.lowercased()) as! [AssetHistoryRecord]
+                successCompletion()
+            } catch let error {
+                print("Error during \(asset.friendlyName)'s history fetching: \(error.localizedDescription)")
+                failureCompletion()
+            }
+        }
     }
     
     private func extractLastPrices() {

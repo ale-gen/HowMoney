@@ -43,12 +43,13 @@ struct KeyboardView: View {
     }
     
     let buttons: [[KeyboardButtonType]] = [
-        [.number("1"), .number("2"), .number("3"), .clear("U")],
+        [.number("1"), .number("2"), .number("3"), .clear("C")],
         [.number("4"), .number("5"), .number("6"), .number("0")],
         [.number("7"), .number("8"), .number("9"), .decimalComma(".")]
     ]
     
-    var didTapItem: (KeyboardButtonType) -> Void = { _ in }
+    @StateObject var vm: KeyboardViewModel
+    @Binding var textValue: String
     
     var body: some View {
         GeometryReader { geo in
@@ -76,7 +77,8 @@ struct KeyboardView: View {
                         HStack {
                             ForEach(row.indices, id: \.self) { index in
                                 Button {
-                                    didTapItem(row[index])
+                                    vm.didTapButton(row[index])
+                                    textValue = vm.textValue
                                 } label: {
                                     Text(row[index].content)
                                         .font(Constants.Button.font)
@@ -95,7 +97,14 @@ struct KeyboardView: View {
 }
 
 struct KeyboardView_Previews: PreviewProvider {
+    
+    @State static var value: String = .empty
+    
     static var previews: some View {
-        KeyboardView()
+        VStack {
+            Text(value)
+            KeyboardView(vm: KeyboardViewModel(assetType: .currency), textValue: $value)
+                .frame(maxHeight: 300)
+        }
     }
 }

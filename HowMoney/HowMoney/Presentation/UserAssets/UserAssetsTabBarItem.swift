@@ -54,11 +54,17 @@ struct UserAssetsTabBarItem: View {
             static let backgroundShadowColor: Color = .lightBlue.opacity(0.7)
             static let backgroundShadowRadius: CGFloat = 15.0
         }
+        enum Animation {
+            static let delay: CGFloat = 0.2
+        }
     }
     
-    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(service: AssetService())
+    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(service: Services.userAssetService)
     @State var selectedFilter: AssetFilter = .all
     @Binding var searchText: String
+    
+    @State private var loaderView: LoaderView? = LoaderView()
+    @State private var loading: Bool = false
     
     var body: some View {
         GeometryReader { geo in
@@ -70,6 +76,14 @@ struct UserAssetsTabBarItem: View {
                     .transition(.opacity)
             }
             .searchable(text: $searchText)
+        }
+        .loader(loader: $loaderView, shouldHideLoader: $loading)
+        .onAppear {
+            vm.getItems {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
+                    loading.toggle()
+                }
+            }
         }
     }
     

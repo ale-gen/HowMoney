@@ -26,10 +26,10 @@ class ListViewModel<Element>: ObservableObject {
         self.didSelectItem = didSelectItem
     }
     
-    @MainActor func getItems(_ completion: @escaping () -> Void) {
+    @MainActor func getItems(_ completion: @escaping () -> Void, _ parameters: Any...) {
         task = Task {
             do {
-                self.items = try await service.getData() as! [Element]
+                self.items = try await service.getData(parameters) as! [Element]
                 completion()
             } catch let error {
                 print("Error during assets fetching: \(error.localizedDescription)")

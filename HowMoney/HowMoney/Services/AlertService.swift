@@ -11,11 +11,12 @@ class AlertService: Service {
     
     typealias ServiceType = Alert
     
-    func sendData() {
+    func sendData(requestValues: RequestValues) async throws -> Alert? {
         /* */
+        return nil
     }
     
-    func getData() async throws -> [Alert] {
+    func getData(_ parameters: Any...) async throws -> [Alert] {
         /* */
         return Alert.AlertsMock
     }
@@ -25,7 +26,7 @@ class AlertService: Service {
         return Alert.AlertsMock.first
     }
     
-    func deleteData() -> Bool {
+    func deleteData(_ parameters: Any...) -> Bool {
         /* */
         return false
     }

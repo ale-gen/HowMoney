@@ -25,6 +25,14 @@ extension String {
         return "-"
     }
     
+    static var zero: String {
+        return "0.00"
+    }
+    
+    static var dot: String {
+        return "."
+    }
+    
     func localized() -> String {
         return NSLocalizedString(self, comment: "")
     }

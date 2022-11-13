@@ -67,21 +67,29 @@ struct UserAssetDetailsView: View {
     
     @EnvironmentObject var authUserVM: UserStateViewModel
     @StateObject var vm: UserAssetViewModel
+    
     @State private var preferenceCurrencyRequired: Bool = true
     
     var body: some View {
-        GeometryReader { geo in
-            VStack(spacing: Constants.verticalSpacing) {
-                assetTypeSwitcher
-                assetBasicInfo
-                assetValue
-                priceChangeLabel
-                graph
-                operationOptions
-                Spacer()
+        NavigationView {
+            GeometryReader { geo in
+                VStack(spacing: Constants.verticalSpacing) {
+                    assetTypeSwitcher
+                    assetBasicInfo
+                    assetValue
+                    priceChangeLabel
+                    graph
+                    operationOptions
+                    Spacer()
+                }
+                .padding(.top, Constants.topOffset)
+                .padding(.bottom, geo.safeAreaInsets.bottom)
             }
-            .padding(.top, Constants.topOffset)
-            .padding(.bottom, geo.safeAreaInsets.bottom)
+            .navigationTitle("")
+            .navigationBarHidden(true)
+        }
+        .onAppear {
+            vm.fetchPriceHistory()
         }
     }
     
@@ -155,8 +163,8 @@ struct UserAssetDetailsView: View {
     }
 
     private func operationOption(type: UserAssetOperation) -> some View {
-        Button {
-            //Navigate to edit user asset screen with properly validation turned on
+        NavigationLink {
+            UserAssetEditingView(vm: vm.prepareEditingViewModel(type))
         } label: {
             RoundedRectangle(cornerRadius: Constants.OperationOption.cornerRadius)
                 .foregroundColor(Constants.OperationOption.color)

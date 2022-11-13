@@ -64,6 +64,10 @@
 "user.assets.creation.positive.number.validation" = "Entered value has to be positive number";
 "user.assets.creation.asset.selection.validation" = "Asset selection is required.";
 
+// MARK: User assets editing
+"user.assets.editing.final.value.label" = "After operation asset balance will be equal:";
+"user.assets.editing.new.value.label" = "After operation new asset balance will be equal:";
+
 // MARK: Alerts creation
 "alerts.creation.nav.bar.title" = "Create alert";
 
