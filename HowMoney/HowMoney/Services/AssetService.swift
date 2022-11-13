@@ -32,7 +32,7 @@ class AssetService: Service {
     
     func updateData(_ model: Asset) -> Asset? {
         /* */
-        return Asset.AssetsMock.first
+        return nil
     }
     
     func deleteData() -> Bool {

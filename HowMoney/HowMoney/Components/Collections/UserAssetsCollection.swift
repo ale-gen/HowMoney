@@ -25,7 +25,6 @@ struct UserAssetsCollection: View {
     
     let userAssets: [UserAsset]
     @State var selectedUserAsset: UserAsset?
-    @State var editUserAsset: Bool = false
     
     var body: some View {
         if userAssets.count > .zero {
@@ -48,8 +47,7 @@ struct UserAssetsCollection: View {
                 .padding(.vertical, Constants.contentTopInsets)
             }
             .sheet(item: $selectedUserAsset) { userAsset in
-                UserAssetDetailsView(vm: UserAssetViewModel(userAsset: userAsset),
-                                     editUserAsset: $editUserAsset)
+                UserAssetDetailsView(vm: UserAssetViewModel(userAsset: userAsset))
             }
         } else {
             VStack {

@@ -21,7 +21,7 @@ class UserAssetService: Service {
         let token = try Keychain.get(account: email, service: "HowMoney")
         let request = createRequest(url: url, token: token, method: .patch, body: requestValues.body)
         let (data, _) = try await session.data(for: request)
-        guard let newUserAsset = try? JSONDecoder().decode(UserAssetDTO.self, from: data) else { throw NetworkError.invalidData }
+        guard let newUserAsset = try? JSONDecoder().decode([UserAssetDTO].self, from: data).first else { throw NetworkError.invalidData }
         return UserAsset.parse(from: newUserAsset)
     }
     

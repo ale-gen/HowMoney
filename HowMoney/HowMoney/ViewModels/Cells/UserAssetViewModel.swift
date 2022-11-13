@@ -33,4 +33,8 @@ class UserAssetViewModel: ObservableObject {
         self.assetVM = AssetViewModel(asset: userAsset.asset)
     }
     
+    func prepareEditingViewModel(_ type: UserAssetOperation) -> UserAssetEditingViewModel {
+        return UserAssetEditingViewModel(service: Services.userAssetService, userAsset: userAsset, operation: type)
+    }
+    
 }
