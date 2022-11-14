@@ -63,23 +63,47 @@ class UserCustomizationViewModel: ObservableObject {
     @Published var enabledEmailAlerts: Bool = true
     @Published var enabledWeeklyReports: Bool = true
     
+    private var userStateVM: UserStateViewModel
     private var steps: [CustomizationStep] = [.preferenceCurrency, .emailAlert, .weeklyReports]
     
-    func performNextStep(_ successCompletion: @escaping () -> Void) {
-        let nextStepIndex = (steps.firstIndex(of: presentStep) ?? .zero) + 1
-        if nextStepIndex == steps.count {
-            // Navigate to HomeTabBar()
-            successCompletion()
-        } else {
-            // Navigate to next onboarding screen
-            withAnimation(.linear(duration: 0.4)) {
-                presentStep = steps[nextStepIndex]
+    init(userStateVM: UserStateViewModel) {
+        self.userStateVM = userStateVM
+    }
+    
+    func performNextStep(_ successCompletion: @escaping () -> Void,
+                         _ failureCompletion: @escaping () -> Void) {
+        setPreferenceValue({ [weak self] in
+            guard let self = self else { return }
+            let nextStepIndex = (self.steps.firstIndex(of: self.presentStep) ?? .zero) + .one
+            if nextStepIndex == self.steps.count {
+                // Navigate to HomeTabBar()
+                successCompletion()
+            } else {
+                // Navigate to next onboarding screen
+                withAnimation(.linear(duration: 0.4)) {
+                    self.presentStep = self.steps[nextStepIndex]
+                }
             }
-        }
+        }, {
+            failureCompletion()
+        })
+        
     }
     
     func choosePreferenceCurrency(_ currency: PreferenceCurrency) {
         self.chosenCurrency = currency
+    }
+    
+    func setPreferenceValue(_ successCompletion: @escaping () -> Void,
+                            _ failureCompletion: @escaping () -> Void) {
+        switch presentStep {
+        case .preferenceCurrency:
+            userStateVM.updateLocalCurrencyPreference(chosenCurrency, successCompletion, failureCompletion)
+        case .emailAlert:
+            userStateVM.updateLocalAlertsOnEmail(enabledEmailAlerts, successCompletion, failureCompletion)
+        case .weeklyReports:
+            userStateVM.updateLocalWeeklyReports(enabledWeeklyReports, successCompletion, failureCompletion)
+        }
     }
     
 }

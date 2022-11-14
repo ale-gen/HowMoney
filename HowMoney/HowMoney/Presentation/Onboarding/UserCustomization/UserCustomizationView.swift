@@ -21,7 +21,7 @@ struct UserCustomizationView: View {
         }
     }
     
-    @StateObject var vm: UserCustomizationViewModel = UserCustomizationViewModel()
+    @StateObject var vm: UserCustomizationViewModel
     @State private var shouldNavigateToNextStep: Bool = false
     private let transition: AnyTransition = .asymmetric(insertion: .move(edge: .trailing),
                                                         removal: .move(edge: .leading))
@@ -52,9 +52,11 @@ struct UserCustomizationView: View {
                 .transition(transition)
                 
                 RectangleButton(title: vm.presentStep.buttonTitle) {
-                    vm.performNextStep() {
+                    vm.performNextStep( {
                         shouldNavigateToNextStep.toggle()
-                    }
+                    }, {
+                        // TODO: Show error toast
+                    })
                 }
                 .padding(.vertical, Constants.Button.topOffset)
                 .animation(nil, value: vm.presentStep)
@@ -86,16 +88,22 @@ struct UserCustomizationView: View {
 }
 
 struct UserCustomizationView_Previews: PreviewProvider {
+    
+    static var userStateVM: UserStateViewModel = UserStateViewModel()
+    
     static var previews: some View {
-        UserCustomizationView()
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+        UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: userStateVM))
+            .environmentObject(userStateVM)
     }
 }
 
 struct UserCustomizationView_SmallerDevicePreviews: PreviewProvider {
+    
+    static var userStateVM: UserStateViewModel = UserStateViewModel()
+    
     static var previews: some View {
-        UserCustomizationView()
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+        UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: userStateVM))
+            .environmentObject(userStateVM)
             .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
 }

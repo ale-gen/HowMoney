@@ -163,6 +163,6 @@ extension Card {
 struct Card_Previews: PreviewProvider {
     static var previews: some View {
         Card(title: "Current Balance", mainValue: 12345.67, subtitle: "Monthly profit", subValue: 1262.5, currency: .usd, additionalValue: 28, isIncreased: true, screenWidth: UIScreen.main.bounds.width * 0.9, width: UIScreen.main.bounds.width * 0.8)
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .environmentObject(UserStateViewModel())
     }
 }

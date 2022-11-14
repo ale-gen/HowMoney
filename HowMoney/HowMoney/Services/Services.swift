@@ -24,8 +24,8 @@ protocol Service: RequestProtocol {
     
     func sendData(requestValues: RequestValues) async throws -> ServiceType?
     func getData(_ parameters: Any...) async throws -> [ServiceType]
-    func updateData(_ model: ServiceType) -> ServiceType?
-    func deleteData(_ parameters: Any...) -> Bool
+    func updateData(_ model: ServiceType) async throws -> ServiceType?
+    func deleteData(_ parameters: Any...) async throws -> Bool
     
     func login(_ completion: @escaping (AuthUser) -> Void)
     func logout(_ completion: @escaping () -> Void)

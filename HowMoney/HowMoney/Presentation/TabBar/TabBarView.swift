@@ -35,14 +35,14 @@ struct TabBarView: View {
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView()
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .environmentObject(UserStateViewModel())
     }
 }
 
 struct TabBarView_SmallerDevicePreviews: PreviewProvider {
     static var previews: some View {
         TabBarView()
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .environmentObject(UserStateViewModel())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
 }

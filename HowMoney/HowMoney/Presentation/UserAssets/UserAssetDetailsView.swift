@@ -96,7 +96,7 @@ struct UserAssetDetailsView: View {
     private var assetTypeSwitcher: some View {
         HStack {
             Spacer()
-            CurrencySymbolToggleButton(isOn: $preferenceCurrencyRequired, canSwitch: vm.userAsset.asset.name == authUserVM.preferenceCurrency.name ? false : true, isOnImage: authUserVM.preferenceCurrency.symbol, isOffImage: vm.userAsset.asset.symbol ?? .empty)
+            CurrencySymbolToggleButton(isOn: $preferenceCurrencyRequired, canSwitch: vm.userAsset.asset.name == authUserVM.localPreferenceCurrency.name ? false : true, isOnImage: authUserVM.localPreferenceCurrency.symbol, isOffImage: vm.userAsset.asset.symbol ?? .empty)
         }
         .padding(.horizontal, Constants.horizontalSpacing)
     }
@@ -124,7 +124,7 @@ struct UserAssetDetailsView: View {
     private var assetValue: some View {
         HStack(spacing: Constants.horizontalSpacing) {
             AssetValueLabel(value: preferenceCurrencyRequired ? vm.userAsset.preferenceCurrencyValue : vm.userAsset.originValue,
-                            symbol: preferenceCurrencyRequired ? authUserVM.preferenceCurrency.symbol : vm.userAsset.asset.symbol ?? .empty,
+                            symbol: preferenceCurrencyRequired ? authUserVM.localPreferenceCurrency.symbol : vm.userAsset.asset.symbol ?? .empty,
                             type: preferenceCurrencyRequired ? .currency : vm.userAsset.asset.type)
             .font(Constants.MainValue.font)
             .foregroundColor(Constants.MainValue.color)
@@ -186,7 +186,7 @@ struct UserAssetDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!))
             .background(.black)
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .environmentObject(UserStateViewModel())
     }
 }
 
@@ -194,7 +194,7 @@ struct UserAssetDetailsViewSmallerDevices_Previews: PreviewProvider {
     static var previews: some View {
         UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!))
             .background(.black)
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .environmentObject(UserStateViewModel())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
 }

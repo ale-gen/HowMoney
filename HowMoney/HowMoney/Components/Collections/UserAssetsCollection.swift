@@ -63,6 +63,6 @@ struct UserAssetsCollection_Previews: PreviewProvider {
     static var previews: some View {
         UserAssetsCollection(userAssets: UserAsset.UserAssetsMock)
             .background(.black)
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .environmentObject(UserStateViewModel())
     }
 }

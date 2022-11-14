@@ -14,7 +14,7 @@ struct PreferenceCurrencyValueLabel: View {
     
     var body: some View {
         AssetValueLabel(value: value,
-                        symbol: authUserVM.preferenceCurrency.symbol,
+                        symbol: authUserVM.localPreferenceCurrency.symbol,
                         type: .currency)
     }
 }

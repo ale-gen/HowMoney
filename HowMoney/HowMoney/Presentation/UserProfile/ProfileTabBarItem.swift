@@ -34,8 +34,6 @@ struct ProfileTabBarItem: View {
     
     @EnvironmentObject var authUserVM: UserStateViewModel
     @State var biometricsEnabled: Bool = false
-    @State var weeklyReportsRequired: Bool = true
-    @State var emailAlertsRequired: Bool = true
     
     @State private var changePasswordRequired: Bool = false
     
@@ -47,7 +45,7 @@ struct ProfileTabBarItem: View {
                 }
                 userNameLabel
                 Divider().background(Constants.Divider.color)
-                PreferenceCurrenciesCollection(selectedPreferenceCurrency: authUserVM.preferenceCurrency, didPreferenceCurrencyChanged: authUserVM.updateCurrencyPreference)
+                PreferenceCurrenciesCollection(selectedPreferenceCurrency: authUserVM.localPreferenceCurrency, didPreferenceCurrencyChanged: didPreferenceCurrencyChanged)
                 toggleButtons
                 changePasswordButton
                     .padding(.top, -Constants.spacing / 2)
@@ -57,6 +55,11 @@ struct ProfileTabBarItem: View {
         }
         .sheet(isPresented: $changePasswordRequired) {
             ChangePassword()
+        }
+        .onAppear {
+            authUserVM.getPreferences {
+                print("❌ Cannot fetch user preferences")
+            }
         }
     }
     
@@ -84,11 +87,25 @@ struct ProfileTabBarItem: View {
     }
     
     private var weeklyReports: some View {
-        ColorToggleButton(isOn: $weeklyReportsRequired, textLabel: Localizable.userProfileWeeklyReportsLabelText.value)
+        ColorToggleButton(isOn: $authUserVM.localWeeklyReports, textLabel: Localizable.userProfileWeeklyReportsLabelText.value)
+            .onChange(of: authUserVM.localWeeklyReports) { newValue in
+                authUserVM.updateLocalWeeklyReports(newValue, {
+                    print("✅ Preference weekly reports is set")
+                }, {
+                    // TODO: Show error toast
+                })
+            }
     }
     
     private var emailAlerts: some View {
-        ColorToggleButton(isOn: $emailAlertsRequired, textLabel: Localizable.userProfileEmailAlertsLabelText.value)
+        ColorToggleButton(isOn: $authUserVM.localAlertsOnEmail, textLabel: Localizable.userProfileEmailAlertsLabelText.value)
+            .onChange(of: authUserVM.localAlertsOnEmail) { newValue in
+                authUserVM.updateLocalAlertsOnEmail(newValue, {
+                    print("✅ Preference alerts on email is set")
+                }, {
+                    // TODO: Show error toast
+                })
+            }
     }
     
     private var biometrics: some View {
@@ -124,6 +141,14 @@ struct ProfileTabBarItem: View {
         .clipShape(Circle())
         .shadow(color: Constants.AvatarImage.shadowColor, radius: Constants.AvatarImage.shadowRadius)
         .padding(.top, Constants.AvatarImage.topOffset)
+    }
+    
+    private func didPreferenceCurrencyChanged(_ preferenceCurrency: PreferenceCurrency) {
+        authUserVM.updateLocalCurrencyPreference(preferenceCurrency, {
+            print("✅ Preference currency is set")
+        }, {
+            // TODO: Show error toast
+        })
     }
 
 }
