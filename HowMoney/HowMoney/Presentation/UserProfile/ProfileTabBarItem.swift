@@ -45,7 +45,7 @@ struct ProfileTabBarItem: View {
                 }
                 userNameLabel
                 Divider().background(Constants.Divider.color)
-                PreferenceCurrenciesCollection(selectedPreferenceCurrency: authUserVM.localPreferenceCurrency, didPreferenceCurrencyChanged: authUserVM.updateLocalCurrencyPreference)
+                PreferenceCurrenciesCollection(selectedPreferenceCurrency: authUserVM.localPreferenceCurrency, didPreferenceCurrencyChanged: didPreferenceCurrencyChanged)
                 toggleButtons
                 changePasswordButton
                     .padding(.top, -Constants.spacing / 2)
@@ -89,14 +89,22 @@ struct ProfileTabBarItem: View {
     private var weeklyReports: some View {
         ColorToggleButton(isOn: $authUserVM.localWeeklyReports, textLabel: Localizable.userProfileWeeklyReportsLabelText.value)
             .onChange(of: authUserVM.localWeeklyReports) { newValue in
-                authUserVM.updateLocalWeeklyReports(newValue)
+                authUserVM.updateLocalWeeklyReports(newValue, {
+                    print("✅ Preference weekly reports is set")
+                }, {
+                    // TODO: Show error toast
+                })
             }
     }
     
     private var emailAlerts: some View {
         ColorToggleButton(isOn: $authUserVM.localAlertsOnEmail, textLabel: Localizable.userProfileEmailAlertsLabelText.value)
             .onChange(of: authUserVM.localAlertsOnEmail) { newValue in
-                authUserVM.updateLocalAlertsOnEmail(newValue)
+                authUserVM.updateLocalAlertsOnEmail(newValue, {
+                    print("✅ Preference alerts on email is set")
+                }, {
+                    // TODO: Show error toast
+                })
             }
     }
     
@@ -133,6 +141,14 @@ struct ProfileTabBarItem: View {
         .clipShape(Circle())
         .shadow(color: Constants.AvatarImage.shadowColor, radius: Constants.AvatarImage.shadowRadius)
         .padding(.top, Constants.AvatarImage.topOffset)
+    }
+    
+    private func didPreferenceCurrencyChanged(_ preferenceCurrency: PreferenceCurrency) {
+        authUserVM.updateLocalCurrencyPreference(preferenceCurrency, {
+            print("✅ Preference currency is set")
+        }, {
+            // TODO: Show error toast
+        })
     }
 
 }

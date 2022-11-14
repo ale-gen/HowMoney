@@ -60,34 +60,44 @@ class UserStateViewModel: ObservableObject {
         }
     }
     
-    func updateLocalCurrencyPreference(_ preferenceCurrency: PreferenceCurrency) {
+    func updateLocalCurrencyPreference(_ preferenceCurrency: PreferenceCurrency,
+                                       _ successCompletion: @escaping () -> Void,
+                                       _ failureCompletion: @escaping () -> Void) {
         self.localPreferenceCurrency = preferenceCurrency
         DispatchQueue.main.async { [weak self] in
-            self?.updatePreferences {
+            self?.updatePreferences(successCompletion) {
                 print("🆘 Failure on updating currency preference")
+                failureCompletion()
             }
         }
     }
     
-    func updateLocalWeeklyReports(_ weeklyReports: Bool) {
+    func updateLocalWeeklyReports(_ weeklyReports: Bool,
+                                  _ successCompletion: @escaping () -> Void,
+                                  _ failureCompletion: @escaping () -> Void) {
         self.localWeeklyReports = weeklyReports
         DispatchQueue.main.async { [weak self] in
-            self?.updatePreferences {
+            self?.updatePreferences(successCompletion) {
                 print("🆘 Failure on updating weekly reports")
+                failureCompletion()
             }
         }
     }
     
-    func updateLocalAlertsOnEmail(_ alertsOnEmail: Bool) {
+    func updateLocalAlertsOnEmail(_ alertsOnEmail: Bool,
+                                  _ successCompletion: @escaping () -> Void,
+                                  _ failureCompletion: @escaping () -> Void) {
         self.localAlertsOnEmail = alertsOnEmail
         DispatchQueue.main.async { [weak self] in
-            self?.updatePreferences {
+            self?.updatePreferences(successCompletion) {
                 print("🆘 Failure on updating alerts on email")
+                failureCompletion()
             }
         }
     }
     
-    @MainActor private func updatePreferences(_ failureCompletion: @escaping () -> Void) {
+    @MainActor private func updatePreferences(_ successCompletion: @escaping () -> Void,
+                                              _ failureCompletion: @escaping () -> Void) {
         task = Task {
             do {
                 let result = try await authService.sendData(requestValues: .userPreferences(preferenceCurrency: localPreferenceCurrency.name.lowercased(),
@@ -99,6 +109,7 @@ class UserStateViewModel: ObservableObject {
                     return
                 }
                 updateLocalPreferences(result)
+                successCompletion()
             } catch let error {
                 print("🆘 Error during user preferences updating: \(error.localizedDescription)")
                 revokeLocalPreferencesIfNeeded()

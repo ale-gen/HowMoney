@@ -13,7 +13,7 @@ struct AppSwitcher: View {
     
     var body: some View {
         if vm.isAuthorized {
-            UserCustomizationView()
+            UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: vm))
                 .environmentObject(vm)
         } else {
             WelcomeView(didGetStarted: vm.login)
