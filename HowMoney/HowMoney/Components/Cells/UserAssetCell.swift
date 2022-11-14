@@ -40,7 +40,7 @@ struct UserAssetCell: View {
                                 type: userAsset.asset.type)
                     .font(Constants.PreferenceCurrencyValue.font)
                     .foregroundColor(Constants.PreferenceCurrencyValue.color)
-                if userAsset.asset.name != authUserVM.preferenceCurrency.name {
+                if userAsset.asset.name != authUserVM.localPreferenceCurrency.name {
                     PreferenceCurrencyValueLabel(value: userAsset.preferenceCurrencyValue)
                         .font(Constants.OriginValue.font)
                         .foregroundColor(Constants.OriginValue.color)
@@ -61,7 +61,7 @@ struct UserAssetCell_Previews: PreviewProvider {
         ZStack {
             Color.black.ignoresSafeArea()
             UserAssetCell(userAsset: userAssets.first!)
-                .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+                .environmentObject(UserStateViewModel())
         }
     }
 }

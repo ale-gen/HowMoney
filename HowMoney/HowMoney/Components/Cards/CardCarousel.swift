@@ -79,6 +79,6 @@ struct CardCarousel_Previews: PreviewProvider {
         GeometryReader { geo in
             CardCarousel(geo: geo)
         }
-        .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+        .environmentObject(UserStateViewModel())
     }
 }

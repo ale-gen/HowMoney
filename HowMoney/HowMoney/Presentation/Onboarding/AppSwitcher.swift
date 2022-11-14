@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppSwitcher: View {
     
-    @StateObject var vm: UserStateViewModel = UserStateViewModel(authService: AuthorizationService())
+    @StateObject var vm: UserStateViewModel = UserStateViewModel()
     
     var body: some View {
         if vm.isAuthorized {
@@ -26,6 +26,6 @@ struct AppSwitcher_Previews: PreviewProvider {
     
     static var previews: some View {
         AppSwitcher()
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .environmentObject(UserStateViewModel())
     }
 }

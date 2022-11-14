@@ -10,7 +10,12 @@ import Auth0
 
 struct AuthorizationService: Service {
     
+    typealias ServiceType = UserPreferences
+    
     @EnvironmentObject var userState: UserStateViewModel
+    
+    private let session = URLSession.shared
+    private let urlString = "\(NetworkEndpoints.userPreferences.rawValue)"
     
     func login(_ completion: @escaping (AuthUser) -> Void) {
         Auth0
@@ -35,10 +40,30 @@ struct AuthorizationService: Service {
         completion()
     }
     
-    func sendData(requestValues: RequestValues) async throws -> Model? { return nil }
-    func getData(_ parameters: Any...) -> [Model] { return [] }
-    func updateData(_ model: Model) -> Model? { return nil }
-    func deleteData(_ parameters: Any...) -> Bool { return false }
+    func getData(_ parameters: Any...) async throws -> [UserPreferences] {
+        guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
+        guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
+        
+        let token = try Keychain.get(account: email)
+        let request = createRequest(url: url, token: token, method: .get)
+        let (data, _) = try await session.data(for: request)
+        guard let userPreferences = try? JSONDecoder().decode(UserPreferencesDTO.self, from: data) else { throw NetworkError.invalidData }
+        return [UserPreferences.parse(from: userPreferences)]
+    }
+    
+    func sendData(requestValues: RequestValues) async throws -> UserPreferences? {
+        guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
+        guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
+        
+        let token = try Keychain.get(account: email)
+        let request = createRequest(url: url, token: token, method: .put, body: requestValues.body)
+        let (data, _) = try await session.data(for: request)
+        guard let newPreferences = try? JSONDecoder().decode(UserPreferencesDTO.self, from: data) else { throw NetworkError.invalidData }
+        return UserPreferences.parse(from: newPreferences)
+    }
+    
+    func updateData(_ model: UserPreferences) async throws -> UserPreferences? { return nil }
+    func deleteData(_ parameters: Any...) async throws -> Bool { return false }
     
     private func extractAudienceValue() -> String? {
         guard let path = Bundle.main.path(forResource: "Auth0", ofType: "plist"),

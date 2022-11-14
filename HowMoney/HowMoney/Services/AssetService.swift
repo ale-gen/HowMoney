@@ -30,12 +30,12 @@ class AssetService: Service {
         return assets.map { Asset.parse(from: $0) }
     }
     
-    func updateData(_ model: Asset) -> Asset? {
+    func updateData(_ model: Asset) async throws -> Asset? {
         /* */
         return nil
     }
     
-    func deleteData(_ parameters: Any...) -> Bool {
+    func deleteData(_ parameters: Any...) async throws -> Bool {
         /* */
         return false
     }

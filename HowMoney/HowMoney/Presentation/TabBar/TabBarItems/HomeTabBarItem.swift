@@ -80,6 +80,6 @@ struct HomeTabBarItem: View {
 struct HomeTabBarItem_Previews: PreviewProvider {
     static var previews: some View {
         HomeTabBarItem()
-            .environmentObject(UserStateViewModel(authService: AuthorizationService()))
+            .environmentObject(UserStateViewModel())
     }
 }

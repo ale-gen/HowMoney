@@ -34,12 +34,12 @@ class AssetHistoryService: Service {
         return assetsHistory.map { AssetHistoryRecord.parse(from: $0) }
     }
     
-    func updateData(_ model: AssetHistoryRecord) -> AssetHistoryRecord? {
+    func updateData(_ model: AssetHistoryRecord) async throws -> AssetHistoryRecord? {
         /* */
         return nil
     }
     
-    func deleteData(_ parameters: Any...) -> Bool {
+    func deleteData(_ parameters: Any...) async throws -> Bool {
         /* */
         return false
     }

@@ -21,12 +21,12 @@ class AlertService: Service {
         return Alert.AlertsMock
     }
     
-    func updateData(_ model: Alert) -> Alert? {
+    func updateData(_ model: Alert) async throws -> Alert? {
         /* */
         return Alert.AlertsMock.first
     }
     
-    func deleteData(_ parameters: Any...) -> Bool {
+    func deleteData(_ parameters: Any...) async throws -> Bool {
         /* */
         return false
     }
