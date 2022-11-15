@@ -10,7 +10,6 @@ import SwiftUI
 struct UserAssetCell: View {
     
     private enum Constants {
-        static let horizontalInsets: CGFloat = 20.0
         static let height: CGFloat = 60.0
         static let spacing: CGFloat = 2.0
         
@@ -49,7 +48,6 @@ struct UserAssetCell: View {
         }
         .contentShape(Rectangle())
         .frame(height: Constants.height)
-        .padding(.horizontal, Constants.horizontalInsets)
     }
 }
 

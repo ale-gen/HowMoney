@@ -10,7 +10,7 @@ import Foundation
 extension String {
     
     static var baseUrl: String {
-        
+        return ""
     }
     
     static var empty: String {
@@ -39,6 +39,10 @@ extension String {
     
     func localized() -> String {
         return NSLocalizedString(self, comment: "")
+    }
+    
+    func localizedWithFormat(_ value: String) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString(self, comment: ""), value)
     }
     
     func date() -> Date? {

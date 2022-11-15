@@ -24,7 +24,10 @@ struct UserAssetsCollection: View {
     }
     
     let userAssets: [UserAsset]
+    var didUserAssetDelete: ((UserAsset, @escaping () -> Void) -> Void)?
     @State var selectedUserAsset: UserAsset?
+    @State private var userAssetForDeletion: UserAsset?
+    @State private var showConfirmationDialog: Bool = false
     
     var body: some View {
         if userAssets.count > .zero {
@@ -32,19 +35,21 @@ struct UserAssetsCollection: View {
                 RoundedRectangle(cornerRadius: Constants.Background.cornerRadius)
                     .fill(Constants.Background.color)
                     .shadow(color: Constants.Shadow.color, radius: Constants.Shadow.radius)
-                ScrollView(showsIndicators: false) {
-                    ForEach(userAssets, id: \.self) { userAsset in
-                        UserAssetCell(userAsset: userAsset)
-                            .listRowBackground(Color.black)
-                            .onTapGesture {
-                                withAnimation {
-                                    selectedUserAsset = userAsset
-                                }
+                
+                List(userAssets) { userAsset in
+                    UserAssetCell(userAsset: userAsset)
+                        .listRowBackground(Color.black)
+                        .onTapGesture {
+                            withAnimation {
+                                selectedUserAsset = userAsset
                             }
-                    }
+                        }
+                        .swipeActions { deleteButton(userAsset) }
+                        .confirmationDialog(Text(""), isPresented: $showConfirmationDialog) {
+                            deleteConfirmationButton } message: {
+                                deleteConfirmationMessage
+                            }
                 }
-                .padding(.horizontal, Constants.contentHorizontalInsets)
-                .padding(.vertical, Constants.contentTopInsets)
             }
             .sheet(item: $selectedUserAsset) { userAsset in
                 UserAssetDetailsView(vm: UserAssetViewModel(userAsset: userAsset))
@@ -56,6 +61,32 @@ struct UserAssetsCollection: View {
                 Spacer()
             }
         }
+    }
+    
+    private func deleteButton(_ userAsset: UserAsset) -> some View {
+        Button() {
+            userAssetForDeletion = userAsset
+            showConfirmationDialog = true
+        } label: {
+            Label(Localizable.deleteButtonTitle.value, systemImage: Icons.trash.rawValue)
+        }
+        .tint(.red)
+    }
+    
+    private var deleteConfirmationButton: some View {
+        Button(Localizable.deleteButtonTitle.value, role: .destructive) {
+            print("🗑 Deleting...")
+            withAnimation {
+                guard let userAssetForDeletion = userAssetForDeletion else { return }
+                didUserAssetDelete?(userAssetForDeletion) {
+                    // TODO: Show error toast
+                }
+            }
+        }
+    }
+    
+    private var deleteConfirmationMessage: some View {
+        Text(Localizable.userAssetsDeletionAlertMessageTitle.value(userAssetForDeletion?.asset.friendlyName ?? .empty))
     }
 }
 
