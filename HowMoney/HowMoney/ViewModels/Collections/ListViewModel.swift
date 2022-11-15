@@ -38,4 +38,18 @@ class ListViewModel<Element>: ObservableObject {
         }
     }
     
+    @MainActor func deleteItem(_ userAsset: UserAsset, _ failureCompletion: @escaping () -> Void) {
+        task = Task {
+            do {
+                let result = try await service.deleteData(userAsset.asset.name)
+                if result {
+                    items.removeAll(where: { ($0 as? UserAsset)?.id == userAsset.id})
+                }
+            } catch let error {
+                print("Error during assets fetching: \(error.localizedDescription)")
+                failureCompletion()
+            }
+        }
+    }
+    
 }

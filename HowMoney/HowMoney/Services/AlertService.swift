@@ -12,7 +12,7 @@ class AlertService: Service {
     typealias ServiceType = Alert
     
     private let session = URLSession.shared
-    private let urlString = "\(NetworkEndpoints.alerts.rawValue)"
+    private let urlString = "\(String.baseUrl)\(NetworkEndpoints.alerts.rawValue)"
     
     func sendData(requestValues: RequestValues) async throws -> Alert? {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }

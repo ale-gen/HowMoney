@@ -67,6 +67,9 @@
 "user.assets.creation.positive.number.validation" = "Entered value has to be positive number";
 "user.assets.creation.asset.selection.validation" = "Asset selection is required.";
 
+// MARK: User asset deletion
+"user.assets.deletion.alert.message" = "Are you sure you want to delete: %@?";
+
 // MARK: Alerts creation
 "alerts.creation.notify.me.button.title" = "Notify me";
 "alerts.creation.selection.prompt.text" = "For which asset would you like to set alert?";
@@ -95,3 +98,5 @@
 "change.password.empty.field.validation.text" = "Please enter all fields";
 "change.password.current.password.validation.text" = "Incorrect current password. Please try again.";
 
+// MARK: Button titles
+"delete.button.title" = "Delete";

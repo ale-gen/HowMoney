@@ -12,7 +12,7 @@ class AssetHistoryService: Service {
     typealias ServiceType = AssetHistoryRecord
     
     private let session = URLSession.shared
-    private var baseUrlString = "\(NetworkEndpoints.assetHistory.rawValue)"
+    private var baseUrlString = "\(String.baseUrl)\(NetworkEndpoints.assetHistory.rawValue)"
     
     func sendData(requestValues: RequestValues) async throws -> AssetHistoryRecord? {
         /* */

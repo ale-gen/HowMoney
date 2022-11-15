@@ -16,6 +16,11 @@ extension Translation where Self: RawRepresentable, Self.RawValue == String {
     var value: String {
         return rawValue.localized()
     }
+    
+    func value(_ value: String) -> String {
+        return rawValue.localizedWithFormat(value)
+    }
+    
 }
 
 enum Localizable: String, Translation {
@@ -81,6 +86,9 @@ enum Localizable: String, Translation {
     case userAssetsCreationPositiveNumberValidation = "user.assets.creation.positive.number.validation"
     case userAssetsCreationAssetSelectionValidation = "user.assets.creation.asset.selection.validation"
     
+    // MARK: User assets deletion
+    case userAssetsDeletionAlertMessageTitle = "user.assets.deletion.alert.message"
+    
     // MARK: Alerts creation
     case alertsCreationNotifyMeButtonTitle = "alerts.creation.notify.me.button.title"
     case alertsCreationSelectionPromptText = "alerts.creation.selection.prompt.text"
@@ -108,5 +116,8 @@ enum Localizable: String, Translation {
     case changePasswordCompatibilityValidationText = "change.password.compatibility.validation.text"
     case changePasswordEmptyFieldValidationText = "change.password.empty.field.validation.text"
     case changePasswordCurrentPasswordValidationText = "change.password.current.password.validation.text"
+    
+    // MARK: Button titles
+    case deleteButtonTitle = "delete.button.title"
     
 }

@@ -12,7 +12,7 @@ class AssetService: Service {
     typealias ServiceType = Asset
     
     private let session = URLSession.shared
-    private let urlString = "\(NetworkEndpoints.assets.rawValue)"
+    private let urlString = "\(String.baseUrl)\(NetworkEndpoints.assets.rawValue)"
     
     func sendData(requestValues: RequestValues) async throws -> Asset? {
         /* */

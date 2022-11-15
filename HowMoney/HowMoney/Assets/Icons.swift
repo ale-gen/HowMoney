@@ -35,4 +35,5 @@ enum Icons: String, IconsTranslation {
     case circleSuccess = "checkmark.circle.fill"
     case circleClose = "xmark.circle.fill"
     case close = "xmark"
+    case trash = "trash.fill"
 }
