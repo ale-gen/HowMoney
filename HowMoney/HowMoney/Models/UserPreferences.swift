@@ -13,17 +13,6 @@ struct UserPreferences {
     let alertsOnEmail: Bool
     
     static func parse(from model: UserPreferencesDTO) -> UserPreferences {
-        var preferenceCurrency: PreferenceCurrency
-        switch model.preferenceCurrency.lowercased() {
-        case PreferenceCurrency.usd.name.lowercased():
-            preferenceCurrency = .usd
-        case PreferenceCurrency.eur.name.lowercased():
-            preferenceCurrency = .eur
-        case PreferenceCurrency.pln.name.lowercased():
-            preferenceCurrency = .pln
-        default:
-            preferenceCurrency = .usd
-        }
-        return UserPreferences(preferenceCurrency: preferenceCurrency, weeklyReports: model.weeklyReports, alertsOnEmail: model.alertsOnEmail)
+        return UserPreferences(preferenceCurrency: model.preferenceCurrency.lowercased().preferenceCurrency(), weeklyReports: model.weeklyReports, alertsOnEmail: model.alertsOnEmail)
     }
 }

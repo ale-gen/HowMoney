@@ -1,13 +1,13 @@
 //
-//  UserAssetCreationView.swift
+//  CreationView.swift
 //  HowMoney
 //
-//  Created by Aleksandra Generowicz on 29/10/2022.
+//  Created by Aleksandra Generowicz on 15/11/2022.
 //
 
 import SwiftUI
 
-struct UserAssetCreationView: View {
+struct CreationView: View {
     
     private enum Constants {
         static let spacing: CGFloat = 20.0
@@ -16,7 +16,7 @@ struct UserAssetCreationView: View {
             static let cornerRadius: CGFloat = 10.0
             static let color: Color = .lightBlue.opacity(0.6)
             static let shadowColor: Color = .lightBlue
-            static let height: CGFloat = 100.0
+            static let height: CGFloat = 60.0
             static let textColor: Color = .white
         }
         enum Icon {
@@ -31,7 +31,7 @@ struct UserAssetCreationView: View {
             static let maxHeight: CGFloat = 150.0
             static let font: Font = .system(size: 40.0)
             static let color: Color = .white
-            static let defaultValue: String = "0.00"
+            static let defaultValue: String = .zero
         }
         enum Keyboard {
             static let maxHeight: CGFloat = 300.0
@@ -39,11 +39,15 @@ struct UserAssetCreationView: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var vm: UserAssetCreationViewModel = UserAssetCreationViewModel(service: Services.userAssetService)
-    @State var textValue: String = Constants.ValueLabel.defaultValue
+    @StateObject var vm: CreationViewModel
+    @State private var textValue: String = Constants.ValueLabel.defaultValue
     
     var body: some View {
         VStack {
+            if vm.context == .alert {
+                currencyPicker
+            }
+            
             NavigationLink(destination: AssetsCollection(assetVM: vm.prepareAssetsCollectionViewModel())) {
                 RoundedRectangle(cornerRadius: Constants.SelectionButton.cornerRadius)
                     .fill(Constants.SelectionButton.color)
@@ -89,6 +93,15 @@ struct UserAssetCreationView: View {
                       subtitleColor: Constants.AssetInfo.subtitleColor)
     }
     
+    private var currencyPicker: some View {
+        VStack {
+            Text(Localizable.alertsCreationTargetCurrencyText.value)
+            if let vm = vm as? AlertCreationViewModel {
+                SegmentedPickerView(items: PreferenceCurrency.allCases.map { $0.name }, didSelectItem: vm.updateTargetCurrency)
+            }
+        }
+    }
+    
     private var valueLabel: some View {
         ZStack {
             // TODO: Ensure typing correct number of decimal places depends on chosen asset type
@@ -104,7 +117,7 @@ struct UserAssetCreationView: View {
     }
     
     private func sendForm() {
-        vm.createAsset(successCompletion: {
+        vm.create(successCompletion: {
             print("Success 🥳")
             DispatchQueue.main.async {
                 presentationMode.wrappedValue.dismiss()
@@ -115,15 +128,8 @@ struct UserAssetCreationView: View {
     }
 }
 
-struct UserAssetCreationView_Previews: PreviewProvider {
+struct CreationView_Previews: PreviewProvider {
     static var previews: some View {
-        UserAssetCreationView()
-    }
-}
-
-struct UserAssetCreationView_SmallerDevicePreviews: PreviewProvider {
-    static var previews: some View {
-        UserAssetCreationView()
-            .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
+        CreationView(vm: AlertCreationViewModel(service: AlertService()))
     }
 }

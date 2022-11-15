@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum PreferenceCurrency: String {
+enum PreferenceCurrency: String, CaseIterable {
     case pln
     case usd
     case eur

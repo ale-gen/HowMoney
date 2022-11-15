@@ -1,26 +1,26 @@
 //
-//  UserAssetCreationViewModel.swift
+//  AlertCreationViewModel.swift
 //  HowMoney
 //
-//  Created by Aleksandra Generowicz on 29/10/2022.
+//  Created by Aleksandra Generowicz on 15/11/2022.
 //
 
 import Foundation
 
-class UserAssetCreationViewModel: CreationViewModel  {
+class AlertCreationViewModel: CreationViewModel {
     
-    private let operation: UserAssetOperation
+    private var targetCurrency: PreferenceCurrency
     
     override init(service: any Service) {
-        self.operation = .add
+        targetCurrency = .usd
         super.init(service: service)
-        self.context = .asset
+        self.context = .alert
     }
     
     override func create(successCompletion: @escaping () -> Void,
                          failureCompletion: @escaping () -> Void) {
         guard let selectedAsset = selectedAsset else {
-            errorMessage = Localizable.userAssetsCreationAssetSelectionValidation.value
+            errorMessage = Localizable.alertsCreationAssetSelectionValidation.value
             return
         }
         guard let keyboardViewModel = keyboardViewModel,
@@ -33,10 +33,10 @@ class UserAssetCreationViewModel: CreationViewModel  {
         
         task = Task {
             do {
-                let result = try await service.sendData(requestValues: .userAsset(assetName: selectedAsset.name.lowercased(),
-                                                                                  value: value * operation.multiplier,
-                                                                                  type: operation.requestValueType))
-                guard let _ = result as? UserAsset else {
+                let result = try await service.sendData(requestValues: .alert(value: value,
+                                                                              originAssetName: selectedAsset.name.lowercased(),
+                                                                              targetCurrencyName: targetCurrency.name.lowercased()))
+                guard let _ = result as? Alert else {
                     failureCompletion()
                     return
                 }
@@ -46,6 +46,10 @@ class UserAssetCreationViewModel: CreationViewModel  {
                 failureCompletion()
             }
         }
+    }
+    
+    func updateTargetCurrency(_ currencyIndex: Int) {
+        self.targetCurrency = PreferenceCurrency.allCases[currencyIndex]
     }
     
 }
