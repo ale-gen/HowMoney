@@ -17,7 +17,7 @@ struct UserAssetEmptyState: View {
             shouldShowAssetCreationView.toggle()
         })
         .sheet(isPresented: $shouldShowAssetCreationView) {
-            UserAssetCreationView()
+            CreationView(vm: UserAssetCreationViewModel(service: Services.userAssetService))
         }
     }
     

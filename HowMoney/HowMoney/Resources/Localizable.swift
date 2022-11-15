@@ -81,6 +81,13 @@ enum Localizable: String, Translation {
     case userAssetsCreationPositiveNumberValidation = "user.assets.creation.positive.number.validation"
     case userAssetsCreationAssetSelectionValidation = "user.assets.creation.asset.selection.validation"
     
+    // MARK: Alerts creation
+    case alertsCreationNotifyMeButtonTitle = "alerts.creation.notify.me.button.title"
+    case alertsCreationSelectionPromptText = "alerts.creation.selection.prompt.text"
+    case alertsCreationTargetCurrencyText = "alerts.creation.target.currency.text"
+    case alertsCreationPositiveNumberValidation = "alerts.creation.positive.number.validation"
+    case alertsCreationAssetSelectionValidation = "alerts.creation.asset.selection.validation"
+    
     // MARK: User assets editing
     case userAssetsEditingFinalValueLabel = "user.assets.editing.final.value.label"
     case userAssetsEditingNewValueLabel = "user.assets.editing.new.value.label"

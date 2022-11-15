@@ -43,7 +43,7 @@ struct SingleRecordRequestBody: RequestBody {
 enum RequestValues {
     case userAsset(assetName: String, value: Float, type: String)
     case userPreferences(preferenceCurrency: String, weeklyReports: Bool, alertsOnEmail: Bool)
-    case alert
+    case alert(value: Float, originAssetName: String, targetCurrencyName: String)
     
     var body: RequestBody {
         switch self {
@@ -55,8 +55,10 @@ enum RequestValues {
             return SingleRecordRequestBody(body: ["preferenceCurrency": preferenceCurrency,
                                                   "weeklyReports": weeklyReports,
                                                   "alertsOnEmail": alertsOnEmail] as [String: Any])
-        case .alert:
-            return SingleRecordRequestBody(body: [:] as [String: Any])
+        case let .alert(value, originAssetName, targetCurrencyName):
+            return SingleRecordRequestBody(body: ["value": value,
+                                                  "originAssetName": originAssetName,
+                                                  "currency": targetCurrencyName] as [String: Any])
         }
     }
 }

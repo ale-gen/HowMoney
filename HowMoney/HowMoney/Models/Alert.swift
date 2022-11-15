@@ -14,6 +14,10 @@ struct Alert: Hashable {
     let originAssetType: AssetType
     let targetCurrency: PreferenceCurrency
     
+    static func parse(from alert: AlertDTO) -> Alert {
+        return Alert(targetValue: alert.value, originAssetName: alert.originAssetName, originAssetType: alert.originAssetType.lowercased().assetType(), targetCurrency: alert.currency.lowercased().preferenceCurrency())
+    }
+    
     static let AlertsMock: [Alert] = [
         .init(targetValue: 4.6, originAssetName: "EUR", originAssetType: .currency, targetCurrency: .pln),
         .init(targetValue: 4.5, originAssetName: "EUR", originAssetType: .currency, targetCurrency: .pln),

@@ -43,18 +43,7 @@ struct Asset: Hashable {
     let type: AssetType
     
     static func parse(from assetDto: AssetDTO) -> Asset {
-        var type: AssetType
-        switch assetDto.category {
-        case "crypto":
-            type = .cryptocurrency
-        case "currency":
-            type = .currency
-        case "metal":
-            type = .metal
-        default:
-            type = .currency
-        }
-        return Asset(name: assetDto.name, friendlyName: assetDto.friendlyName, symbol: assetDto.symbol, type: type)
+        return Asset(name: assetDto.name, friendlyName: assetDto.friendlyName, symbol: assetDto.symbol, type: assetDto.category.lowercased().assetType())
     }
     
     static let CurrencyAssetsMock: [Asset] = [

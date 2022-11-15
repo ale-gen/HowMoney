@@ -43,4 +43,34 @@ extension String {
         return formatter.date(from: self)
     }
     
+    func preferenceCurrency() -> PreferenceCurrency {
+        var preferenceCurrency: PreferenceCurrency
+        switch self {
+        case PreferenceCurrency.usd.name.lowercased():
+            preferenceCurrency = .usd
+        case PreferenceCurrency.eur.name.lowercased():
+            preferenceCurrency = .eur
+        case PreferenceCurrency.pln.name.lowercased():
+            preferenceCurrency = .pln
+        default:
+            preferenceCurrency = .usd
+        }
+        return preferenceCurrency
+    }
+    
+    func assetType() -> AssetType {
+        var type: AssetType
+        switch self {
+        case "crypto":
+            type = .cryptocurrency
+        case "currency":
+            type = .currency
+        case "metal":
+            type = .metal
+        default:
+            type = .currency
+        }
+        return type
+    }
+    
 }

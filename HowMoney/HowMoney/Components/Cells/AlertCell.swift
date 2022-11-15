@@ -50,7 +50,7 @@ struct AlertCell: View {
                 }
                 Spacer()
                 HStack(alignment: .top) {
-                    Text(alert.originAssetName)
+                    Text(alert.originAssetName.uppercased())
                     Spacer()
                     targetValueLabel
                 }

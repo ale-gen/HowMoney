@@ -23,9 +23,9 @@ enum CreationContext {
     var destinationView: some View {
         switch self {
         case .asset:
-            return AnyView(UserAssetCreationView())
+            return AnyView(CreationView(vm: UserAssetCreationViewModel(service: Services.userAssetService)))
         case .alert:
-            return AnyView(EmptyView())
+            return AnyView(CreationView(vm: AlertCreationViewModel(service: Services.alertService)))
         }
     }
     
@@ -35,6 +35,24 @@ enum CreationContext {
             return Localizable.userAssetsCreationNavBarTitle.value
         case .alert:
             return Localizable.alertsCreationNavBarTitle.value
+        }
+    }
+    
+    var buttonTitle: String {
+        switch self {
+        case .asset:
+            return Localizable.userAssetsCreationAddToMyWalletButtonTitle.value
+        case .alert:
+            return Localizable.alertsCreationNotifyMeButtonTitle.value
+        }
+    }
+    
+    var promptText: String {
+        switch self {
+        case .asset:
+            return Localizable.userAssetsCreationSelectionPromptText.value
+        case .alert:
+            return Localizable.alertsCreationSelectionPromptText.value
         }
     }
 }
