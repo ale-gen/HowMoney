@@ -9,6 +9,10 @@ import Foundation
 
 extension String {
     
+    static var baseUrl: String {
+        
+    }
+    
     static var empty: String {
         return ""
     }

@@ -12,7 +12,7 @@ class UserAssetService: Service {
     typealias ServiceType = UserAsset
     
     private let session = URLSession.shared
-    private let urlString = "\(NetworkEndpoints.userAssets.rawValue)"
+    private let urlString = "\(String.baseUrl)\(NetworkEndpoints.userAssets.rawValue)"
     
     func sendData(requestValues: RequestValues) async throws -> UserAsset? {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }

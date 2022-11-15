@@ -15,7 +15,7 @@ struct AuthorizationService: Service {
     @EnvironmentObject var userState: UserStateViewModel
     
     private let session = URLSession.shared
-    private let urlString = "\(NetworkEndpoints.userPreferences.rawValue)"
+    private let urlString = "\(String.baseUrl)\(NetworkEndpoints.userPreferences.rawValue)"
     
     func login(_ completion: @escaping (AuthUser) -> Void) {
         Auth0
