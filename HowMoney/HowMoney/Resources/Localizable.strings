@@ -97,6 +97,7 @@
 "change.password.compatibility.validation.text" = "Passwords have to be identical";
 "change.password.empty.field.validation.text" = "Please enter all fields";
 "change.password.current.password.validation.text" = "Incorrect current password. Please try again.";
+"change.password.success.text" = "Your password is changed.";
 
 // MARK: Button titles
 "delete.button.title" = "Delete";

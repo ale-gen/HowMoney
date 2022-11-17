@@ -156,6 +156,7 @@ struct ProfileTabBarItem: View {
 struct ProfileTabBarItem_Previews: PreviewProvider {
     
     static var previews: some View {
-        return Text("User cannot be fetch, please launch the app")
+        ProfileTabBarItem()
+            .environmentObject(UserStateViewModel())
     }
 }

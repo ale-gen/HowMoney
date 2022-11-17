@@ -116,6 +116,7 @@ enum Localizable: String, Translation {
     case changePasswordCompatibilityValidationText = "change.password.compatibility.validation.text"
     case changePasswordEmptyFieldValidationText = "change.password.empty.field.validation.text"
     case changePasswordCurrentPasswordValidationText = "change.password.current.password.validation.text"
+    case changePasswordSuccesText = "change.password.success.text"
     
     // MARK: Button titles
     case deleteButtonTitle = "delete.button.title"

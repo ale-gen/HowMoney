@@ -82,8 +82,8 @@ struct ChangePassword: View {
         VStack {
             Spacer()
             ToastView(shouldBeVisible: $shouldShowToast,
-                      toastType: .error,
-                      subtitle: vm.errorMessage)
+                      toastType: vm.toastType,
+                      subtitle: vm.message)
         }
         .padding(.horizontal)
         .padding(.bottom, Constants.Toast.bottomOffset)
@@ -101,14 +101,12 @@ struct ChangePassword: View {
     }
     
     private func sendForm() {
-        vm.changePassword({
-            print("Password is successfully changed!")
-        }, {
+        vm.changePassword {
             animateToastState(for: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Toast.animationDelay) {
                 animateToastState(for: false)
             }
-        })
+        }
     }
     
     private func animateToastState(for showing: Bool) {
