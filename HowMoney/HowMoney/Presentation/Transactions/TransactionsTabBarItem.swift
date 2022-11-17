@@ -9,11 +9,21 @@ import SwiftUI
 
 struct TransactionsTabBarItem: View {
     
-    @StateObject var vm: TransactionsListViewModel = TransactionsListViewModel(service: AssetService())
+    private enum Constants {
+        enum Animation {
+            static let delay: CGFloat = 0.2
+        }
+    }
+    
+    @StateObject var vm: TransactionsListViewModel = TransactionsListViewModel(service: Services.transactionService)
+    
+    @State private var loaderView: LoaderView? = LoaderView()
+    @State private var loading: Bool = false
     
     var body: some View {
         VStack {
-            SegmentedPickerView(items: ["D", "W", "M", "6M", "Y"])
+            SegmentedPickerView(items: TransactionDateRange.allCases.map { $0.shortName },
+                                didSelectItem: vm.didDateRangeChanged)
             
             if vm.items.count > .zero {
                 ScrollView(showsIndicators: false) {
@@ -29,6 +39,36 @@ struct TransactionsTabBarItem: View {
                     Spacer()
                     TransactionsEmptyState()
                     Spacer()
+                }
+            }
+        }
+        .loader(loader: $loaderView, shouldHideLoader: $loading)
+        .onChange(of: vm.startDateRangeFormat, perform: { _ in
+            self.loading = true
+            vm.getTransactions {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
+                    loading.toggle()
+                }
+            }
+        })
+        .onAppear {
+            loading = true
+            let group = DispatchGroup()
+            group.enter()
+            vm.getAssets({
+                print("Assets are fetched in transactions list screen!")
+                group.leave()
+            })
+            
+            group.enter()
+            vm.getTransactions({
+                print("Transactions are fetched in transactions list screen!")
+                group.leave()
+            })
+            
+            group.notify(queue: .main) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
+                    loading.toggle()
                 }
             }
         }
