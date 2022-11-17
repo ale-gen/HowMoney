@@ -14,7 +14,7 @@ struct Services {
     static let assetHistoryService: AssetHistoryService = AssetHistoryService()
     static let alertService: AlertService = AlertService()
     static let userAssetService: UserAssetService = UserAssetService()
-    
+    static let transactionService: TransactionService = TransactionService()
 }
 
 

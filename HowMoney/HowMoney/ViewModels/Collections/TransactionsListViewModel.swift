@@ -9,11 +9,15 @@ import Foundation
 
 class TransactionsListViewModel: ListViewModel<Transaction> {
     
-    private var assets: [Asset] = []
+    @Published var assets: [Asset] = []
+    @Published var startDateRangeFormat: String = "from=%@".localizedWithFormat(Date().today.text())
+    
+    private var assetTask: Task<(), Error>?
+    private var transactionsTask: Task<(), Error>?
+    private var endDateRangeFormat = "to=%@".localizedWithFormat(Date().today.text())
     
     override init(service: any Service) {
         super.init(service: service)
-        fetchAssets()
     }
     
     func prepareTransactionViewModel(for transaction: Transaction) -> TransactionViewModel? {
@@ -24,8 +28,27 @@ class TransactionsListViewModel: ListViewModel<Transaction> {
         return TransactionViewModel(transaction: transaction, asset: asset)
     }
     
-    private func fetchAssets() {
-        assets = Asset.AssetsMock
+    @MainActor func getAssets(_ completion: @escaping () -> Void) {
+        assetTask = Task {
+            do {
+                self.assets = try await Services.assetService.getData()
+                completion()
+            } catch let error {
+                print("Error during assets fetching: \(error.localizedDescription)")
+                completion()
+            }
+        }
+    }
+    
+    func didDateRangeChanged(_ index: Int) {
+        startDateRangeFormat = "from=%@".localizedWithFormat(TransactionDateRange.allCases[index].date.text())
+    }
+    
+    @MainActor func getTransactions(_ completion: @escaping () -> Void) {
+        let queryString = "?\(startDateRangeFormat)&\(endDateRangeFormat)"
+        transactionsTask = Task {
+            await getItems(completion, queryString)
+        }
     }
     
 }
