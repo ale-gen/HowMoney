@@ -13,8 +13,8 @@ class ChangePasswordViewModel: ObservableObject {
     @Published var newPasswordTextField: String = .empty
     @Published var confirmedNewPasswordTextField: String = .empty
     
-    private(set) var message: String = .empty
-    private(set) var toastType: ToastType = .error
+    @Published var message: String = .empty
+    @Published var toastType: ToastType = .error
     
     func checkPasswordsCompatibility() -> Bool {
         guard !newPasswordTextField.isEmpty && !confirmedNewPasswordTextField.isEmpty else {
