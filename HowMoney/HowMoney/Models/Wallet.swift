@@ -16,20 +16,20 @@ enum WalletType {
     var title: String {
         switch self {
         case .total:
-            return "Total balance"
+            return Localizable.walletTotalBalanceTitle.value
         case .currency:
-            return "Balance for currencies"
+            return Localizable.walletCurrencyBalanceTitle.value
         case .crypto:
-            return "Balance for cryptos"
+            return Localizable.walletCryptocurrencyBalanceTitle.value
         case .metal:
-            return "Balance for metals"
+            return Localizable.walletMetalBalanceTitle.value
         }
     }
     
     var subtitle: String {
         switch self {
         case .total:
-            return "Weekly profit"
+            return Localizable.walletTotalBalanceSubtitle.value
         case .currency, .crypto, .metal:
             return .empty
         }

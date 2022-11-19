@@ -45,6 +45,13 @@ enum Localizable: String, Translation {
     // MARK: Authorization
     case authorizationSignOutButtonTitle = "authorization.sign.out.button.title"
     
+    // MARK: Home
+    case walletTotalBalanceTitle = "wallet.total.balance.title"
+    case walletCurrencyBalanceTitle = "wallet.currency.balance.title"
+    case walletCryptocurrencyBalanceTitle = "wallet.cryptocurrency.balance.title"
+    case walletMetalBalanceTitle = "wallet.metal.balance.title"
+    case walletTotalBalanceSubtitle = "wallet.total.balance.subtitle"
+    
     // MARK: User profile
     case userProfileWeeklyReportsLabelText = "user.profile.weekly.reports.label.text"
     case userProfileEmailAlertsLabelText = "user.profile.email.alerts.label.text"

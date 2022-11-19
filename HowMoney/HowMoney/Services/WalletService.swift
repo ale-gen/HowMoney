@@ -19,9 +19,15 @@ class WalletService: Service {
     }
     
     func getData(_ parameters: Any...) async throws -> [Wallet] {
+        /* */
+        return []
+    }
+    
+    func getWalletData(completion: @escaping ([Wallet]) -> Void) async throws {
         let group = DispatchGroup()
         var balancesByType: [Wallet] = []
         var totalBalance: [Wallet] = []
+        var balances: [Wallet] = []
         
         group.enter()
         balancesByType = try await getWalletBalances { group.leave() }
@@ -31,9 +37,9 @@ class WalletService: Service {
         
         group.notify(queue: .main) {
             print("✅ All data are fetched!")
-            return balancesByType.append(contentsOf: totalBalance)
+            balances = totalBalance + balancesByType
+            completion(balances)
         }
-        return balancesByType
     }
     
     func updateData(_ model: Wallet) async throws -> Wallet? {

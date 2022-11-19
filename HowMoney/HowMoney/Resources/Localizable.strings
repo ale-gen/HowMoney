@@ -26,6 +26,13 @@
 // MARK: Authorization
 "authorization.sign.out.button.title" = "Sign out";
 
+// MARK: Home
+"wallet.total.balance.title" = "Total balance";
+"wallet.currency.balance.title" = "Balance for currencies";
+"wallet.cryptocurrency.balance.title" = "Balance for cryptos";
+"wallet.metal.balance.title" = "Balance for metals";
+"wallet.total.balance.subtitle" = "Weekly profit";
+
 // MARK: User profile
 "user.profile.weekly.reports.label.text" = "Weekly reports";
 "user.profile.email.alerts.label.text" = "Email alerts";

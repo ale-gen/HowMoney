@@ -20,9 +20,12 @@ class WalletViewModel: ObservableObject {
     
     @MainActor func getWalletBalances(_ successCompletion: @escaping () -> Void,
                            _ failureCompletion: @escaping () -> Void) {
+        guard let service = service as? WalletService else { return }
         task = Task {
             do {
-                balances = try await service.getData() as! [Wallet]
+                try await service.getWalletData { [weak self] in
+                    self?.balances = $0
+                }
                 successCompletion()
             } catch {
                 print("Error during fetching wallet balances: \(error.localizedDescription)")
