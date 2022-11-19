@@ -69,6 +69,7 @@ struct UserAssetDetailsView: View {
     @StateObject var vm: UserAssetViewModel
     
     @State private var preferenceCurrencyRequired: Bool = true
+    @State private var showToast: Bool = false
     
     var body: some View {
         NavigationView {
@@ -82,6 +83,7 @@ struct UserAssetDetailsView: View {
                     operationOptions
                     Spacer()
                 }
+                .conditionalModifier(showToast, { $0.toast(shouldShow: $showToast, type: toastModel.type, message: toastModel.message)} )
                 .padding(.top, Constants.topOffset)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
             }
@@ -161,10 +163,14 @@ struct UserAssetDetailsView: View {
             Spacer()
         }
     }
+    
+    private var toastModel: ToastModel {
+        vm.getToastValues()!
+    }
 
     private func operationOption(type: UserAssetOperation) -> some View {
         NavigationLink {
-            UserAssetEditingView(vm: vm.prepareEditingViewModel(type))
+            UserAssetEditingView(vm: vm.prepareEditingViewModel(type), showToast: $showToast)
         } label: {
             RoundedRectangle(cornerRadius: Constants.OperationOption.cornerRadius)
                 .foregroundColor(Constants.OperationOption.color)

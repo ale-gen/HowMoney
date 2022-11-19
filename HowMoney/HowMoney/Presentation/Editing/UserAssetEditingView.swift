@@ -32,6 +32,7 @@ struct UserAssetEditingView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @StateObject var vm: UserAssetEditingViewModel
+    @Binding var showToast: Bool
     @State private var textValue: String = Constants.ValueLabel.defaultValue
     
     var body: some View {
@@ -50,6 +51,7 @@ struct UserAssetEditingView: View {
         }
         .navigationTitle(vm.userAsset.asset.friendlyName)
         .navigationBarHidden(false)
+        .toast(shouldShow: $showToast, type: vm.toast.type, message: vm.toast.message)
     }
     
     private var valueLabel: some View {
@@ -83,10 +85,14 @@ struct UserAssetEditingView: View {
     private func sendForm() {
         vm.updateUserAsset(successCompletion: {
             print("Success 🥳")
+            showToast = true
             DispatchQueue.main.async {
                 presentationMode.wrappedValue.dismiss()
             }
         }, failureCompletion: {
+            withAnimation(.spring()) {
+                showToast = true
+            }
             print("Failure 🫠")
         })
     }
@@ -96,6 +102,6 @@ struct UserAssetEditingView_Previews: PreviewProvider {
     static var previews: some View {
         UserAssetEditingView(vm: UserAssetEditingViewModel(service: UserAssetService(),
                                                            userAsset: UserAsset.UserAssetsMock.first!,
-                                                           operation: .add))
+                                                           operation: .add), showToast: .constant(false))
     }
 }
