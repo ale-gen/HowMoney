@@ -15,4 +15,6 @@ enum NetworkEndpoints: String {
     case userAssets = "/api/users/me/assets"
     case userPreferences = "/api/users/me/preferences"
     case transactions = "/api/transactions"
+    case walletHistory = "/api/wallet"
+    case walletByAssetType = "/api/wallet/total"
 }

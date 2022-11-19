@@ -28,6 +28,8 @@ struct HomeTabBarItem: View {
         }
     }
     
+    @StateObject var homeVM: HomeViewModel = HomeViewModel(preferenceCurency: .eur)
+    @StateObject var walletVM: WalletViewModel = WalletViewModel(service: Services.walletService)
     @StateObject var alertsVM: ListViewModel<Alert> = ListViewModel(service: Services.alertService)
     
     @State private var showAlertList: Bool = false
@@ -35,7 +37,7 @@ struct HomeTabBarItem: View {
     var body: some View {
         VStack(spacing: Constants.spacing) {
             GeometryReader { geo in
-                CardCarousel(geo: geo)
+                CardCarousel(geo: geo, cardViewModels: homeVM.prepareCardViewModels())
             }
             .frame(maxHeight: Constants.maxHeight)
             alertsSection
@@ -48,6 +50,15 @@ struct HomeTabBarItem: View {
                     .navigationTitle(Localizable.alertsCollectionTitle.value)
                     .background(Constants.background)
             }
+        }
+        .onAppear {
+            walletVM.getWalletBalances({
+                DispatchQueue.main.async {
+                    homeVM.walletBalances = walletVM.balances
+                }
+            }, {
+                // TODO: Show toast with error
+            })
         }
     }
     

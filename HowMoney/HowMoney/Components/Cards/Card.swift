@@ -63,11 +63,11 @@ struct Card: View {
     
     let title: String
     let mainValue: Float
-    let subtitle: String
-    let subValue: Float
+    let subtitle: String?
+    let subValue: Float?
     let currency: PreferenceCurrency
-    let additionalValue: Int
-    let isIncreased: Bool
+    let additionalValue: Int?
+    let isIncreased: Bool?
     
     var cardColor: Color?
     var titleColor: Color = Constants.Title.color
@@ -124,21 +124,25 @@ extension Card {
     
     private var subtitleSection: some View {
         HStack {
-            VStack {
-                Text(subtitle)
-                    .foregroundColor(subtitleColor)
-                    .font(Constants.Subtitle.font)
-                    .padding(.bottom, Constants.Subtitle.bottomPadding)
-                HStack(spacing: Constants.SubValue.spacing) {
-                    Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)")
-                    PreferenceCurrencyValueLabel(value: subValue)
+            if let subtitle = subtitle, let subValue = subValue, let isIncreased = isIncreased {
+                VStack {
+                    Text(subtitle)
+                        .foregroundColor(subtitleColor)
+                        .font(Constants.Subtitle.font)
+                        .padding(.bottom, Constants.Subtitle.bottomPadding)
+                    HStack(spacing: Constants.SubValue.spacing) {
+                        Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)")
+                        PreferenceCurrencyValueLabel(value: subValue)
+                    }
+                    .padding(.leading, Constants.SubValue.innerContainerHorizontalInset)
+                    .foregroundColor(Constants.SubValue.color)
+                    .font(Constants.SubValue.font)
                 }
-                .padding(.leading, Constants.SubValue.innerContainerHorizontalInset)
-                .foregroundColor(Constants.SubValue.color)
-                .font(Constants.SubValue.font)
+                Spacer()
+                additionalLabel
+            } else {
+                Spacer()
             }
-            Spacer()
-            additionalLabel
         }
         .padding(.bottom, Constants.AdditionalStack.insets.bottom)
         .padding(.top, Constants.AdditionalStack.insets.top)
@@ -146,15 +150,19 @@ extension Card {
 
     private var additionalLabel: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: Constants.AdditionalLabel.cornerRadius)
-                .frame(width: Constants.AdditionalLabel.width, height: Constants.AdditionalLabel.height)
-                .foregroundColor(Constants.Rectangle.color)
-                .opacity(Constants.AdditionalLabel.opacity)
-            HStack {
-                isIncreased ? BalanceChar.positive.arrowImage : BalanceChar.negative.arrowImage
-                Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)\(additionalValue)%")
+            if let isIncreased = isIncreased, let additionalValue = additionalValue {
+                RoundedRectangle(cornerRadius: Constants.AdditionalLabel.cornerRadius)
+                    .frame(width: Constants.AdditionalLabel.width, height: Constants.AdditionalLabel.height)
+                    .foregroundColor(Constants.Rectangle.color)
+                    .opacity(Constants.AdditionalLabel.opacity)
+                HStack {
+                    isIncreased ? BalanceChar.positive.arrowImage : BalanceChar.negative.arrowImage
+                    Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)\(additionalValue)%")
+                }
+                .foregroundColor(additionalLabelColor)
+            } else {
+                Spacer()
             }
-            .foregroundColor(additionalLabelColor)
         }
         .padding(.bottom, Constants.AdditionalStack.insets.bottom)
     }

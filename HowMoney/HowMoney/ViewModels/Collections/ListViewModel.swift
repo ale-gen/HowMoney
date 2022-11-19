@@ -32,7 +32,7 @@ class ListViewModel<Element>: ObservableObject {
                 self.items = try await service.getData(parameters) as! [Element]
                 completion()
             } catch let error {
-                print("Error during assets fetching: \(error.localizedDescription)")
+                print("Error during elements fetching: \(error.localizedDescription)")
                 completion()
             }
         }
@@ -46,7 +46,7 @@ class ListViewModel<Element>: ObservableObject {
                     items.removeAll(where: { ($0 as? UserAsset)?.id == userAsset.id})
                 }
             } catch let error {
-                print("Error during assets fetching: \(error.localizedDescription)")
+                print("Error during element deletion: \(error.localizedDescription)")
                 failureCompletion()
             }
         }
