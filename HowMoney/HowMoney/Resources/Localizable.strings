@@ -87,6 +87,8 @@
 // MARK: User assets editing
 "user.assets.editing.final.value.label" = "After operation asset balance will be equal:";
 "user.assets.editing.new.value.label" = "After operation new asset balance will be equal:";
+"user.assets.editing.value.validation.toast.message.text" = "Asset value is incorrect.";
+"user.assets.editing.asset.updated.toast.message.text" = "Asset is updated.";
 
 // MARK: Alerts creation
 "alerts.creation.nav.bar.title" = "Create alert";
@@ -94,6 +96,7 @@
 // MARK: Toast view
 "toast.view.error.title" = "Error";
 "toast.view.success.title" = "Success";
+"toast.view.failed.operation.message.text" = "Cannot make this operation. Please try again.";
 
 // MARK: Change password
 "change.password.label" = "Change password...";

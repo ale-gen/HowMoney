@@ -40,6 +40,6 @@ enum ToastType {
 }
 
 struct ToastModel {
-    let message: String
-    let type: ToastType
+    var message: String
+    var type: ToastType
 }

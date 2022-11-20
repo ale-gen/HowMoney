@@ -106,6 +106,8 @@ enum Localizable: String, Translation {
     // MARK: User assets editing
     case userAssetsEditingFinalValueLabel = "user.assets.editing.final.value.label"
     case userAssetsEditingNewValueLabel = "user.assets.editing.new.value.label"
+    case userAssetsEditingValueValidationToastMessageText = "user.assets.editing.value.validation.toast.message.text"
+    case userAssetsEditingAssetUpdatedToastMessageText = "user.assets.editing.asset.updated.toast.message.text"
     
     // MARK: Alerts creation
     case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"
@@ -113,6 +115,7 @@ enum Localizable: String, Translation {
     // MARK: Toast view
     case toastViewErrorTitle = "toast.view.error.title"
     case toastViewSuccessTitle = "toast.view.success.title"
+    case toastViewFailedOperationMessageText = "toast.view.failed.operation.message.text"
     
     // MARK: Change password
     case changePasswordLabel = "change.password.label"

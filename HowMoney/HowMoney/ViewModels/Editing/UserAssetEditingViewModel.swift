@@ -43,7 +43,8 @@ class UserAssetEditingViewModel: ObservableObject {
         guard let keyboardViewModel = keyboardViewModel,
               let value = Float(keyboardViewModel.textValue)
         else {
-            toast = ToastModel(message: "Asset value is incorrect.", type: .error)
+            toast.message = Localizable.userAssetsEditingValueValidationToastMessageText.value
+            toast.type = .error
             failureCompletion()
             return
         }
@@ -55,15 +56,18 @@ class UserAssetEditingViewModel: ObservableObject {
                                                                                   type: operation.requestValueType))
                 guard let result = result as? UserAsset else {
                     failureCompletion()
-                    toast = ToastModel(message: "Cannot make this operation. Please try again.", type: .error)
+                    toast.message = Localizable.toastViewFailedOperationMessageText.value
+                    toast.type = .error
                     return
                 }
                 userAsset = result
-                toast = ToastModel(message: "Asset is created.", type: .success)
+                toast.message = Localizable.userAssetsEditingAssetUpdatedToastMessageText.value
+                toast.type = .success
                 successCompletion()
             } catch let error {
                 print("Error during user asset updating: \(error.localizedDescription)")
-                toast = ToastModel(message: "Cannot make this operation. Please try again.", type: .error)
+                toast.message = Localizable.toastViewFailedOperationMessageText.value
+                toast.type = .error
                 failureCompletion()
             }
         }
