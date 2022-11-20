@@ -102,6 +102,9 @@
 "toast.view.success.title" = "Success";
 "toast.view.failed.operation.message.text" = "Cannot make this operation. Please try again.";
 
+// MARK: Change user preference
+"change.user.preference.failure.toast.message.text" = "Cannot change preferences. Please try again.";
+
 // MARK: Change password
 "change.password.label" = "Change password...";
 "change.password.save.button.title" = "Save";

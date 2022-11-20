@@ -113,6 +113,7 @@ class UserStateViewModel: ObservableObject {
             } catch let error {
                 print("🆘 Error during user preferences updating: \(error.localizedDescription)")
                 revokeLocalPreferencesIfNeeded()
+                ToastViewModel.shared.update(message: Localizable.changeUserPreferencesFailureToastMessageText.value, type: .error)
                 failureCompletion()
             }
         }

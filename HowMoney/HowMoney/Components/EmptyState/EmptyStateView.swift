@@ -39,7 +39,6 @@ struct EmptyStateView: View {
                 .foregroundColor(Constants.Title.color)
                 .font(Constants.Title.font)
             Button {
-                // TODO: Navigate to new user asset or alert creation
                 didButtonTapped?()
             } label: {
                 Text(model.buttonTitle)

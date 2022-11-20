@@ -22,6 +22,8 @@ struct UserCustomizationView: View {
     }
     
     @StateObject var vm: UserCustomizationViewModel
+    
+    @StateObject private var toastVM: ToastViewModel = ToastViewModel.shared
     @State private var shouldNavigateToNextStep: Bool = false
     private let transition: AnyTransition = .asymmetric(insertion: .move(edge: .trailing),
                                                         removal: .move(edge: .leading))
@@ -55,13 +57,14 @@ struct UserCustomizationView: View {
                     vm.performNextStep( {
                         shouldNavigateToNextStep.toggle()
                     }, {
-                        // TODO: Show error toast
+                        toastVM.show()
                     })
                 }
                 .padding(.vertical, Constants.Button.topOffset)
                 .animation(nil, value: vm.presentStep)
             }
         }
+        .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
         .navigate(destination: TabBarView(), when: $shouldNavigateToNextStep)
     }
     

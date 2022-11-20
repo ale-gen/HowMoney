@@ -121,6 +121,9 @@ enum Localizable: String, Translation {
     case toastViewSuccessTitle = "toast.view.success.title"
     case toastViewFailedOperationMessageText = "toast.view.failed.operation.message.text"
     
+    // MARK: Change user preference
+    case changeUserPreferencesFailureToastMessageText = "change.user.preference.failure.toast.message.text"
+    
     // MARK: Change password
     case changePasswordLabel = "change.password.label"
     case changePasswordSaveButtonTitle = "change.password.save.button.title"
