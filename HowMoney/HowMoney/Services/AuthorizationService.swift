@@ -5,19 +5,18 @@
 //  Created by Aleksandra Generowicz on 22/10/2022.
 //
 
-import SwiftUI
+import Foundation
 import Auth0
 
 struct AuthorizationService: Service {
     
     typealias ServiceType = UserPreferences
     
-    @EnvironmentObject var userState: UserStateViewModel
-    
     private let session = URLSession.shared
     private let urlString = "\(String.baseUrl)\(NetworkEndpoints.userPreferences.rawValue)"
     
     func login(_ completion: @escaping (AuthUser) -> Void) {
+        Keychain.logout()
         Auth0
             .webAuth()
             .parameters(["prompt": "login"])

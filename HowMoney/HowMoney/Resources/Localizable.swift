@@ -92,25 +92,27 @@ enum Localizable: String, Translation {
     case userAssetsCreationDecimalPlacesValidation = "user.assets.creation.decimal.places.validation"
     case userAssetsCreationPositiveNumberValidation = "user.assets.creation.positive.number.validation"
     case userAssetsCreationAssetSelectionValidation = "user.assets.creation.asset.selection.validation"
+    case userAssetsCreationValueValidationToastMessageText = "user.assets.creation.value.validation.toast.message.text"
+    case userAssetsCreationSuccessToastMessageText = "user.assets.creation.success.toast.message.text"
     
     // MARK: User assets deletion
     case userAssetsDeletionAlertMessageTitle = "user.assets.deletion.alert.message"
     
     // MARK: Alerts creation
+    case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"
     case alertsCreationNotifyMeButtonTitle = "alerts.creation.notify.me.button.title"
     case alertsCreationSelectionPromptText = "alerts.creation.selection.prompt.text"
     case alertsCreationTargetCurrencyText = "alerts.creation.target.currency.text"
+    case alertsCreationTargetValueValidation = "alerts.creation.target.value.validation"
     case alertsCreationPositiveNumberValidation = "alerts.creation.positive.number.validation"
     case alertsCreationAssetSelectionValidation = "alerts.creation.asset.selection.validation"
+    case alertsCreationSuccessToastMessageText = "alerts.creation.success.toast.message.text"
     
     // MARK: User assets editing
     case userAssetsEditingFinalValueLabel = "user.assets.editing.final.value.label"
     case userAssetsEditingNewValueLabel = "user.assets.editing.new.value.label"
     case userAssetsEditingValueValidationToastMessageText = "user.assets.editing.value.validation.toast.message.text"
     case userAssetsEditingAssetUpdatedToastMessageText = "user.assets.editing.asset.updated.toast.message.text"
-    
-    // MARK: Alerts creation
-    case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"
     
     // MARK: Toast view
     case toastViewErrorTitle = "toast.view.error.title"

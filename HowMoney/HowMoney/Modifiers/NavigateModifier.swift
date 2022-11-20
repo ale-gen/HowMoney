@@ -21,7 +21,8 @@ extension View {
                 
                 NavigationLink(destination: destination
                                                 .navigationTitle(destinationNavBarTitle)
-                                                .navigationBarHidden(hideNavBar),
+                                                .navigationBarHidden(hideNavBar)
+                                                .navigationBarTitleDisplayMode(.inline),
                                isActive: when) {
                     EmptyView()
                 }

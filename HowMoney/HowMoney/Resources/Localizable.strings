@@ -73,25 +73,27 @@
 "user.assets.creation.decimal.places.validation" = "Invalid format for available asset types.";
 "user.assets.creation.positive.number.validation" = "Entered value has to be positive number";
 "user.assets.creation.asset.selection.validation" = "Asset selection is required.";
+"user.assets.creation.value.validation.toast.message.text" = "Asset value is incorrect.";
+"user.assets.creation.success.toast.message.text" = "Asset is created.";
 
 // MARK: User asset deletion
 "user.assets.deletion.alert.message" = "Are you sure you want to delete: %@?";
 
 // MARK: Alerts creation
+"alerts.creation.nav.bar.title" = "Create alert";
 "alerts.creation.notify.me.button.title" = "Notify me";
 "alerts.creation.selection.prompt.text" = "For which asset would you like to set alert?";
 "alerts.creation.target.currency.text" = "Choose target currency for alert:";
+"alerts.creation.target.value.validation" = "Alert target value is incorrect.";
 "alerts.creation.positive.number.validation" = "Entered value has to be positive number";
 "alerts.creation.asset.selection.validation" = "Asset selection is required.";
+"alerts.creation.success.toast.message.text" = "Alert is created.";
 
 // MARK: User assets editing
 "user.assets.editing.final.value.label" = "After operation asset balance will be equal:";
 "user.assets.editing.new.value.label" = "After operation new asset balance will be equal:";
 "user.assets.editing.value.validation.toast.message.text" = "Asset value is incorrect.";
 "user.assets.editing.asset.updated.toast.message.text" = "Asset is updated.";
-
-// MARK: Alerts creation
-"alerts.creation.nav.bar.title" = "Create alert";
 
 // MARK: Toast view
 "toast.view.error.title" = "Error";

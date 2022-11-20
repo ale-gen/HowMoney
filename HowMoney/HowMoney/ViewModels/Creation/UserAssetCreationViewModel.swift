@@ -20,13 +20,14 @@ class UserAssetCreationViewModel: CreationViewModel  {
     override func create(successCompletion: @escaping () -> Void,
                          failureCompletion: @escaping () -> Void) {
         guard let selectedAsset = selectedAsset else {
-            errorMessage = Localizable.userAssetsCreationAssetSelectionValidation.value
+            ToastViewModel.shared.update(message: Localizable.userAssetsCreationAssetSelectionValidation.value, type: .error)
+            failureCompletion()
             return
         }
         guard let keyboardViewModel = keyboardViewModel,
               let value = Float(keyboardViewModel.textValue)
         else {
-            errorMessage = "Value has to be in correct format"
+            ToastViewModel.shared.update(message: Localizable.userAssetsCreationValueValidationToastMessageText.value, type: .error)
             failureCompletion()
             return
         }
@@ -37,12 +38,15 @@ class UserAssetCreationViewModel: CreationViewModel  {
                                                                                   value: value * operation.multiplier,
                                                                                   type: operation.requestValueType))
                 guard let _ = result as? UserAsset else {
+                    ToastViewModel.shared.update(message: Localizable.toastViewFailedOperationMessageText.value, type: .error)
                     failureCompletion()
                     return
                 }
+                ToastViewModel.shared.update(message: Localizable.userAssetsCreationSuccessToastMessageText.value, type: .success)
                 successCompletion()
             } catch let error {
-                print("Error during user asset creation: \(error.localizedDescription)")
+                print("🆘 Error during user asset creation: \(error.localizedDescription)")
+                ToastViewModel.shared.update(message: Localizable.toastViewFailedOperationMessageText.value, type: .error)
                 failureCompletion()
             }
         }

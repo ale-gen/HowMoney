@@ -40,6 +40,8 @@ struct CreationView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @StateObject var vm: CreationViewModel
+    
+    @StateObject private var toastVM: ToastViewModel = ToastViewModel.shared
     @State private var textValue: String = Constants.ValueLabel.defaultValue
     
     var body: some View {
@@ -80,6 +82,8 @@ struct CreationView: View {
             KeyboardView(vm: vm.prepareKeyboardViewModel(), textValue: $textValue)
                 .frame(maxHeight: Constants.Keyboard.maxHeight)
         }
+        .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
+        .transition(.move(edge: .bottom))
     }
     
     private var assetSelectionButton: some View {
@@ -119,11 +123,13 @@ struct CreationView: View {
     private func sendForm() {
         vm.create(successCompletion: {
             print("Success 🥳")
+            ToastViewModel.shared.show()
             DispatchQueue.main.async {
                 presentationMode.wrappedValue.dismiss()
             }
         }, failureCompletion: {
             print("Failure 🫠")
+            ToastViewModel.shared.show()
         })
     }
 }

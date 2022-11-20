@@ -51,6 +51,7 @@ struct UserAssetEditingView: View {
         }
         .navigationTitle(vm.userAsset.asset.friendlyName)
         .navigationBarHidden(false)
+        .navigationBarTitleDisplayMode(.inline)
         .toast(shouldShow: $showToast, type: vm.toast.type, message: vm.toast.message)
     }
     

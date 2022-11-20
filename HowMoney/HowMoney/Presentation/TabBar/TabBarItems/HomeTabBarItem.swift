@@ -48,6 +48,7 @@ struct HomeTabBarItem: View {
             NavigationView {
                 AlertsCollection(vm: alertsVM, scrollAxis: .vertical)
                     .navigationTitle(Localizable.alertsCollectionTitle.value)
+                    .navigationBarTitleDisplayMode(.inline)
                     .background(Constants.background)
             }
         }

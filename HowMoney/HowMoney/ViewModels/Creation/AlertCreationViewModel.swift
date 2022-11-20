@@ -20,13 +20,14 @@ class AlertCreationViewModel: CreationViewModel {
     override func create(successCompletion: @escaping () -> Void,
                          failureCompletion: @escaping () -> Void) {
         guard let selectedAsset = selectedAsset else {
-            errorMessage = Localizable.alertsCreationAssetSelectionValidation.value
+            ToastViewModel.shared.update(message: Localizable.alertsCreationAssetSelectionValidation.value, type: .error)
+            failureCompletion()
             return
         }
         guard let keyboardViewModel = keyboardViewModel,
               let value = Float(keyboardViewModel.textValue)
         else {
-            errorMessage = "Value has to be in correct format"
+            ToastViewModel.shared.update(message: Localizable.alertsCreationTargetValueValidation.value, type: .error)
             failureCompletion()
             return
         }
@@ -37,12 +38,15 @@ class AlertCreationViewModel: CreationViewModel {
                                                                               originAssetName: selectedAsset.name.lowercased(),
                                                                               targetCurrencyName: targetCurrency.name.lowercased()))
                 guard let _ = result as? Alert else {
+                    ToastViewModel.shared.update(message: Localizable.toastViewFailedOperationMessageText.value, type: .error)
                     failureCompletion()
                     return
                 }
+                ToastViewModel.shared.update(message: Localizable.alertsCreationSuccessToastMessageText.value, type: .success)
                 successCompletion()
             } catch let error {
                 print("Error during user asset creation: \(error.localizedDescription)")
+                ToastViewModel.shared.update(message: Localizable.toastViewFailedOperationMessageText.value, type: .error)
                 failureCompletion()
             }
         }
