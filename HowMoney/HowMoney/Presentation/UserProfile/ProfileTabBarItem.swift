@@ -92,7 +92,7 @@ struct ProfileTabBarItem: View {
                 authUserVM.updateLocalWeeklyReports(newValue, {
                     print("✅ Preference weekly reports is set")
                 }, {
-                    // TODO: Show error toast
+                    ToastViewModel.shared.show()
                 })
             }
     }
@@ -103,7 +103,7 @@ struct ProfileTabBarItem: View {
                 authUserVM.updateLocalAlertsOnEmail(newValue, {
                     print("✅ Preference alerts on email is set")
                 }, {
-                    // TODO: Show error toast
+                    ToastViewModel.shared.show()
                 })
             }
     }
@@ -147,7 +147,7 @@ struct ProfileTabBarItem: View {
         authUserVM.updateLocalCurrencyPreference(preferenceCurrency, {
             print("✅ Preference currency is set")
         }, {
-            // TODO: Show error toast
+            ToastViewModel.shared.show()
         })
     }
 
@@ -156,6 +156,7 @@ struct ProfileTabBarItem: View {
 struct ProfileTabBarItem_Previews: PreviewProvider {
     
     static var previews: some View {
-        return Text("User cannot be fetch, please launch the app")
+        ProfileTabBarItem()
+            .environmentObject(UserStateViewModel())
     }
 }

@@ -11,19 +11,20 @@ struct CardCarousel: View {
     
     private enum Constants {
         static let spacing: CGFloat = -40.0
-        static let cardsNumber: CGFloat = 4
         static let maxOffsetX: CGFloat = -1.0
     }
     
     var geo: GeometryProxy
+    var cardViewModels: [CardViewModel]
     
     @State private var offsetX: CGFloat = 0.0
     @State private var maxOffsetX: CGFloat = Constants.maxOffsetX
     private var cardsNumber: CGFloat
     
-    init(geo: GeometryProxy) {
+    init(geo: GeometryProxy, cardViewModels: [CardViewModel]) {
         self.geo = geo
-        self.cardsNumber = Constants.cardsNumber
+        self.cardViewModels = cardViewModels
+        self.cardsNumber = CGFloat(cardViewModels.count)
     }
     
     var body: some View {
@@ -46,10 +47,9 @@ struct CardCarousel: View {
                 .frame(width: .zero)
                 
                 HStack(spacing: Constants.spacing) {
-                    totalBalanceCard(width: cardWidth, screenWidth: geo.size.width)
-                    currencyBalanceCard(width: cardWidth, screenWidth: geo.size.width)
-                    cryptoBalanceCard(width: cardWidth, screenWidth: geo.size.width)
-                    metalBalanceCard(width: cardWidth, screenWidth: geo.size.width)
+                    ForEach(cardViewModels, id: \.self) { cardVM in
+                        Card(title: cardVM.title, mainValue: cardVM.mainValue, subtitle: cardVM.subtitle, subValue: cardVM.subValue, currency: cardVM.currency, additionalValue: cardVM.additionalValue, isIncreased: cardVM.isIncreased, gradientColors: cardVM.gradientColors, screenWidth: geo.size.width, width: cardWidth)
+                    }
                 }
                 .padding(.horizontal, horizontalPadding)
             }
@@ -77,7 +77,7 @@ struct CardCarousel: View {
 struct CardCarousel_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
-            CardCarousel(geo: geo)
+            CardCarousel(geo: geo, cardViewModels: [])
         }
         .environmentObject(UserStateViewModel())
     }

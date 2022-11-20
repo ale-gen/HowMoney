@@ -7,43 +7,12 @@
 
 import SwiftUI
 
-enum ToastType {
-    case error
-    case success
-    
-    var color: Color {
-        switch self {
-        case .error:
-            return .red
-        case .success:
-            return .green
-        }
-    }
-    
-    var title: String {
-        switch self {
-        case .error:
-            return Localizable.toastViewErrorTitle.value
-        case .success:
-            return Localizable.toastViewSuccessTitle.value
-        }
-    }
-    
-    var icon: Image {
-        switch self {
-        case .error:
-            return Icons.circleClose.value
-        case .success:
-            return Icons.circleSuccess.value
-        }
-    }
-}
-
 struct ToastView: View {
     
     private enum Constants {
         enum General {
-            static let maxHeight: CGFloat = 80.0
+            static let succesMaxHeight: CGFloat = 80.0
+            static let errorMaxHeight: CGFloat = 100.0
             static let cornerRadius: CGFloat = 20.0
             static let closeIconColor: Color = .white
         }
@@ -107,7 +76,7 @@ struct ToastView: View {
                 }
             }
         }
-        .frame(maxHeight: Constants.General.maxHeight)
+        .frame(maxHeight: toastType == .success ? Constants.General.succesMaxHeight : Constants.General.errorMaxHeight)
         .cornerRadius(Constants.General.cornerRadius, [.allCorners])
     }
 }
@@ -115,7 +84,7 @@ struct ToastView: View {
 struct ToastView_Previews: PreviewProvider {
     static var previews: some View {
         ToastView(shouldBeVisible: .constant(true),
-                  toastType: .error,
+                  toastType: .success,
                   subtitle: "Passwords have to be identical")
     }
 }

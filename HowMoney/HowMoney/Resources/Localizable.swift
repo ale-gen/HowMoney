@@ -45,6 +45,13 @@ enum Localizable: String, Translation {
     // MARK: Authorization
     case authorizationSignOutButtonTitle = "authorization.sign.out.button.title"
     
+    // MARK: Home
+    case walletTotalBalanceTitle = "wallet.total.balance.title"
+    case walletCurrencyBalanceTitle = "wallet.currency.balance.title"
+    case walletCryptocurrencyBalanceTitle = "wallet.cryptocurrency.balance.title"
+    case walletMetalBalanceTitle = "wallet.metal.balance.title"
+    case walletTotalBalanceSubtitle = "wallet.total.balance.subtitle"
+    
     // MARK: User profile
     case userProfileWeeklyReportsLabelText = "user.profile.weekly.reports.label.text"
     case userProfileEmailAlertsLabelText = "user.profile.email.alerts.label.text"
@@ -85,27 +92,37 @@ enum Localizable: String, Translation {
     case userAssetsCreationDecimalPlacesValidation = "user.assets.creation.decimal.places.validation"
     case userAssetsCreationPositiveNumberValidation = "user.assets.creation.positive.number.validation"
     case userAssetsCreationAssetSelectionValidation = "user.assets.creation.asset.selection.validation"
+    case userAssetsCreationValueValidationToastMessageText = "user.assets.creation.value.validation.toast.message.text"
+    case userAssetsCreationSuccessToastMessageText = "user.assets.creation.success.toast.message.text"
     
     // MARK: User assets deletion
     case userAssetsDeletionAlertMessageTitle = "user.assets.deletion.alert.message"
+    case userAssetsDeletionSuccesssToastMessageText = "user.assets.deletion.success.toast.message.text"
+    case userAssetsDeletionFailureToastMessageText = "user.assets.deletion.failure.toast.message.text"
     
     // MARK: Alerts creation
+    case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"
     case alertsCreationNotifyMeButtonTitle = "alerts.creation.notify.me.button.title"
     case alertsCreationSelectionPromptText = "alerts.creation.selection.prompt.text"
     case alertsCreationTargetCurrencyText = "alerts.creation.target.currency.text"
+    case alertsCreationTargetValueValidation = "alerts.creation.target.value.validation"
     case alertsCreationPositiveNumberValidation = "alerts.creation.positive.number.validation"
     case alertsCreationAssetSelectionValidation = "alerts.creation.asset.selection.validation"
+    case alertsCreationSuccessToastMessageText = "alerts.creation.success.toast.message.text"
     
     // MARK: User assets editing
     case userAssetsEditingFinalValueLabel = "user.assets.editing.final.value.label"
     case userAssetsEditingNewValueLabel = "user.assets.editing.new.value.label"
-    
-    // MARK: Alerts creation
-    case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"
+    case userAssetsEditingValueValidationToastMessageText = "user.assets.editing.value.validation.toast.message.text"
+    case userAssetsEditingAssetUpdatedToastMessageText = "user.assets.editing.asset.updated.toast.message.text"
     
     // MARK: Toast view
     case toastViewErrorTitle = "toast.view.error.title"
     case toastViewSuccessTitle = "toast.view.success.title"
+    case toastViewFailedOperationMessageText = "toast.view.failed.operation.message.text"
+    
+    // MARK: Change user preference
+    case changeUserPreferencesFailureToastMessageText = "change.user.preference.failure.toast.message.text"
     
     // MARK: Change password
     case changePasswordLabel = "change.password.label"
@@ -116,6 +133,7 @@ enum Localizable: String, Translation {
     case changePasswordCompatibilityValidationText = "change.password.compatibility.validation.text"
     case changePasswordEmptyFieldValidationText = "change.password.empty.field.validation.text"
     case changePasswordCurrentPasswordValidationText = "change.password.current.password.validation.text"
+    case changePasswordSuccesText = "change.password.success.text"
     
     // MARK: Button titles
     case deleteButtonTitle = "delete.button.title"

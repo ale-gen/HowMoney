@@ -54,7 +54,6 @@ struct AssetCell: View {
                 
                 Spacer()
                 let color = assetVM.priceChange > .zero ? Constants.AdditionalInfo.increaseColor : (assetVM.priceChange < .zero ? Constants.AdditionalInfo.decreaseColor : Constants.AdditionalInfo.defaultColor)
-                // TODO: Chart of history of chosen asset instead mock asset
                 LineChart(data: assetVM.assetHistoryData.map { $0.value },  lineColor: color)
                     .frame(maxWidth: Constants.Chart.maxWidth)
                     .padding(.trailing, Constants.Chart.trailingPadding)

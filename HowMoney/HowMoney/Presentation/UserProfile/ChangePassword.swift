@@ -21,10 +21,6 @@ struct ChangePassword: View {
         enum Image {
             static let maxHeight: CGFloat = 250.0
         }
-        enum Toast {
-            static let bottomOffset: CGFloat = -10.0
-            static let animationDelay: CGFloat = 2.0
-        }
         enum TextField {
             static let height: CGFloat = 55.0
             static let color: Color = .black.opacity(0.4)
@@ -56,11 +52,8 @@ struct ChangePassword: View {
                 Spacer()
                 RectangleButton(title: Localizable.changePasswordSaveButtonTitle.value, didButtonTapped: sendForm)
             }
-            
-            if shouldShowToast {
-                toast
-            }
         }
+        .toast(shouldShow: $shouldShowToast, type: vm.toastType, message: vm.message)
         .padding(.vertical, Constants.General.verticalInsets)
     }
     
@@ -78,18 +71,6 @@ struct ChangePassword: View {
         }
     }
     
-    private var toast: some View {
-        VStack {
-            Spacer()
-            ToastView(shouldBeVisible: $shouldShowToast,
-                      toastType: .error,
-                      subtitle: vm.errorMessage)
-        }
-        .padding(.horizontal)
-        .padding(.bottom, Constants.Toast.bottomOffset)
-        .transition(.move(edge: .bottom))
-    }
-    
     private func textField(placeholder: String, text: Binding<String>) -> some View {
         RoundedRectangle(cornerRadius: Constants.TextField.cornerRadius)
             .fill(Constants.TextField.color)
@@ -101,14 +82,9 @@ struct ChangePassword: View {
     }
     
     private func sendForm() {
-        vm.changePassword({
-            print("Password is successfully changed!")
-        }, {
+        vm.changePassword {
             animateToastState(for: true)
-            DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Toast.animationDelay) {
-                animateToastState(for: false)
-            }
-        })
+        }
     }
     
     private func animateToastState(for showing: Bool) {

@@ -13,38 +13,49 @@ class ChangePasswordViewModel: ObservableObject {
     @Published var newPasswordTextField: String = .empty
     @Published var confirmedNewPasswordTextField: String = .empty
     
-    @Published var errorMessage: String = .empty
+    @Published var message: String = .empty
+    @Published var toastType: ToastType = .error
     
     func checkPasswordsCompatibility() -> Bool {
         guard !newPasswordTextField.isEmpty && !confirmedNewPasswordTextField.isEmpty else {
-            errorMessage = Localizable.changePasswordEmptyFieldValidationText.value
+            message = Localizable.changePasswordEmptyFieldValidationText.value
             return false
         }
         
         if newPasswordTextField != confirmedNewPasswordTextField {
-            errorMessage = Localizable.changePasswordCompatibilityValidationText.value
+            message = Localizable.changePasswordCompatibilityValidationText.value
             return false
         }
         return true
     }
     
-    func changePassword(_ successCompletion: @escaping () -> Void,
-                        _ failureCompletion: @escaping () -> Void) {
+    func changePassword(_ completion: @escaping () -> Void) {
         guard !currentPasswordTextField.isEmpty else {
-            errorMessage = Localizable.changePasswordEmptyFieldValidationText.value
-            failureCompletion()
+            message = Localizable.changePasswordEmptyFieldValidationText.value
+            toastType = .error
+            completion()
             return
         }
         
         guard checkPasswordsCompatibility() else {
-            failureCompletion()
+            toastType = .error
+            completion()
             return
         }
-        successCompletion()
+        toastType = .success
+        message = Localizable.changePasswordSuccesText.value
+        completion()
+        clearTextFields()
     }
     
-    private func clearErrorMessage() {
-        errorMessage = .empty
+    private func clearMessage() {
+        message = .empty
+    }
+    
+    private func clearTextFields() {
+        currentPasswordTextField = .empty
+        newPasswordTextField = .empty
+        confirmedNewPasswordTextField = .empty
     }
     
 }

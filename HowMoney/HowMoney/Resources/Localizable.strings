@@ -26,6 +26,13 @@
 // MARK: Authorization
 "authorization.sign.out.button.title" = "Sign out";
 
+// MARK: Home
+"wallet.total.balance.title" = "Total balance";
+"wallet.currency.balance.title" = "Balance for currencies";
+"wallet.cryptocurrency.balance.title" = "Balance for cryptos";
+"wallet.metal.balance.title" = "Balance for metals";
+"wallet.total.balance.subtitle" = "Weekly profit";
+
 // MARK: User profile
 "user.profile.weekly.reports.label.text" = "Weekly reports";
 "user.profile.email.alerts.label.text" = "Email alerts";
@@ -66,27 +73,37 @@
 "user.assets.creation.decimal.places.validation" = "Invalid format for available asset types.";
 "user.assets.creation.positive.number.validation" = "Entered value has to be positive number";
 "user.assets.creation.asset.selection.validation" = "Asset selection is required.";
+"user.assets.creation.value.validation.toast.message.text" = "Asset value is incorrect.";
+"user.assets.creation.success.toast.message.text" = "Asset is created.";
 
 // MARK: User asset deletion
 "user.assets.deletion.alert.message" = "Are you sure you want to delete: %@?";
+"user.assets.deletion.success.toast.message.text" = "Item is deleted.";
+"user.assets.deletion.failure.toast.message.text" = "Cannot delete item. Please try again.";
 
 // MARK: Alerts creation
+"alerts.creation.nav.bar.title" = "Create alert";
 "alerts.creation.notify.me.button.title" = "Notify me";
 "alerts.creation.selection.prompt.text" = "For which asset would you like to set alert?";
 "alerts.creation.target.currency.text" = "Choose target currency for alert:";
+"alerts.creation.target.value.validation" = "Alert target value is incorrect.";
 "alerts.creation.positive.number.validation" = "Entered value has to be positive number";
 "alerts.creation.asset.selection.validation" = "Asset selection is required.";
+"alerts.creation.success.toast.message.text" = "Alert is created.";
 
 // MARK: User assets editing
 "user.assets.editing.final.value.label" = "After operation asset balance will be equal:";
 "user.assets.editing.new.value.label" = "After operation new asset balance will be equal:";
-
-// MARK: Alerts creation
-"alerts.creation.nav.bar.title" = "Create alert";
+"user.assets.editing.value.validation.toast.message.text" = "Asset value is incorrect.";
+"user.assets.editing.asset.updated.toast.message.text" = "Asset is updated.";
 
 // MARK: Toast view
 "toast.view.error.title" = "Error";
 "toast.view.success.title" = "Success";
+"toast.view.failed.operation.message.text" = "Cannot make this operation. Please try again.";
+
+// MARK: Change user preference
+"change.user.preference.failure.toast.message.text" = "Cannot change preferences. Please try again.";
 
 // MARK: Change password
 "change.password.label" = "Change password...";
@@ -97,6 +114,7 @@
 "change.password.compatibility.validation.text" = "Passwords have to be identical";
 "change.password.empty.field.validation.text" = "Please enter all fields";
 "change.password.current.password.validation.text" = "Incorrect current password. Please try again.";
+"change.password.success.text" = "Your password is changed.";
 
 // MARK: Button titles
 "delete.button.title" = "Delete";

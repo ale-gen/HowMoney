@@ -79,7 +79,7 @@ struct UserAssetsCollection: View {
             withAnimation {
                 guard let userAssetForDeletion = userAssetForDeletion else { return }
                 didUserAssetDelete?(userAssetForDeletion) {
-                    // TODO: Show error toast
+                    ToastViewModel.shared.show()
                 }
             }
         }

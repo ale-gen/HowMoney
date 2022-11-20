@@ -48,8 +48,12 @@ class UserAssetViewModel: ObservableObject {
         assetVM.getExchangeRateHistory({ [weak self] in
             self?.userAssetPriceHistory = self?.assetVM.assetHistoryData.map { $0.value } ?? []
         }, { [weak self] in
-            print("Cannot fetch exchange rates for asset: \(self?.userAsset.asset.friendlyName) 🫠")
+            print("🫠 Cannot fetch exchange rates for asset: \(self?.userAsset.asset.friendlyName)")
         })
+    }
+    
+    func getToastValues() -> ToastModel? {
+        return editingViewModel?.toast
     }
     
 }

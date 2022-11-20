@@ -13,6 +13,7 @@ struct UserAssetDetailsView: View {
         enum Icon {
             static let height: CGFloat = 80.0
             static let shadow: CGFloat = 10.0
+            static let shadowColor: Color = .white.opacity(0.3)
             static let bottomPadding: CGFloat = 20.0
         }
         enum Title {
@@ -69,6 +70,7 @@ struct UserAssetDetailsView: View {
     @StateObject var vm: UserAssetViewModel
     
     @State private var preferenceCurrencyRequired: Bool = true
+    @State private var showToast: Bool = false
     
     var body: some View {
         NavigationView {
@@ -82,6 +84,7 @@ struct UserAssetDetailsView: View {
                     operationOptions
                     Spacer()
                 }
+                .conditionalModifier(showToast, { $0.toast(shouldShow: $showToast, type: toastModel.type, message: toastModel.message)} )
                 .padding(.top, Constants.topOffset)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
             }
@@ -103,12 +106,11 @@ struct UserAssetDetailsView: View {
     
     private var assetBasicInfo: some View {
         VStack(spacing: Constants.verticalSpacing) {
-            // TODO: asset image/symbol/flag
-            Image("bitcoin")
+            Image(vm.userAsset.asset.name.lowercased())
                 .resizable()
                 .scaledToFit()
                 .frame(width: Constants.Icon.height, height: Constants.Icon.height)
-                .shadow(color: .orange, radius: Constants.Icon.shadow)
+                .shadow(color: Constants.Icon.shadowColor, radius: Constants.Icon.shadow)
                 .padding(.bottom, Constants.Icon.bottomPadding)
             HStack(spacing: Constants.horizontalSpacing) {
                 Text(vm.userAsset.asset.friendlyName)
@@ -161,10 +163,14 @@ struct UserAssetDetailsView: View {
             Spacer()
         }
     }
+    
+    private var toastModel: ToastModel {
+        vm.getToastValues()!
+    }
 
     private func operationOption(type: UserAssetOperation) -> some View {
         NavigationLink {
-            UserAssetEditingView(vm: vm.prepareEditingViewModel(type))
+            UserAssetEditingView(vm: vm.prepareEditingViewModel(type), showToast: $showToast)
         } label: {
             RoundedRectangle(cornerRadius: Constants.OperationOption.cornerRadius)
                 .foregroundColor(Constants.OperationOption.color)

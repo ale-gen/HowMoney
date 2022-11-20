@@ -15,7 +15,6 @@ class CreationViewModel: ObservableObject {
     }
     
     @Published var selectedAsset: Asset?
-    @Published var errorMessage: String = .empty
     
     var keyboardViewModel: KeyboardViewModel?
     var service: any Service

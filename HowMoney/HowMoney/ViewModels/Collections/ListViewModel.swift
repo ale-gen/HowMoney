@@ -32,22 +32,25 @@ class ListViewModel<Element>: ObservableObject {
                 self.items = try await service.getData(parameters) as! [Element]
                 completion()
             } catch let error {
-                print("Error during assets fetching: \(error.localizedDescription)")
+                print("Error during elements fetching: \(error.localizedDescription)")
                 completion()
             }
         }
     }
     
-    @MainActor func deleteItem(_ userAsset: UserAsset, _ failureCompletion: @escaping () -> Void) {
+    @MainActor func deleteItem(_ userAsset: UserAsset, _ completion: @escaping () -> Void) {
         task = Task {
             do {
                 let result = try await service.deleteData(userAsset.asset.name)
                 if result {
                     items.removeAll(where: { ($0 as? UserAsset)?.id == userAsset.id})
+                    ToastViewModel.shared.update(message: Localizable.userAssetsDeletionSuccesssToastMessageText.value, type: .success)
+                    completion()
                 }
             } catch let error {
-                print("Error during assets fetching: \(error.localizedDescription)")
-                failureCompletion()
+                print("Error during element deletion: \(error.localizedDescription)")
+                ToastViewModel.shared.update(message: Localizable.userAssetsDeletionFailureToastMessageText.value, type: .error)
+                completion()
             }
         }
     }

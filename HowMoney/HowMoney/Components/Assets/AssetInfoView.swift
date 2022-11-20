@@ -16,6 +16,7 @@ struct AssetInfoView: View {
             static let height: CGFloat = Constants.height - 20.0
             static let trailingInset: CGFloat = 10.0
             static let shadow: CGFloat = 8.0
+            static let shadowColor: Color = .white.opacity(0.3)
         }
         enum Title {
             static let font: Font = .system(size: 15.0, weight: .light)
@@ -34,12 +35,11 @@ struct AssetInfoView: View {
     
     var body: some View {
         HStack {
-            // TODO: asset image/symbol/flag
-            Image("bitcoin")
+            Image(asset.name.lowercased())
                 .resizable()
                 .scaledToFit()
                 .frame(width: Constants.Icon.height, height: Constants.Icon.height)
-                .shadow(color: .orange, radius: Constants.Icon.shadow)
+                .shadow(color: Constants.Icon.shadowColor, radius: Constants.Icon.shadow)
             
             VStack(alignment: .leading, spacing: Constants.spacing) {
                 Text(asset.friendlyName)

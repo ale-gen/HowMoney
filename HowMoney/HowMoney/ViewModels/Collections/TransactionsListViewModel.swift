@@ -34,7 +34,7 @@ class TransactionsListViewModel: ListViewModel<Transaction> {
                 self.assets = try await Services.assetService.getData()
                 completion()
             } catch let error {
-                print("Error during assets fetching: \(error.localizedDescription)")
+                print("Error during transactions fetching: \(error.localizedDescription)")
                 completion()
             }
         }
@@ -47,7 +47,7 @@ class TransactionsListViewModel: ListViewModel<Transaction> {
     @MainActor func getTransactions(_ completion: @escaping () -> Void) {
         let queryString = "?\(startDateRangeFormat)&\(endDateRangeFormat)"
         transactionsTask = Task {
-            await getItems(completion, queryString)
+            await getItems(completion, queryString) 
         }
     }
     

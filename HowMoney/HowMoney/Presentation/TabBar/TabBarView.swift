@@ -14,6 +14,7 @@ struct TabBarView: View {
     @State var selection: TabBarItem = .home
     @State var searchText: String = ""
     
+    @StateObject private var toastVM: ToastViewModel = ToastViewModel.shared
     @State private var showCreationView: Bool = false
     @State private var selectedContext: CreationContext = .asset
     
@@ -22,6 +23,7 @@ struct TabBarView: View {
             contentViewRouter.currentContent
             TabBar(tabs: [.home, .wallet, .plus, .transactions, .profile], selection: $selection, localSelection: selection, selectedContext: $selectedContext, showCreationView: $showCreationView)
         }
+        .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
         .onChange(of: selection) { newValue in
             contentViewRouter.navigateToContent(newValue)
         }
