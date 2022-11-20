@@ -97,6 +97,8 @@ enum Localizable: String, Translation {
     
     // MARK: User assets deletion
     case userAssetsDeletionAlertMessageTitle = "user.assets.deletion.alert.message"
+    case userAssetsDeletionSuccesssToastMessageText = "user.assets.deletion.success.toast.message.text"
+    case userAssetsDeletionFailureToastMessageText = "user.assets.deletion.failure.toast.message.text"
     
     // MARK: Alerts creation
     case alertsCreationNavBarTitle = "alerts.creation.nav.bar.title"

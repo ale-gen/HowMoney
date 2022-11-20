@@ -78,6 +78,8 @@
 
 // MARK: User asset deletion
 "user.assets.deletion.alert.message" = "Are you sure you want to delete: %@?";
+"user.assets.deletion.success.toast.message.text" = "Item is deleted.";
+"user.assets.deletion.failure.toast.message.text" = "Cannot delete item. Please try again.";
 
 // MARK: Alerts creation
 "alerts.creation.nav.bar.title" = "Create alert";

@@ -38,16 +38,19 @@ class ListViewModel<Element>: ObservableObject {
         }
     }
     
-    @MainActor func deleteItem(_ userAsset: UserAsset, _ failureCompletion: @escaping () -> Void) {
+    @MainActor func deleteItem(_ userAsset: UserAsset, _ completion: @escaping () -> Void) {
         task = Task {
             do {
                 let result = try await service.deleteData(userAsset.asset.name)
                 if result {
                     items.removeAll(where: { ($0 as? UserAsset)?.id == userAsset.id})
+                    ToastViewModel.shared.update(message: Localizable.userAssetsDeletionSuccesssToastMessageText.value, type: .success)
+                    completion()
                 }
             } catch let error {
                 print("Error during element deletion: \(error.localizedDescription)")
-                failureCompletion()
+                ToastViewModel.shared.update(message: Localizable.userAssetsDeletionFailureToastMessageText.value, type: .error)
+                completion()
             }
         }
     }
