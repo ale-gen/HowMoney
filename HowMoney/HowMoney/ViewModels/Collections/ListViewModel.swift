@@ -38,7 +38,7 @@ class ListViewModel<Element>: ObservableObject {
         }
     }
     
-    @MainActor func deleteUserAsset(_ element: UserAsset, _ completion: @escaping () -> Void) {
+    func deleteUserAsset(_ element: UserAsset, _ completion: @escaping () -> Void) {
         deleteItem(element.asset.name, completion, successCompletion: { [weak self] in
             DispatchQueue.main.async {
                 withAnimation {
@@ -48,7 +48,7 @@ class ListViewModel<Element>: ObservableObject {
         })
     }
     
-    @MainActor func deleteAlert(_ element: Alert, _ completion: @escaping () -> Void) {
+    func deleteAlert(_ element: Alert, _ completion: @escaping () -> Void) {
         deleteItem(String(element.id), completion, successCompletion: { [weak self] in
             DispatchQueue.main.async {
                 withAnimation {

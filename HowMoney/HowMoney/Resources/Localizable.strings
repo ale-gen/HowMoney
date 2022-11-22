@@ -31,7 +31,8 @@
 "wallet.currency.balance.title" = "Balance for currencies";
 "wallet.cryptocurrency.balance.title" = "Balance for cryptos";
 "wallet.metal.balance.title" = "Balance for metals";
-"wallet.total.balance.subtitle" = "Weekly profit";
+"wallet.total.balance.weekly.profit.subtitle" = "Weekly profit";
+"wallet.total.balance.yeasterdays.profit.subtitle" = "Yeasterday's profit";
 
 // MARK: User profile
 "user.profile.weekly.reports.label.text" = "Weekly reports";

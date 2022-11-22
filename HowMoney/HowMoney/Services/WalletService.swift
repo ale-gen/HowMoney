@@ -79,13 +79,17 @@ class WalletService: Service {
     
     private func getTotalWalletHistory(_ completion: () -> Void) async throws -> [Wallet] {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
-        let urlString = "\(String.baseUrl)\(NetworkEndpoints.walletHistory.rawValue)"
+        let urlString = "\(String.baseUrl)\(NetworkEndpoints.walletHistory.rawValue)?from=\(Date.now.previousWeek.text())"
         guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
         
         let token = try Keychain.get(account: email)
         let request = createRequest(url: url, token: token, method: .get)
         let (data, _) = try await session.data(for: request)
-        guard let totalBalance = try? JSONDecoder().decode([WalletDTO].self, from: data) else {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        guard let totalBalance = try? decoder.decode([WalletDTO].self, from: data) else {
             completion()
             print("🆘 Error during total balance history fetching")
             throw NetworkError.invalidData

@@ -51,6 +51,8 @@ enum Localizable: String, Translation {
     case walletCryptocurrencyBalanceTitle = "wallet.cryptocurrency.balance.title"
     case walletMetalBalanceTitle = "wallet.metal.balance.title"
     case walletTotalBalanceSubtitle = "wallet.total.balance.subtitle"
+    case walletTotalBalanceWeeklyProfitSubtitle = "wallet.total.balance.weekly.profit.subtitle"
+    case walletTotalBalanceYeasterdaysProfitSubtitle = "wallet.total.balance.yeasterdays.profit.subtitle"
     
     // MARK: User profile
     case userProfileWeeklyReportsLabelText = "user.profile.weekly.reports.label.text"

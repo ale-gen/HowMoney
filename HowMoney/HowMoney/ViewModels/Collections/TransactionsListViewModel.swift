@@ -10,11 +10,11 @@ import Foundation
 class TransactionsListViewModel: ListViewModel<Transaction> {
     
     @Published var assets: [Asset] = []
-    @Published var startDateRangeFormat: String = "from=%@".localizedWithFormat(Date().today.text())
+    @Published var startDateRangeFormat: String = "from=%@".localizedWithFormat(Date().today.textWithZone())
     
     private var assetTask: Task<(), Error>?
     private var transactionsTask: Task<(), Error>?
-    private var endDateRangeFormat = "to=%@".localizedWithFormat(Date().today.text())
+    private var endDateRangeFormat = "to=%@".localizedWithFormat(Date().today.textWithZone())
     
     override init(service: any Service) {
         super.init(service: service)
@@ -41,7 +41,7 @@ class TransactionsListViewModel: ListViewModel<Transaction> {
     }
     
     func didDateRangeChanged(_ index: Int) {
-        startDateRangeFormat = "from=%@".localizedWithFormat(TransactionDateRange.allCases[index].date.text())
+        startDateRangeFormat = "from=%@".localizedWithFormat(TransactionDateRange.allCases[index].date.textWithZone())
     }
     
     @MainActor func getTransactions(_ completion: @escaping () -> Void) {
