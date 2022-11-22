@@ -47,7 +47,7 @@ class TransactionsListViewModel: ListViewModel<Transaction> {
     @MainActor func getTransactions(_ completion: @escaping () -> Void) {
         let queryString = "?\(startDateRangeFormat)&\(endDateRangeFormat)"
         transactionsTask = Task {
-            await getItems(completion, queryString) 
+            await getItems(completion, queryString)
         }
     }
     
