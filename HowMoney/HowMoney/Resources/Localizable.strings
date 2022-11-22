@@ -76,6 +76,12 @@
 "user.assets.creation.value.validation.toast.message.text" = "Asset value is incorrect.";
 "user.assets.creation.success.toast.message.text" = "Asset is created.";
 
+// MARK: User assets editing
+"user.assets.editing.final.value.label" = "After operation asset balance will be equal:";
+"user.assets.editing.new.value.label" = "After operation new asset balance will be equal:";
+"user.assets.editing.value.validation.toast.message.text" = "Asset value is incorrect.";
+"user.assets.editing.asset.updated.toast.message.text" = "Asset is updated.";
+
 // MARK: User asset deletion
 "user.assets.deletion.alert.message" = "Are you sure you want to delete: %@?";
 "user.assets.deletion.success.toast.message.text" = "Item is deleted.";
@@ -91,11 +97,10 @@
 "alerts.creation.asset.selection.validation" = "Asset selection is required.";
 "alerts.creation.success.toast.message.text" = "Alert is created.";
 
-// MARK: User assets editing
-"user.assets.editing.final.value.label" = "After operation asset balance will be equal:";
-"user.assets.editing.new.value.label" = "After operation new asset balance will be equal:";
-"user.assets.editing.value.validation.toast.message.text" = "Asset value is incorrect.";
-"user.assets.editing.asset.updated.toast.message.text" = "Asset is updated.";
+// MARK: Alerts deletion
+"alerts.deletion.alert.message" = "Are you sure you want to delete selected alert?";
+"alerts.deletion.success.toast.message.text" = "Alert is deleted.";
+"alerts.deletion.failure.toast.message.text" = "Cannot delete selected alert. Please try again.";
 
 // MARK: Toast view
 "toast.view.error.title" = "Error";

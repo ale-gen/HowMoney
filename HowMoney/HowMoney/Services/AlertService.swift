@@ -28,7 +28,7 @@ class AlertService: Service {
     func getData(_ parameters: Any...) async throws -> [Alert] {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
         guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
-        
+
         let token = try Keychain.get(account: email)
         let request = createRequest(url: url, token: token, method: .get)
         let (data, _) = try await session.data(for: request)
@@ -42,7 +42,25 @@ class AlertService: Service {
     }
     
     func deleteData(_ parameters: Any...) async throws -> Bool {
-        /* */
+        guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
+        var urlString = self.urlString
+        for parameter in parameters {
+            urlString += "/\(parameter)"
+        }
+        guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
+        
+        let token = try Keychain.get(account: email)
+        let request = createRequest(url: url, token: token, method: .delete)
+        let (_, response) = try await session.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse {
+            switch httpResponse.statusCode {
+            case 200..<300:
+                return true
+            default:
+                throw NetworkError.unknown
+            }
+        }
         return false
     }
     

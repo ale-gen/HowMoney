@@ -110,6 +110,11 @@ enum Localizable: String, Translation {
     case alertsCreationAssetSelectionValidation = "alerts.creation.asset.selection.validation"
     case alertsCreationSuccessToastMessageText = "alerts.creation.success.toast.message.text"
     
+    // MARK: Alerts deletion
+    case alertsDeletionAlertMessage = "alerts.deletion.alert.message"
+    case alertsDeletionSuccessToastMessageText = "alerts.deletion.success.toast.message.text"
+    case alertsDeletionFailureToastMessageText = "alerts.deletion.failure.toast.message.text"
+    
     // MARK: User assets editing
     case userAssetsEditingFinalValueLabel = "user.assets.editing.final.value.label"
     case userAssetsEditingNewValueLabel = "user.assets.editing.new.value.label"

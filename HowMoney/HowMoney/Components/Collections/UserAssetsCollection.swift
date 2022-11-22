@@ -24,7 +24,7 @@ struct UserAssetsCollection: View {
     }
     
     let userAssets: [UserAsset]
-    var didUserAssetDelete: ((UserAsset, @escaping () -> Void) -> Void)?
+    var didUserAssetDeleted: ((UserAsset, @escaping () -> Void) -> Void)?
     @State var selectedUserAsset: UserAsset?
     @State private var userAssetForDeletion: UserAsset?
     @State private var showConfirmationDialog: Bool = false
@@ -78,7 +78,7 @@ struct UserAssetsCollection: View {
             print("🗑 Deleting...")
             withAnimation {
                 guard let userAssetForDeletion = userAssetForDeletion else { return }
-                didUserAssetDelete?(userAssetForDeletion) {
+                didUserAssetDeleted?(userAssetForDeletion) {
                     ToastViewModel.shared.show()
                 }
             }

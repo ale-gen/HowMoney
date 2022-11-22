@@ -32,6 +32,8 @@ struct HomeTabBarItem: View {
     @StateObject var walletVM: WalletViewModel = WalletViewModel(service: Services.walletService)
     @StateObject var alertsVM: ListViewModel<Alert> = ListViewModel(service: Services.alertService)
     
+    @State private var loaderView: LoaderView? = LoaderView()
+    @State private var loading: Bool = false
     @State private var showAlertList: Bool = false
     
     var body: some View {
@@ -46,20 +48,36 @@ struct HomeTabBarItem: View {
         .padding(.vertical, Constants.verticalInsets)
         .sheet(isPresented: $showAlertList) {
             NavigationView {
-                AlertsCollection(vm: alertsVM, scrollAxis: .vertical)
+                AlertsCollection(vm: alertsVM, didAlertDeleted: alertsVM.deleteAlert, scrollAxis: .vertical)
                     .navigationTitle(Localizable.alertsCollectionTitle.value)
                     .navigationBarTitleDisplayMode(.inline)
-                    .background(Constants.background)
+                    .background(Constants.background.edgesIgnoringSafeArea(.all))
             }
         }
+        .loader(loader: $loaderView, shouldHideLoader: $loading)
         .onAppear {
+            loading = true
+            let group = DispatchGroup()
+            group.enter()
             walletVM.getWalletBalances({
                 DispatchQueue.main.async {
                     homeVM.walletBalances = walletVM.balances
                 }
+                group.leave()
             }, {
                 // TODO: Show toast with error
+                group.leave()
             })
+            
+            group.enter()
+            alertsVM.getItems {
+                group.leave()
+            }
+            
+            group.notify(queue: .main) {
+                loading = false
+                print("✅ Wallet data and alerts are fetched!")
+            }
         }
     }
     
