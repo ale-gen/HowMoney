@@ -51,6 +51,8 @@ enum Localizable: String, Translation {
     case walletCryptocurrencyBalanceTitle = "wallet.cryptocurrency.balance.title"
     case walletMetalBalanceTitle = "wallet.metal.balance.title"
     case walletTotalBalanceSubtitle = "wallet.total.balance.subtitle"
+    case walletTotalBalanceWeeklyProfitSubtitle = "wallet.total.balance.weekly.profit.subtitle"
+    case walletTotalBalanceYeasterdaysProfitSubtitle = "wallet.total.balance.yeasterdays.profit.subtitle"
     
     // MARK: User profile
     case userProfileWeeklyReportsLabelText = "user.profile.weekly.reports.label.text"
@@ -109,6 +111,11 @@ enum Localizable: String, Translation {
     case alertsCreationPositiveNumberValidation = "alerts.creation.positive.number.validation"
     case alertsCreationAssetSelectionValidation = "alerts.creation.asset.selection.validation"
     case alertsCreationSuccessToastMessageText = "alerts.creation.success.toast.message.text"
+    
+    // MARK: Alerts deletion
+    case alertsDeletionAlertMessage = "alerts.deletion.alert.message"
+    case alertsDeletionSuccessToastMessageText = "alerts.deletion.success.toast.message.text"
+    case alertsDeletionFailureToastMessageText = "alerts.deletion.failure.toast.message.text"
     
     // MARK: User assets editing
     case userAssetsEditingFinalValueLabel = "user.assets.editing.final.value.label"

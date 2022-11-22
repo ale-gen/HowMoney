@@ -31,27 +31,9 @@ struct UserCustomizationView: View {
     var body: some View {
         GeometryReader { geo in
             VStack {
-                VStack {
-                    vm.presentStep.image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxHeight: geo.size.height / 2)
-                    Spacer()
-
-                    descriptionLabel
-
-                    Spacer()
-
-                    switch vm.presentStep {
-                    case .preferenceCurrency:
-                        preferenceCurrencyContent
-                    case .emailAlert:
-                        emailAlertsContent
-                    case .weeklyReports:
-                        weeklyReportsContent
-                    }
-                }
-                .transition(transition)
+                stepContent(for: vm.presentStep, imageHeight: geo.size.height / 2)
+                    .animation(.default, value: vm.presentStep)
+                    .transition(transition)
                 
                 RectangleButton(title: vm.presentStep.buttonTitle) {
                     vm.performNextStep( {
@@ -61,7 +43,6 @@ struct UserCustomizationView: View {
                     })
                 }
                 .padding(.vertical, Constants.Button.topOffset)
-                .animation(nil, value: vm.presentStep)
             }
         }
         .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
@@ -87,6 +68,29 @@ struct UserCustomizationView: View {
     
     private var weeklyReportsContent: some View {
         ColorToggleButton(isOn: $vm.enabledWeeklyReports, textLabel: vm.presentStep.subtitle)
+    }
+    
+    private func stepContent(for step: CustomizationStep, imageHeight: CGFloat) -> some View {
+        VStack {
+            step.image
+                .resizable()
+                .scaledToFit()
+                .frame(maxHeight: imageHeight)
+            Spacer()
+
+            descriptionLabel
+
+            Spacer()
+
+            switch step {
+            case .preferenceCurrency:
+                preferenceCurrencyContent
+            case .emailAlert:
+                emailAlertsContent
+            case .weeklyReports:
+                weeklyReportsContent
+            }
+        }
     }
 }
 

@@ -19,7 +19,7 @@ class WalletViewModel: ObservableObject {
     }
     
     @MainActor func getWalletBalances(_ successCompletion: @escaping () -> Void,
-                           _ failureCompletion: @escaping () -> Void) {
+                                      _ failureCompletion: @escaping () -> Void) {
         guard let service = service as? WalletService else { return }
         task = Task {
             do {

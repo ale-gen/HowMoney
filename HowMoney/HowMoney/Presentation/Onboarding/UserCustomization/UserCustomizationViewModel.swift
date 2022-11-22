@@ -76,13 +76,9 @@ class UserCustomizationViewModel: ObservableObject {
             guard let self = self else { return }
             let nextStepIndex = (self.steps.firstIndex(of: self.presentStep) ?? .zero) + .one
             if nextStepIndex == self.steps.count {
-                // Navigate to HomeTabBar()
                 successCompletion()
             } else {
-                // Navigate to next onboarding screen
-                withAnimation(.linear(duration: 0.4)) {
-                    self.presentStep = self.steps[nextStepIndex]
-                }
+                self.presentStep = self.steps[nextStepIndex]
             }
         }, {
             failureCompletion()

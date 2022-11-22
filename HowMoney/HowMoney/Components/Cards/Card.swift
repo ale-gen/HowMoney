@@ -37,7 +37,6 @@ struct Card: View {
             static let color: Color = .black
             static let font: Font = .system(size: 15.0, weight: .light)
             static let spacing: CGFloat = 2.0
-            static let innerContainerHorizontalInset: CGFloat = -20.0
         }
         enum Gradient {
             static let startRadius: CGFloat = 10.0
@@ -66,7 +65,7 @@ struct Card: View {
     let subtitle: String?
     let subValue: Float?
     let currency: PreferenceCurrency
-    let additionalValue: Int?
+    let additionalValue: Double?
     let isIncreased: Bool?
     
     var cardColor: Color?
@@ -125,7 +124,7 @@ extension Card {
     private var subtitleSection: some View {
         HStack {
             if let subtitle = subtitle, let subValue = subValue, let isIncreased = isIncreased {
-                VStack {
+                VStack(alignment: .leading) {
                     Text(subtitle)
                         .foregroundColor(subtitleColor)
                         .font(Constants.Subtitle.font)
@@ -134,7 +133,6 @@ extension Card {
                         Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)")
                         PreferenceCurrencyValueLabel(value: subValue)
                     }
-                    .padding(.leading, Constants.SubValue.innerContainerHorizontalInset)
                     .foregroundColor(Constants.SubValue.color)
                     .font(Constants.SubValue.font)
                 }
@@ -157,7 +155,8 @@ extension Card {
                     .opacity(Constants.AdditionalLabel.opacity)
                 HStack {
                     isIncreased ? BalanceChar.positive.arrowImage : BalanceChar.negative.arrowImage
-                    Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)\(additionalValue)%")
+                    Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)\(additionalValue, specifier: "%.2f")%")
+                        .font(.caption)
                 }
                 .foregroundColor(additionalLabelColor)
             } else {
@@ -170,7 +169,7 @@ extension Card {
 
 struct Card_Previews: PreviewProvider {
     static var previews: some View {
-        Card(title: "Current Balance", mainValue: 12345.67, subtitle: "Monthly profit", subValue: 1262.5, currency: .usd, additionalValue: 28, isIncreased: true, screenWidth: UIScreen.main.bounds.width * 0.9, width: UIScreen.main.bounds.width * 0.8)
+        Card(title: "Current Balance", mainValue: 12345.67, subtitle: "Yeasterday's profit", subValue: 1262.5, currency: .usd, additionalValue: 100, isIncreased: true, screenWidth: UIScreen.main.bounds.width * 0.9, width: UIScreen.main.bounds.width * 0.8)
             .environmentObject(UserStateViewModel())
     }
 }

@@ -72,7 +72,7 @@ struct UserAssetsTabBarItem: View {
                 filterAssetTypePicker
                 
                 let filteredItems = vm.items.filter { selectedFilter.possibleAssetTypes.contains($0.asset.type) }
-                UserAssetsCollection(userAssets: filteredItems, didUserAssetDelete: vm.deleteItem)
+                UserAssetsCollection(userAssets: filteredItems, didUserAssetDeleted: vm.deleteUserAsset)
                     .transition(.opacity)
             }
             .searchable(text: $searchText)

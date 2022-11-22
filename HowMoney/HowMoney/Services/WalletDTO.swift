@@ -9,4 +9,5 @@ import Foundation
 
 struct WalletDTO: Decodable {
     let value: Double
+    let dateStamp: Date
 }

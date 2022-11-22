@@ -25,15 +25,6 @@ enum WalletType {
             return Localizable.walletMetalBalanceTitle.value
         }
     }
-    
-    var subtitle: String {
-        switch self {
-        case .total:
-            return Localizable.walletTotalBalanceSubtitle.value
-        case .currency, .crypto, .metal:
-            return .empty
-        }
-    }
 }
 
 struct Wallet {
@@ -48,10 +39,12 @@ struct Wallet {
     }
     
     static func parse(from model: [WalletDTO]) -> Wallet? {
+        var model = model.sorted(by: { $0.dateStamp > $1.dateStamp })
         guard !model.isEmpty,
               let latestValue = model.first?.value
         else { return nil }
         
-        return Wallet(value: latestValue, type: .total, historyValues: [])
+        model.remove(at: .zero)
+        return Wallet(value: latestValue, type: .total, historyValues: model.map { $0.value })
     }
 }

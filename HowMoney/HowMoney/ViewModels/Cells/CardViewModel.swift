@@ -18,7 +18,7 @@ class CardViewModel: ObservableObject {
     private(set) var currency: PreferenceCurrency
     private(set) var subtitle: String?
     private(set) var subValue: Float?
-    private(set) var additionalValue: Int?
+    private(set) var additionalValue: Double?
     private(set) var isIncreased: Bool?
     private(set) var gradientColors: [Color]
     
@@ -27,7 +27,7 @@ class CardViewModel: ObservableObject {
          currency: PreferenceCurrency,
          subtitle: String? = nil,
          subValue: Float? = nil,
-         additionalValue: Int? = nil,
+         additionalValue: Double? = nil,
          isIncreased: Bool?,
          gradientColor: [Color] = [.lightBlue, .lightGreen]) {
         self.title = title

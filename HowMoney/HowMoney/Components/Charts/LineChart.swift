@@ -13,8 +13,8 @@ struct LineChart: View {
     
     private enum Constants {
         enum Animation {
-            static let duration: CGFloat = 1.5
-            static let delay: CGFloat = 0.2
+            static let duration: CGFloat = 2.0
+            static let delay: CGFloat = 0.5
         }
         enum Line {
             static let defaultWidth: CGFloat = 2.0

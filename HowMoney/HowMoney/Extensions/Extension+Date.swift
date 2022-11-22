@@ -33,9 +33,15 @@ extension Date {
         return Calendar.current.date(byAdding: .year, value: -1, to: self)!
     }
     
-    func text() -> String {
+    func textWithZone() -> String {
         let dateFormat = DateFormatter()
         dateFormat.dateFormat = "yyyy-MM-dd'Z'"
+        return dateFormat.string(from: self)
+    }
+    
+    func text() -> String {
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "yyyy-MM-dd"
         return dateFormat.string(from: self)
     }
 }

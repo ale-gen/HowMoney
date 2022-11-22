@@ -35,7 +35,7 @@ class TransactionService: Service {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
         guard let transactions = try? decoder.decode([TransactionDTO].self, from: data) else { throw NetworkError.invalidData }
-        return transactions.map { Transaction.parse(from: $0) }
+        return transactions.map { Transaction.parse(from: $0) }.sorted(by: { $0.date > $1.date })
     }
     
     func updateData(_ model: Transaction) async throws -> Transaction? {

@@ -16,4 +16,8 @@ extension Double {
     static var invisibleAlpha: Double {
         return 0.0
     }
+    
+    static var zero: Double {
+        return 0.0
+    }
 }

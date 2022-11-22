@@ -5,7 +5,7 @@
 //  Created by Aleksandra Generowicz on 28/10/2022.
 //
 
-import Foundation
+import SwiftUI
 
 class ListViewModel<Element>: ObservableObject {
     
@@ -38,12 +38,32 @@ class ListViewModel<Element>: ObservableObject {
         }
     }
     
-    @MainActor func deleteItem(_ userAsset: UserAsset, _ completion: @escaping () -> Void) {
+    func deleteUserAsset(_ element: UserAsset, _ completion: @escaping () -> Void) {
+        deleteItem(element.asset.name, completion, successCompletion: { [weak self] in
+            DispatchQueue.main.async {
+                withAnimation {
+                    self?.items.removeAll(where: { ($0 as? UserAsset)?.id == element.id})
+                }
+            }
+        })
+    }
+    
+    func deleteAlert(_ element: Alert, _ completion: @escaping () -> Void) {
+        deleteItem(String(element.id), completion, successCompletion: { [weak self] in
+            DispatchQueue.main.async {
+                withAnimation {
+                    self?.items.removeAll(where: { ($0 as? Alert)?.id == element.id})
+                }
+            }
+        })
+    }
+    
+    private func deleteItem(_ itemId: String, _ completion: @escaping () -> Void, successCompletion: @escaping () -> Void) {
         task = Task {
             do {
-                let result = try await service.deleteData(userAsset.asset.name)
+                let result = try await service.deleteData(itemId)
                 if result {
-                    items.removeAll(where: { ($0 as? UserAsset)?.id == userAsset.id})
+                    successCompletion()
                     ToastViewModel.shared.update(message: Localizable.userAssetsDeletionSuccesssToastMessageText.value, type: .success)
                     completion()
                 }
