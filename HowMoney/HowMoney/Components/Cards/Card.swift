@@ -72,7 +72,8 @@ struct Card: View {
     var titleColor: Color = Constants.Title.color
     var mainValueColor: Color = Constants.MainValue.color
     var subtitleColor: Color = Constants.Subtitle.color
-    var additionalLabelColor: Color = .green
+    var positiveAdditionalLabelColor: Color = .green
+    var negativeAdditionalLabelColor: Color = .red
     var gradientColors: [Color] = [.lightBlue, .lightGreen]
     
     var screenWidth: CGFloat
@@ -123,14 +124,13 @@ extension Card {
     
     private var subtitleSection: some View {
         HStack {
-            if let subtitle = subtitle, let subValue = subValue, let isIncreased = isIncreased {
+            if let subtitle = subtitle, let subValue = subValue {
                 VStack(alignment: .leading) {
                     Text(subtitle)
                         .foregroundColor(subtitleColor)
                         .font(Constants.Subtitle.font)
                         .padding(.bottom, Constants.Subtitle.bottomPadding)
                     HStack(spacing: Constants.SubValue.spacing) {
-                        Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)")
                         PreferenceCurrencyValueLabel(value: subValue)
                     }
                     .foregroundColor(Constants.SubValue.color)
@@ -155,10 +155,10 @@ extension Card {
                     .opacity(Constants.AdditionalLabel.opacity)
                 HStack {
                     isIncreased ? BalanceChar.positive.arrowImage : BalanceChar.negative.arrowImage
-                    Text("\(isIncreased ? BalanceChar.positive.text : BalanceChar.negative.text)\(additionalValue, specifier: "%.2f")%")
+                    Text("\(additionalValue, specifier: "%.2f")%")
                         .font(.caption)
                 }
-                .foregroundColor(additionalLabelColor)
+                .foregroundColor(isIncreased ? positiveAdditionalLabelColor : negativeAdditionalLabelColor)
             } else {
                 Spacer()
             }
