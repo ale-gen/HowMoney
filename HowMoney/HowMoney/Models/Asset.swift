@@ -79,12 +79,13 @@ struct AssetHistoryRecord: Hashable {
     
     let assetName: String
     let value: Float
+    let date: Date
     
     static func parse(from assetHistory: AssetHistoryDTO) -> AssetHistoryRecord {
-        AssetHistoryRecord(assetName: assetHistory.assetIdentifier, value: assetHistory.value)
+        AssetHistoryRecord(assetName: assetHistory.assetIdentifier, value: assetHistory.value, date: assetHistory.timeStamp)
     }
     
     static let DollarHistoryMock: [AssetHistoryRecord] = [
         4.9462, 4.9854, 4.9329, 4.9491, 4.9491, 4.9491, 4.9116, 4.8160, 4.8719, 4.9890, 4.9860, 4.9860, 4.9860, 5.0021, 4.9927, 4.9908, 4.9091, 4.9363, 4.5908, 4.6709
-    ].map { AssetHistoryRecord(assetName: "USD", value: $0) }
+    ].map { AssetHistoryRecord(assetName: "USD", value: $0, date: Date().today) }
 }

@@ -10,7 +10,9 @@ import SwiftUI
 struct CreationView: View {
     
     private enum Constants {
-        static let spacing: CGFloat = 20.0
+        static let topOffset: CGFloat = 50.0
+        static let spacing: CGFloat = 30.0
+        static let bottomOffset: CGFloat = 20.0
         
         enum SelectionButton {
             static let cornerRadius: CGFloat = 10.0
@@ -27,14 +29,17 @@ struct CreationView: View {
             static let titleColor: Color = .white
             static let subtitleColor: Color = .white.opacity(0.7)
         }
-        enum ValueLabel {
-            static let maxHeight: CGFloat = 150.0
-            static let font: Font = .system(size: 40.0)
-            static let color: Color = .white
-            static let defaultValue: String = .zero
+        enum TextField {
+            static let height: CGFloat = 55.0
+            static let color: Color = .white.opacity(0.08)
+            static let cornerRadius: CGFloat = 20.0
+            static let textInset: CGFloat = 10.0
+            static let spacing: CGFloat = 15.0
         }
-        enum Keyboard {
-            static let maxHeight: CGFloat = 300.0
+        enum Circle {
+            static let opacity: CGFloat = 0.4
+            static let blurRadius: CGFloat = 150.0
+            static let offset: CGFloat = 200.0
         }
     }
     
@@ -42,48 +47,61 @@ struct CreationView: View {
     @StateObject var vm: CreationViewModel
     
     @StateObject private var toastVM: ToastViewModel = ToastViewModel.shared
-    @State private var textValue: String = Constants.ValueLabel.defaultValue
+    @State private var originText: String = .empty
+    @State private var presentNextStep: Bool = false
+    @State private var isCreated: Bool = false
     
     var body: some View {
-        VStack {
-            if vm.context == .alert {
-                currencyPicker
+        GeometryReader { geo in
+            VStack(spacing: Constants.spacing) {
+                if vm.context == .alert {
+                    currencyPicker
+                }
+                if vm.context == .asset {
+                    originTextField
+                }
+                
+                assetSelectionSection
+                Spacer()
+                nextButton
             }
-            
-            NavigationLink(destination: AssetsCollection(assetVM: vm.prepareAssetsCollectionViewModel())) {
-                RoundedRectangle(cornerRadius: Constants.SelectionButton.cornerRadius)
-                    .fill(Constants.SelectionButton.color)
-                    .frame(height: Constants.SelectionButton.height)
-                    .shadow(color: Constants.SelectionButton.shadowColor, radius: Constants.SelectionButton.cornerRadius)
-                    .overlay {
-                        HStack {
-                            if let asset = vm.selectedAsset {
-                                selectedAssetInfo(asset)
-                            } else {
-                                assetSelectionButton
-                            }
-                            Spacer()
-                            Icons.rightArrow.value
-                                .foregroundColor(Constants.Icon.color)
-                        }
-                        .padding(.horizontal, Constants.AssetInfo.horizontalPadding)
-                    }
-                    .padding(.horizontal)
-            }
-            .padding(.top, Constants.spacing)
-            
-            Spacer()
-            valueLabel
-            Spacer()
-            
-            RectangleButton(title: Localizable.userAssetsCreationAddToMyWalletButtonTitle.value, didButtonTapped: sendForm)
-                .padding(.bottom, Constants.spacing)
-            
-            KeyboardView(vm: vm.prepareKeyboardViewModel(), textValue: $textValue)
-                .frame(maxHeight: Constants.Keyboard.maxHeight)
+            .padding(.top, Constants.topOffset)
+            .padding(.bottom, Constants.bottomOffset)
+            .background(
+                backgroundCircles
+                    .frame(width: geo.size.width)
+                    .edgesIgnoringSafeArea(.all)
+            )
         }
         .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
         .transition(.move(edge: .bottom))
+        .onChange(of: isCreated) { newValue in
+            presentationMode.wrappedValue.dismiss()
+        }
+        
+    }
+    
+    private var assetSelectionSection: some View {
+        NavigationLink(destination: AssetsCollection(assetVM: vm.prepareAssetsCollectionViewModel())) {
+            RoundedRectangle(cornerRadius: Constants.SelectionButton.cornerRadius)
+                .fill(Constants.SelectionButton.color)
+                .frame(height: Constants.SelectionButton.height)
+                .shadow(color: Constants.SelectionButton.shadowColor, radius: Constants.SelectionButton.cornerRadius)
+                .overlay {
+                    HStack {
+                        if let asset = vm.selectedAsset {
+                            selectedAssetInfo(asset)
+                        } else {
+                            assetSelectionButton
+                        }
+                        Spacer()
+                        Icons.rightArrow.value
+                            .foregroundColor(Constants.Icon.color)
+                    }
+                    .padding(.horizontal, Constants.AssetInfo.horizontalPadding)
+                }
+                .padding(.horizontal)
+        }
     }
     
     private var assetSelectionButton: some View {
@@ -100,42 +118,63 @@ struct CreationView: View {
     private var currencyPicker: some View {
         VStack {
             Text(Localizable.alertsCreationTargetCurrencyText.value)
+                .padding(.leading, Constants.TextField.textInset)
             if let vm = vm as? AlertCreationViewModel {
                 SegmentedPickerView(items: PreferenceCurrency.allCases.map { $0.name }, didSelectItem: vm.updateTargetCurrency)
             }
         }
     }
     
-    private var valueLabel: some View {
-        ZStack {
-            // TODO: Ensure typing correct number of decimal places depends on chosen asset type
-            HStack {
-                Spacer()
-                Text(textValue)
-                Text(vm.selectedAsset?.symbol ?? .empty)
-                Spacer()
+    private var originTextField: some View {
+        VStack(alignment: .leading, spacing: Constants.TextField.spacing) {
+            if let vm = vm as? UserAssetCreationViewModel {
+                Text("Asset origin: ")
+                RoundedRectangle(cornerRadius: Constants.TextField.cornerRadius)
+                    .fill(Constants.TextField.color)
+                    .frame(height: Constants.TextField.height)
+                    .overlay {
+                        TextField("Enter origin...", text: $originText)
+                            .padding(.leading, Constants.TextField.textInset)
+                            .onChange(of: originText) { newValue in
+                                vm.updateOrigin(newValue)
+                            }
+                    }
             }
-            .foregroundColor(Constants.ValueLabel.color)
-            .font(Constants.ValueLabel.font)
+        }
+        .padding(.horizontal)
+    }
+    
+    private var nextButton: some View {
+        NavigationLink(destination: CreationValueView(vm: vm, isCreated: $isCreated), isActive: $vm.presentNextStep) {
+            RectangleButton(title: Localizable.nextButtonTitle.value, didButtonTapped: nextButtonTapped)
         }
     }
     
-    private func sendForm() {
-        vm.create(successCompletion: {
-            print("Success 🥳")
-            ToastViewModel.shared.show()
-            DispatchQueue.main.async {
-                presentationMode.wrappedValue.dismiss()
-            }
-        }, failureCompletion: {
-            print("Failure 🫠")
-            ToastViewModel.shared.show()
-        })
+    private var backgroundCircles: some View {
+        ZStack {
+            Circle()
+                .fill(Color.lightBlue.opacity(Constants.Circle.opacity))
+                .blur(radius: Constants.Circle.blurRadius)
+                .offset(x: -Constants.Circle.offset, y: -Constants.Circle.offset)
+            
+            Circle()
+                .fill(Color.lightGreen.opacity(Constants.Circle.opacity))
+                .blur(radius: Constants.Circle.blurRadius)
+                .offset(x: Constants.Circle.offset, y: Constants.Circle.offset)
+        }
     }
+    
+    private func nextButtonTapped() {
+        vm.navigateToNextStep {
+            toastVM.show()
+        }
+    }
+
 }
 
 struct CreationView_Previews: PreviewProvider {
     static var previews: some View {
-        CreationView(vm: AlertCreationViewModel(service: AlertService()))
+//        CreationView(vm: AlertCreationViewModel(service: AlertService()))
+        CreationView(vm: UserAssetCreationViewModel(service: UserAssetService()))
     }
 }

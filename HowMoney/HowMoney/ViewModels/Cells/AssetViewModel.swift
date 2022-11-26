@@ -43,9 +43,10 @@ class AssetViewModel: ObservableObject {
     
     @MainActor func getExchangeRateHistory(_ successCompletion: @escaping () -> Void,
                                            _ failureCompletion: @escaping () -> Void) {
+        let startDateRangeParameter = "from=%@".localizedWithFormat(Date().previousMonth.textWithZone())
         task = Task {
             do {
-                self.assetHistoryData = try await service.getData(asset.name.lowercased()) as! [AssetHistoryRecord]
+                self.assetHistoryData = try await service.getData(asset.name.lowercased(), startDateRangeParameter) as! [AssetHistoryRecord]
                 successCompletion()
             } catch let error {
                 print("Error during \(asset.friendlyName)'s history fetching: \(error.localizedDescription)")

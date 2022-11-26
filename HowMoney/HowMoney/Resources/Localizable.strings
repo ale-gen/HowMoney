@@ -74,6 +74,7 @@
 "user.assets.creation.decimal.places.validation" = "Invalid format for available asset types.";
 "user.assets.creation.positive.number.validation" = "Entered value has to be positive number";
 "user.assets.creation.asset.selection.validation" = "Asset selection is required.";
+"user.assets.creation.origin.validation" = "Asset origin is required.";
 "user.assets.creation.value.validation.toast.message.text" = "Asset value is incorrect.";
 "user.assets.creation.success.toast.message.text" = "Asset is created.";
 
@@ -124,3 +125,4 @@
 
 // MARK: Button titles
 "delete.button.title" = "Delete";
+"next.button.title" = "Next";
