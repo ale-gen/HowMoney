@@ -42,7 +42,7 @@ struct CreationValueView: View {
                          textValue: $textValue)
                 .frame(maxHeight: Constants.Keyboard.maxHeight)
         }
-        .navigationTitle(vm.selectedAsset?.name ?? .empty)
+        .navigationTitle(vm.selectedAsset?.friendlyName.uppercased() ?? .empty)
         .navigationBarHidden(false)
         .navigationBarTitleDisplayMode(.inline)
         .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)

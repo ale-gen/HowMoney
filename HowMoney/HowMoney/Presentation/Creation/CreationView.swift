@@ -10,8 +10,9 @@ import SwiftUI
 struct CreationView: View {
     
     private enum Constants {
-        static let topOffset: CGFloat = 70.0
+        static let topOffset: CGFloat = 50.0
         static let spacing: CGFloat = 30.0
+        static let bottomOffset: CGFloat = 20.0
         
         enum SelectionButton {
             static let cornerRadius: CGFloat = 10.0
@@ -38,7 +39,7 @@ struct CreationView: View {
         enum Circle {
             static let opacity: CGFloat = 0.4
             static let blurRadius: CGFloat = 150.0
-            static let offset: CGFloat = 100.0
+            static let offset: CGFloat = 200.0
         }
     }
     
@@ -51,9 +52,7 @@ struct CreationView: View {
     @State private var isCreated: Bool = false
     
     var body: some View {
-        ZStack {
-            backgroundCircles
-            
+        GeometryReader { geo in
             VStack(spacing: Constants.spacing) {
                 if vm.context == .alert {
                     currencyPicker
@@ -62,39 +61,46 @@ struct CreationView: View {
                     originTextField
                 }
                 
-                NavigationLink(destination: AssetsCollection(assetVM: vm.prepareAssetsCollectionViewModel())) {
-                    RoundedRectangle(cornerRadius: Constants.SelectionButton.cornerRadius)
-                        .fill(Constants.SelectionButton.color)
-                        .frame(height: Constants.SelectionButton.height)
-                        .shadow(color: Constants.SelectionButton.shadowColor, radius: Constants.SelectionButton.cornerRadius)
-                        .overlay {
-                            HStack {
-                                if let asset = vm.selectedAsset {
-                                    selectedAssetInfo(asset)
-                                } else {
-                                    assetSelectionButton
-                                }
-                                Spacer()
-                                Icons.rightArrow.value
-                                    .foregroundColor(Constants.Icon.color)
-                            }
-                            .padding(.horizontal, Constants.AssetInfo.horizontalPadding)
-                        }
-                        .padding(.horizontal)
-                }
-                
+                assetSelectionSection
                 Spacer()
-                
-                NavigationLink(destination: CreationValueView(vm: vm, isCreated: $isCreated), isActive: $vm.presentNextStep) {
-                    RectangleButton(title: Localizable.nextButtonTitle.value, didButtonTapped: nextButtonTapped)
-                }
+                nextButton
             }
             .padding(.top, Constants.topOffset)
+            .padding(.bottom, Constants.bottomOffset)
+            .background(
+                backgroundCircles
+                    .frame(width: geo.size.width)
+                    .edgesIgnoringSafeArea(.all)
+            )
         }
         .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
         .transition(.move(edge: .bottom))
         .onChange(of: isCreated) { newValue in
             presentationMode.wrappedValue.dismiss()
+        }
+        
+    }
+    
+    private var assetSelectionSection: some View {
+        NavigationLink(destination: AssetsCollection(assetVM: vm.prepareAssetsCollectionViewModel())) {
+            RoundedRectangle(cornerRadius: Constants.SelectionButton.cornerRadius)
+                .fill(Constants.SelectionButton.color)
+                .frame(height: Constants.SelectionButton.height)
+                .shadow(color: Constants.SelectionButton.shadowColor, radius: Constants.SelectionButton.cornerRadius)
+                .overlay {
+                    HStack {
+                        if let asset = vm.selectedAsset {
+                            selectedAssetInfo(asset)
+                        } else {
+                            assetSelectionButton
+                        }
+                        Spacer()
+                        Icons.rightArrow.value
+                            .foregroundColor(Constants.Icon.color)
+                    }
+                    .padding(.horizontal, Constants.AssetInfo.horizontalPadding)
+                }
+                .padding(.horizontal)
         }
     }
     
@@ -112,6 +118,7 @@ struct CreationView: View {
     private var currencyPicker: some View {
         VStack {
             Text(Localizable.alertsCreationTargetCurrencyText.value)
+                .padding(.leading, Constants.TextField.textInset)
             if let vm = vm as? AlertCreationViewModel {
                 SegmentedPickerView(items: PreferenceCurrency.allCases.map { $0.name }, didSelectItem: vm.updateTargetCurrency)
             }
@@ -135,6 +142,12 @@ struct CreationView: View {
             }
         }
         .padding(.horizontal)
+    }
+    
+    private var nextButton: some View {
+        NavigationLink(destination: CreationValueView(vm: vm, isCreated: $isCreated), isActive: $vm.presentNextStep) {
+            RectangleButton(title: Localizable.nextButtonTitle.value, didButtonTapped: nextButtonTapped)
+        }
     }
     
     private var backgroundCircles: some View {
