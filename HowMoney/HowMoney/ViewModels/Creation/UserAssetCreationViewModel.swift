@@ -10,9 +10,11 @@ import Foundation
 class UserAssetCreationViewModel: CreationViewModel  {
     
     private let operation: UserAssetOperation
+    private var origin: String
     
     override init(service: any Service) {
         self.operation = .add
+        self.origin = .empty
         super.init(service: service)
         self.context = .asset
     }
@@ -22,6 +24,10 @@ class UserAssetCreationViewModel: CreationViewModel  {
         guard let selectedAsset = selectedAsset else {
             ToastViewModel.shared.update(message: Localizable.userAssetsCreationAssetSelectionValidation.value, type: .error)
             failureCompletion()
+            return
+        }
+        guard !origin.isEmpty else {
+            ToastViewModel.shared.update(message: Localizable.userAssetsCreationOriginValidation.value, type: .error)
             return
         }
         guard let keyboardViewModel = keyboardViewModel,
@@ -51,5 +57,25 @@ class UserAssetCreationViewModel: CreationViewModel  {
             }
         }
     }
+    
+    override func navigateToNextStep(_ failureCompletion: @escaping () -> Void) {
+        guard let _ = selectedAsset else {
+            ToastViewModel.shared.update(message: Localizable.userAssetsCreationAssetSelectionValidation.value, type: .error)
+            failureCompletion()
+            return
+        }
+        guard !origin.isEmpty else {
+            ToastViewModel.shared.update(message: Localizable.userAssetsCreationOriginValidation.value, type: .error)
+            failureCompletion()
+            return
+        }
+        presentNextStep = true
+    }
+    
+    func updateOrigin(_ newValue: String) {
+        origin = newValue
+    }
+    
+    
     
 }

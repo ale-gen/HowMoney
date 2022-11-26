@@ -15,6 +15,7 @@ class CreationViewModel: ObservableObject {
     }
     
     @Published var selectedAsset: Asset?
+    @Published var presentNextStep: Bool = false
     
     var keyboardViewModel: KeyboardViewModel?
     var service: any Service
@@ -28,6 +29,15 @@ class CreationViewModel: ObservableObject {
     func create(successCompletion: @escaping () -> Void,
                 failureCompletion: @escaping () -> Void) {
         /* */
+    }
+    
+    func navigateToNextStep(_ failureCompletion: @escaping () -> Void) {
+        guard let _ = selectedAsset else {
+            ToastViewModel.shared.update(message: Localizable.userAssetsCreationAssetSelectionValidation.value, type: .error)
+            failureCompletion()
+            return
+        }
+        presentNextStep = true
     }
     
     func prepareAssetsCollectionViewModel() -> ListViewModel<Asset> {

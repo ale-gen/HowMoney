@@ -94,6 +94,7 @@ enum Localizable: String, Translation {
     case userAssetsCreationDecimalPlacesValidation = "user.assets.creation.decimal.places.validation"
     case userAssetsCreationPositiveNumberValidation = "user.assets.creation.positive.number.validation"
     case userAssetsCreationAssetSelectionValidation = "user.assets.creation.asset.selection.validation"
+    case userAssetsCreationOriginValidation = "user.assets.creation.origin.validation"
     case userAssetsCreationValueValidationToastMessageText = "user.assets.creation.value.validation.toast.message.text"
     case userAssetsCreationSuccessToastMessageText = "user.assets.creation.success.toast.message.text"
     
@@ -144,5 +145,6 @@ enum Localizable: String, Translation {
     
     // MARK: Button titles
     case deleteButtonTitle = "delete.button.title"
+    case nextButtonTitle = "next.button.title"
     
 }
