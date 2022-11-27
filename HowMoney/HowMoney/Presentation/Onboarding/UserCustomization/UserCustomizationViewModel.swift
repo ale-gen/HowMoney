@@ -43,6 +43,17 @@ enum CustomizationStep: Int, CaseIterable {
         }
     }
     
+    var colorWordsDescription: [String] {
+        switch self {
+        case .preferenceCurrency:
+            return ["1", "of", "3"]
+        case .emailAlert:
+            return ["notifications", "email", "alerts"]
+        case .weeklyReports:
+            return ["weekly", "reports,", "wallet", "balance."]
+        }
+    }
+    
     var subtitle: String {
         switch self {
         case .preferenceCurrency:
