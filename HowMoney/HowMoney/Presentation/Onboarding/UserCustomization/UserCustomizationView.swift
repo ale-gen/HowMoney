@@ -53,13 +53,13 @@ struct UserCustomizationView: View {
     }
     
     private var descriptionLabel: some View {
-        vm.presentStep.description.split(separator: " ").map { String($0) }
-            .reduce(Text(""), {
+        vm.presentStep.description.split(separator: .space).map { String($0) }
+            .reduce(Text(String.empty), {
                 $0 + Text($1)
                     .foregroundColor(vm.presentStep.colorWordsDescription.contains($1) ? Constants.Description.highlightColor : Constants.Description.color)
                     .font(Constants.Description.font)
                     .fontWeight(vm.presentStep.colorWordsDescription.contains($1) ? Constants.Description.highlightFontWeight : Constants.Description.fontWeight)
-                + Text(" ")} )
+                + Text(String.space)} )
     }
     
     private var preferenceCurrencyContent: some View {

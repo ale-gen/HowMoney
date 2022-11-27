@@ -13,4 +13,8 @@ extension Character {
         return "."
     }
     
+    static var space: Character {
+        return " "
+    }
+    
 }

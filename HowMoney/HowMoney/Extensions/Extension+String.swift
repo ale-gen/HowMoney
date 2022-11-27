@@ -37,6 +37,10 @@ extension String {
         return "."
     }
     
+    static var space: String {
+        return " "
+    }
+    
     func localized() -> String {
         return NSLocalizedString(self, comment: "")
     }

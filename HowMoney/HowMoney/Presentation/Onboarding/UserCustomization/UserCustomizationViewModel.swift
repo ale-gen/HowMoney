@@ -68,7 +68,7 @@ enum CustomizationStep: Int, CaseIterable {
 
 class UserCustomizationViewModel: ObservableObject {
     
-    @Published var presentStep: CustomizationStep = .weeklyReports
+    @Published var presentStep: CustomizationStep = .preferenceCurrency
     
     @Published var chosenCurrency: PreferenceCurrency = .usd
     @Published var enabledEmailAlerts: Bool = true
