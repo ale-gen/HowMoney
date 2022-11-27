@@ -6,6 +6,9 @@
   
 */
 
+// MARK: Launch screen
+"launch.screen.text" = "Counting your money...";
+
 // MARK: Welcome screen
 "welcome.swipe.to.get.started.title" = "Swipe to get started";
 "welcome.company.slogan.text" = "Let us help you count \nyour all resources in one chosen currency!";

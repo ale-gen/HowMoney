@@ -25,6 +25,9 @@ extension Translation where Self: RawRepresentable, Self.RawValue == String {
 
 enum Localizable: String, Translation {
     
+    // MARK: Launch screen
+    case launchScreenText = "launch.screen.text"
+    
     // MARK: Welcome screen
     case welcomeSwipeToGetStarted = "welcome.swipe.to.get.started.title"
     case welcomeCompanySloganText = "welcome.company.slogan.text"
