@@ -10,14 +10,22 @@ import SwiftUI
 struct AppSwitcher: View {
     
     @StateObject var vm: UserStateViewModel = UserStateViewModel()
+    @State private var showLaunchScreen: Bool = true
     
     var body: some View {
-        if vm.isAuthorized {
-            UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: vm))
-                .environmentObject(vm)
-        } else {
-            WelcomeView(didGetStarted: vm.login)
-                .transition(.opacity)
+        ZStack {
+            if vm.isAuthorized {
+                UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: vm))
+                    .environmentObject(vm)
+            } else {
+                WelcomeView(didGetStarted: vm.login)
+                    .transition(.opacity)
+            }
+            
+            if showLaunchScreen {
+                LaunchView(showLaunchScreen: $showLaunchScreen)
+                    .transition(.opacity)
+            }
         }
     }
 }
