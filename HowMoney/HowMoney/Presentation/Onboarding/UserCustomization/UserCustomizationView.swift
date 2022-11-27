@@ -14,6 +14,9 @@ struct UserCustomizationView: View {
         
         enum Description {
             static let font: Font = .subheadline
+            static let fontWeight: Font.Weight = .regular
+            static let highlightFontWeight: Font.Weight = .heavy
+            static let highlightColor: Color = .lightBlue
             static let color: Color = .white.opacity(0.9)
         }
         enum Button {
@@ -50,10 +53,13 @@ struct UserCustomizationView: View {
     }
     
     private var descriptionLabel: some View {
-        Text(vm.presentStep.description)
-            .font(Constants.Description.font)
-            .foregroundColor(Constants.Description.color)
-            .padding(.horizontal, Constants.horizontalPadding)
+        vm.presentStep.description.split(separator: " ").map { String($0) }
+            .reduce(Text(""), {
+                $0 + Text($1)
+                    .foregroundColor(vm.presentStep.colorWordsDescription.contains($1) ? Constants.Description.highlightColor : Constants.Description.color)
+                    .font(Constants.Description.font)
+                    .fontWeight(vm.presentStep.colorWordsDescription.contains($1) ? Constants.Description.highlightFontWeight : Constants.Description.fontWeight)
+                + Text(" ")} )
     }
     
     private var preferenceCurrencyContent: some View {
@@ -79,6 +85,7 @@ struct UserCustomizationView: View {
             Spacer()
 
             descriptionLabel
+                .padding(.horizontal, Constants.horizontalPadding)
 
             Spacer()
 

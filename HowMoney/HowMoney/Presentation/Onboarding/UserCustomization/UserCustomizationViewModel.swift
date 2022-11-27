@@ -43,6 +43,17 @@ enum CustomizationStep: Int, CaseIterable {
         }
     }
     
+    var colorWordsDescription: [String] {
+        switch self {
+        case .preferenceCurrency:
+            return ["1", "of", "3"]
+        case .emailAlert:
+            return ["notifications", "email", "alerts"]
+        case .weeklyReports:
+            return ["weekly", "reports,", "wallet", "balance."]
+        }
+    }
+    
     var subtitle: String {
         switch self {
         case .preferenceCurrency:
@@ -57,7 +68,7 @@ enum CustomizationStep: Int, CaseIterable {
 
 class UserCustomizationViewModel: ObservableObject {
     
-    @Published var presentStep: CustomizationStep = .preferenceCurrency
+    @Published var presentStep: CustomizationStep = .weeklyReports
     
     @Published var chosenCurrency: PreferenceCurrency = .usd
     @Published var enabledEmailAlerts: Bool = true
