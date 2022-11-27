@@ -27,6 +27,9 @@ struct TabBarView: View {
         .onChange(of: selection) { newValue in
             contentViewRouter.navigateToContent(newValue)
         }
+        .onAppear {
+            LocalNotificationProvider.shared.requestAuthorization()
+        }
         .navigate(destination: selectedContext.destinationView,
                   when: $showCreationView,
                   hideNavBar: false,

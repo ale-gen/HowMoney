@@ -15,10 +15,20 @@ struct ContentView: View {
         static let preferredColorScheme: ColorScheme = .dark
     }
     
+    @Environment(\.scenePhase) var scenePhase
+    
     var body: some View {
         AppSwitcher()
             .padding(.top, Constants.topPadding)
             .preferredColorScheme(Constants.preferredColorScheme)
+            .onChange(of: scenePhase) { _ in
+                switch scenePhase {
+                case .active:
+                    UIApplication.shared.applicationIconBadgeNumber = .zero
+                default:
+                    break
+                }
+            }
     }
 }
 
