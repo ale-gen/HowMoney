@@ -16,6 +16,7 @@ struct ContentView: View {
     }
     
     @Environment(\.scenePhase) var scenePhase
+    @AppStorage("isAuthorized") var isAuthorized: Bool = false
     
     var body: some View {
         AppSwitcher()
@@ -25,6 +26,8 @@ struct ContentView: View {
                 switch scenePhase {
                 case .active:
                     UIApplication.shared.applicationIconBadgeNumber = .zero
+                case .inactive:
+                    isAuthorized = false
                 default:
                     break
                 }

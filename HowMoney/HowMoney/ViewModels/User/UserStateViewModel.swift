@@ -9,7 +9,9 @@ import SwiftUI
 
 class UserStateViewModel: ObservableObject {
     
-    @Published var isAuthorized: Bool = false
+    @AppStorage("isAuthorized") var isAuthorized: Bool = false
+    @AppStorage("firstLogin") var firstLogin: Bool = true
+    
     @Published var user: AuthUser? = nil
     @Published var localPreferenceCurrency: PreferenceCurrency = .usd
     @Published var localWeeklyReports: Bool = true
@@ -94,6 +96,11 @@ class UserStateViewModel: ObservableObject {
                 failureCompletion()
             }
         }
+    }
+    
+    func markPreferenceCustomizationAsShown() {
+        guard firstLogin else { return }
+        firstLogin.toggle()
     }
     
     @MainActor private func updatePreferences(_ successCompletion: @escaping () -> Void,
