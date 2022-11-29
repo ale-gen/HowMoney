@@ -103,13 +103,20 @@ class UserCustomizationViewModel: ObservableObject {
     
     func setPreferenceValue(_ successCompletion: @escaping () -> Void,
                             _ failureCompletion: @escaping () -> Void) {
+        var onSuccess = successCompletion
+        if presentStep == CustomizationStep.allCases.last {
+            onSuccess = { [weak self] in
+                self?.userStateVM.markPreferenceCustomizationAsShown()
+                successCompletion()
+            }
+        }
         switch presentStep {
         case .preferenceCurrency:
-            userStateVM.updateLocalCurrencyPreference(chosenCurrency, successCompletion, failureCompletion)
+            userStateVM.updateLocalCurrencyPreference(chosenCurrency, onSuccess, failureCompletion)
         case .emailAlert:
-            userStateVM.updateLocalAlertsOnEmail(enabledEmailAlerts, successCompletion, failureCompletion)
+            userStateVM.updateLocalAlertsOnEmail(enabledEmailAlerts, onSuccess, failureCompletion)
         case .weeklyReports:
-            userStateVM.updateLocalWeeklyReports(enabledWeeklyReports, successCompletion, failureCompletion)
+            userStateVM.updateLocalWeeklyReports(enabledWeeklyReports, onSuccess, failureCompletion)
         }
     }
     

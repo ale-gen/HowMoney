@@ -14,8 +14,11 @@ struct AppSwitcher: View {
     
     var body: some View {
         ZStack {
-            if vm.isAuthorized {
+            if vm.isAuthorized && vm.firstLogin {
                 UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: vm))
+                    .environmentObject(vm)
+            } else if vm.isAuthorized {
+                TabBarView()
                     .environmentObject(vm)
             } else {
                 WelcomeView(didGetStarted: vm.login)
