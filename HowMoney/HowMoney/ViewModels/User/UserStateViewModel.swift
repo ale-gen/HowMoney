@@ -37,6 +37,7 @@ class UserStateViewModel: ObservableObject {
     
     func logout() {
         authService.logout { [weak self] in
+            LocalNotificationProvider.shared.disconnect()
             self?.user = nil
             withAnimation() {
                 self?.isAuthorized.toggle()

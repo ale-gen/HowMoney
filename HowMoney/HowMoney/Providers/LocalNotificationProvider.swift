@@ -13,12 +13,13 @@ class LocalNotificationProvider: ObservableObject {
         static let timeInterval: TimeInterval = 10.0
     }
     
-    static let shared: LocalNotificationProvider = LocalNotificationProvider()
+    static let shared: LocalNotificationProvider = LocalNotificationProvider(service: Services.notificationService)
     
-    var notifications: [Notification]
+    private var service: NotificationService
     
-    init() {
-        notifications = []
+    init(service: NotificationService) {
+        self.service = service
+        setupNotifications()
     }
     
     func requestAuthorization() {
@@ -29,11 +30,15 @@ class LocalNotificationProvider: ObservableObject {
                 return
             }
             
-            print("✅ Permissions are granetd. User can get notifications.")
+            print("✅ Permissions are granted. User can get notifications.")
         }
     }
     
-    func sendNotification(title: String, subtitle: String?) {
+    func disconnect() {
+        service.disconnect()
+    }
+    
+    private func sendNotification(title: String, subtitle: String?) {
         let content = UNMutableNotificationContent()
         content.title = title
         content.subtitle = subtitle ?? .empty
@@ -43,6 +48,16 @@ class LocalNotificationProvider: ObservableObject {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Constants.timeInterval, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request)
+    }
+    
+    private func setupNotifications() {
+        service.onReceive = { [weak self] notifications in
+            for notification in notifications.alerts {
+                if notification.receiver == AuthUser.loggedUser?.email {
+                    self?.sendNotification(title: notification.title, subtitle: notification.subtitle)
+                }
+            }
+        }
     }
     
 }

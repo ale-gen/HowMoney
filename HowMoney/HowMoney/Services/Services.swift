@@ -16,6 +16,7 @@ struct Services {
     static let userAssetService: UserAssetService = UserAssetService()
     static let transactionService: TransactionService = TransactionService()
     static let walletService: WalletService = WalletService()
+    static let notificationService: NotificationService = NotificationService()
 }
 
 
