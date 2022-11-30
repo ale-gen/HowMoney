@@ -42,7 +42,8 @@ class UserAssetCreationViewModel: CreationViewModel  {
             do {
                 let result = try await service.sendData(requestValues: .userAsset(assetName: selectedAsset.name.lowercased(),
                                                                                   value: value * operation.multiplier,
-                                                                                  type: operation.requestValueType))
+                                                                                  type: operation.requestValueType,
+                                                                                  origin: origin))
                 guard let _ = result as? UserAsset else {
                     ToastViewModel.shared.update(message: Localizable.toastViewFailedOperationMessageText.value, type: .error)
                     failureCompletion()

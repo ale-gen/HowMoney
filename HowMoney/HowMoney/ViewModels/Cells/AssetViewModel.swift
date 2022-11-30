@@ -15,25 +15,40 @@ class AssetViewModel: ObservableObject {
         didSet {
             extractLastPrices()
             updatePriceChangeImage()
+            updateDailyPriceChangeImage()
         }
     }
     @Published var assetPriceChangeImage: Image? = nil
+    @Published var assetDailyPriceChangeImage: Image? = nil
     
     private let service: any Service
-    private var previousPrice: Float?
+    private var firstPrice: Float?
+    private var previousDayPrice: Float?
     private var actualPrice: Float?
     private var task: Task<(), Never>?
     
     var priceChange: Float {
         guard let actualPrice = actualPrice,
-                let previousPrice = previousPrice
+              let firstPrice = firstPrice
         else { return .zero }
-        return actualPrice - previousPrice
+        return actualPrice - firstPrice
+    }
+    
+    var dailyPriceChange: Float {
+        guard let actualPrice = actualPrice,
+              let previousDayPrice = previousDayPrice
+        else { return .zero }
+        return actualPrice - previousDayPrice
     }
     
     var percentagePriceChange: Float {
-        guard let previousPrice = previousPrice else { return .zero }
-        return priceChange / previousPrice * 100
+        guard let firstPrice = firstPrice else { return .zero }
+        return priceChange / firstPrice * 100
+    }
+    
+    var dailyPercentagePriceChange: Float {
+        guard let previousDayPrice = previousDayPrice else { return .zero }
+        return dailyPriceChange / previousDayPrice * 100
     }
     
     init(asset: Asset) {
@@ -56,20 +71,33 @@ class AssetViewModel: ObservableObject {
     }
     
     private func extractLastPrices() {
+        self.firstPrice = assetHistoryData.first?.value
+        self.actualPrice = assetHistoryData.last?.value
         let prices = Array(assetHistoryData.suffix(2))
-        self.previousPrice = prices.first?.value
-        self.actualPrice = prices.last?.value
+        self.previousDayPrice = prices.first?.value
     }
     
     private func updatePriceChangeImage() {
-        guard let previousPrice = previousPrice,
+        guard let firstPrice = firstPrice,
               let actualPrice = actualPrice
         else { return }
         
-        if actualPrice - previousPrice > .zero {
+        if actualPrice - firstPrice > .zero {
             assetPriceChangeImage = BalanceChar.positive.arrowImage
-        } else if actualPrice - previousPrice < .zero {
+        } else if actualPrice - firstPrice < .zero {
             assetPriceChangeImage = BalanceChar.negative.arrowImage
+        }
+    }
+    
+    private func updateDailyPriceChangeImage() {
+        guard let previousDayPrice = previousDayPrice,
+              let actualPrice = actualPrice
+        else { return }
+        
+        if actualPrice - previousDayPrice > .zero {
+            assetDailyPriceChangeImage = BalanceChar.positive.arrowImage
+        } else if actualPrice - previousDayPrice < .zero {
+            assetDailyPriceChangeImage = BalanceChar.negative.arrowImage
         }
     }
     

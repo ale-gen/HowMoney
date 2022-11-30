@@ -10,12 +10,18 @@ import SwiftUI
 class LocalNotificationProvider: ObservableObject {
     
     private enum Constants {
-        static let timeInterval: TimeInterval = 10.0
+        static let timeInterval: TimeInterval = 5.0
     }
     
     static let shared: LocalNotificationProvider = LocalNotificationProvider(service: Services.notificationService)
     
     private var service: NotificationService
+    
+    private var currentBadgeNumber: Int {
+        DispatchQueue.main.sync {
+            UIApplication.shared.applicationIconBadgeNumber
+        }
+    }
     
     init(service: NotificationService) {
         self.service = service
@@ -43,7 +49,7 @@ class LocalNotificationProvider: ObservableObject {
         content.title = title
         content.subtitle = subtitle ?? .empty
         content.sound = .default
-        content.badge = (UIApplication.shared.applicationIconBadgeNumber + 1) as NSNumber
+        content.badge = (currentBadgeNumber + 1) as NSNumber
         
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Constants.timeInterval, repeats: false)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)

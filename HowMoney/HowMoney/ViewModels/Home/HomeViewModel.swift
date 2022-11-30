@@ -23,7 +23,7 @@ class HomeViewModel: ObservableObject {
     }
     
     func prepareCardViewModels() -> [CardViewModel] {
-        walletBalances.map { wallet in
+        var viewModels =  walletBalances.map { wallet in
             countWalletChange(for: wallet)
             return CardViewModel(title: wallet.type.title,
                                  mainValue: Float(wallet.value),
@@ -33,6 +33,12 @@ class HomeViewModel: ObservableObject {
                                  additionalValue: percentageChange,
                                  isIncreased: isIncreased)
         }
+        guard viewModels.count == .zero else { return viewModels }
+        
+        for type in WalletType.allCases {
+            viewModels.append(CardViewModel(title: type.title, mainValue: .zero, currency: preferenceCurrency, isIncreased: nil))
+        }
+        return viewModels
     }
     
     private func countWalletChange(for wallet: Wallet) {

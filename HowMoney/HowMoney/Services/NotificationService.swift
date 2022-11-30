@@ -19,7 +19,7 @@ class NotificationService {
     }
     
     func connect() {
-        let url = URL(string: "wss://\(baseWebsocketUrl)ws/socket-server/")!
+        let url = URL(string: "wss://\(baseWebsocketUrl)/ws/socket-server/")!
         let config = URLSessionConfiguration.default
         config.shouldUseExtendedBackgroundIdleMode = true
         let session = URLSession(configuration: config)

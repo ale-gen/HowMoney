@@ -53,7 +53,8 @@ class UserAssetEditingViewModel: ObservableObject {
             do {
                 let result = try await service.sendData(requestValues: .userAsset(assetName: userAsset.asset.name.lowercased(),
                                                                                   value: value * operation.multiplier,
-                                                                                  type: operation.requestValueType))
+                                                                                  type: operation.requestValueType,
+                                                                                  origin: userAsset.origin))
                 guard let result = result as? UserAsset else {
                     failureCompletion()
                     toast.message = Localizable.toastViewFailedOperationMessageText.value

@@ -126,6 +126,9 @@
 "change.password.current.password.validation.text" = "Incorrect current password. Please try again.";
 "change.password.success.text" = "Your password is changed.";
 
+// MARK: Notifications
+"notification.title" = "⚠️ Alert";
+
 // MARK: Button titles
 "delete.button.title" = "Delete";
 "next.button.title" = "Next";

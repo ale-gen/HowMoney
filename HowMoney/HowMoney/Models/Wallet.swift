@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum WalletType {
+enum WalletType: CaseIterable {
     case total
     case currency
     case crypto
