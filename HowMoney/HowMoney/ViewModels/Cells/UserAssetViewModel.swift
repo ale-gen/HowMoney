@@ -18,15 +18,15 @@ class UserAssetViewModel: ObservableObject {
     }
     
     var assetPricePercentageChangeValue: Float {
-        assetVM.percentagePriceChange
+        assetVM.dailyPercentagePriceChange
     }
     
     var assetPriceChangeImage: Image? {
-        assetVM.assetPriceChangeImage
+        assetVM.assetDailyPriceChangeImage
     }
     
     var priceChangeColor: Color {
-        assetVM.percentagePriceChange > .zero ? .green : (assetVM.percentagePriceChange < .zero ? .red : .white)
+        assetVM.dailyPercentagePriceChange > .zero ? .green : (assetVM.dailyPercentagePriceChange < .zero ? .red : .white)
     }
     
     private var localUserAsset: UserAsset

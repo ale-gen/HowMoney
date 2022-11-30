@@ -11,4 +11,5 @@ struct UserAssetDTO: Decodable {
     let asset: AssetDTO
     let originValue: Float
     let userCurrencyValue: Float
+    let description: String
 }

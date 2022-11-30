@@ -59,9 +59,10 @@ struct UserAsset: Identifiable, Hashable {
     let asset: Asset
     let originValue: Float
     let preferenceCurrencyValue: Float
+    let origin: String
     
     static func parse(from userAsset: UserAssetDTO) -> UserAsset {
-        UserAsset(asset: Asset.parse(from: userAsset.asset), originValue: userAsset.originValue, preferenceCurrencyValue: userAsset.userCurrencyValue)
+        UserAsset(asset: Asset.parse(from: userAsset.asset), originValue: userAsset.originValue, preferenceCurrencyValue: userAsset.userCurrencyValue, origin: userAsset.description)
     }
     
     static func ==(lhs: UserAsset, rhs: UserAsset) -> Bool {
@@ -77,12 +78,12 @@ struct UserAsset: Identifiable, Hashable {
     static let polygon = Asset(name: "MATIC", friendlyName: "Polygon", symbol: nil, type: .cryptocurrency)
     
     static let UserAssetsMock: [UserAsset] = [
-        .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 1600.9),
-        .init(asset: americanDollar, originValue: 126.78, preferenceCurrencyValue: 609.90),
-        .init(asset: euro, originValue: 2300.0, preferenceCurrencyValue: 8900.89),
-        .init(asset: swissFranc, originValue: 0.0, preferenceCurrencyValue: 0.0),
-        .init(asset: pancakeSwap, originValue: 10.34, preferenceCurrencyValue: 390.21),
-        .init(asset: polygon, originValue: 12.0, preferenceCurrencyValue: 65.7)
+        .init(asset: polishZloty, originValue: 2600.9, preferenceCurrencyValue: 1600.9, origin: "Cash"),
+        .init(asset: americanDollar, originValue: 126.78, preferenceCurrencyValue: 609.90, origin: "Cash"),
+        .init(asset: euro, originValue: 2300.0, preferenceCurrencyValue: 8900.89, origin: "Cash"),
+        .init(asset: swissFranc, originValue: 0.0, preferenceCurrencyValue: 0.0, origin: "PKO"),
+        .init(asset: pancakeSwap, originValue: 10.34, preferenceCurrencyValue: 390.21, origin: "Revolut"),
+        .init(asset: polygon, originValue: 12.0, preferenceCurrencyValue: 65.7, origin: "Revolut")
     ]
 }
 

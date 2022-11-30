@@ -12,7 +12,7 @@ struct Notification {
     let alerts: [NotificationContent]
     
     static func parse(from modelDto: NotificationDTO) -> Notification {
-        return Notification(type: modelDto.type, alerts: modelDto.message.map { NotificationContent(receiver: $0.email, title: "⚠️ Alert", subtitle: $0.alert_msg) })
+        return Notification(type: modelDto.type, alerts: modelDto.message.map { NotificationContent(receiver: $0.email, title: Localizable.notificationTitle.value, subtitle: $0.alert_msg) })
     }
 }
 
