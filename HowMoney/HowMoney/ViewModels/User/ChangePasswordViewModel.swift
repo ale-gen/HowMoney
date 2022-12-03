@@ -9,53 +9,21 @@ import SwiftUI
 
 class ChangePasswordViewModel: ObservableObject {
     
-    @Published var currentPasswordTextField: String = .empty
-    @Published var newPasswordTextField: String = .empty
-    @Published var confirmedNewPasswordTextField: String = .empty
+    var toastType: ToastType {
+        return ToastViewModel.shared.toast.type
+    }
     
-    @Published var message: String = .empty
-    @Published var toastType: ToastType = .error
+    var toastMessage: String {
+        return ToastViewModel.shared.toast.message
+    }
     
-    func checkPasswordsCompatibility() -> Bool {
-        guard !newPasswordTextField.isEmpty && !confirmedNewPasswordTextField.isEmpty else {
-            message = Localizable.changePasswordEmptyFieldValidationText.value
-            return false
-        }
+    func changePassword(successCompletion: @escaping () -> Void,
+                        failureCompletion: @escaping () -> Void) {
+        ToastViewModel.shared.update(message: Localizable.changePasswordSuccesText.value, type: .success)
+        successCompletion()
         
-        if newPasswordTextField != confirmedNewPasswordTextField {
-            message = Localizable.changePasswordCompatibilityValidationText.value
-            return false
-        }
-        return true
-    }
-    
-    func changePassword(_ completion: @escaping () -> Void) {
-        guard !currentPasswordTextField.isEmpty else {
-            message = Localizable.changePasswordEmptyFieldValidationText.value
-            toastType = .error
-            completion()
-            return
-        }
-        
-        guard checkPasswordsCompatibility() else {
-            toastType = .error
-            completion()
-            return
-        }
-        toastType = .success
-        message = Localizable.changePasswordSuccesText.value
-        completion()
-        clearTextFields()
-    }
-    
-    private func clearMessage() {
-        message = .empty
-    }
-    
-    private func clearTextFields() {
-        currentPasswordTextField = .empty
-        newPasswordTextField = .empty
-        confirmedNewPasswordTextField = .empty
+//        ToastViewModel.shared.update(message: Localizable.toastViewFailedOperationMessageText.value, type: .error)
+//        failureCompletion()
     }
     
 }

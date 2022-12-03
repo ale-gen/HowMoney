@@ -35,6 +35,7 @@ struct ProfileTabBarItem: View {
     @EnvironmentObject var authUserVM: UserStateViewModel
     @State var biometricsEnabled: Bool = false
     
+    @State private var toastVM: ToastViewModel = ToastViewModel.shared
     @State private var changePasswordRequired: Bool = false
     
     var body: some View {
@@ -47,8 +48,10 @@ struct ProfileTabBarItem: View {
                 Divider().background(Constants.Divider.color)
                 PreferenceCurrenciesCollection(selectedPreferenceCurrency: authUserVM.localPreferenceCurrency, didPreferenceCurrencyChanged: didPreferenceCurrencyChanged)
                 toggleButtons
-                changePasswordButton
-                    .padding(.top, -Constants.spacing / 2)
+                if authUserVM.isResetPasswordEnabled {
+                    changePasswordButton
+                        .padding(.top, -Constants.spacing / 2)
+                }
                 RectangleButton(title: Localizable.authorizationSignOutButtonTitle.value, didButtonTapped: authUserVM.logout)
                     .padding(.bottom, Constants.bottomSpace)
             }

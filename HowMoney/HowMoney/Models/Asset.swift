@@ -35,7 +35,7 @@ enum AssetType: String {
     }
 }
 
-struct Asset: Hashable {
+struct Asset: Hashable, Identifiable {
     let id = UUID()
     let name: String
     let friendlyName: String

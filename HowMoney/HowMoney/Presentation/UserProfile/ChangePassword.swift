@@ -12,6 +12,7 @@ struct ChangePassword: View {
     private enum Constants {
         enum General {
             static let verticalInsets: CGFloat = 30.0
+            static let spacing: CGFloat = 40.0
         }
         enum Circle {
             static let opacity: CGFloat = 0.4
@@ -21,39 +22,35 @@ struct ChangePassword: View {
         enum Image {
             static let maxHeight: CGFloat = 250.0
         }
-        enum TextField {
-            static let height: CGFloat = 55.0
-            static let color: Color = .black.opacity(0.4)
+        enum Description {
             static let cornerRadius: CGFloat = 20.0
+            static let height: CGFloat = 120.0
+            static let color: Color = .black.opacity(0.4)
+            static let horizontalInsets: CGFloat = 20.0
         }
     }
     
+    @Environment(\.presentationMode) var presentationMode
     @StateObject var vm: ChangePasswordViewModel = ChangePasswordViewModel()
     @State private var shouldShowToast: Bool = false
+    @State private var toastVM: ToastViewModel = ToastViewModel.shared
     
     var body: some View {
         ZStack {
             backgroundCircles
             
-            VStack {
+            VStack(spacing: Constants.General.spacing) {
                 Images.changePasswordIllustration.value
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: Constants.Image.maxHeight)
-                Spacer()
                 
-                VStack {
-                    textField(placeholder: Localizable.changePasswordCurrentPasswordPlaceholder.value, text: $vm.currentPasswordTextField)
-                    textField(placeholder: Localizable.changePasswordNewPasswordPlaceholder.value, text: $vm.newPasswordTextField)
-                    textField(placeholder: Localizable.changePasswordConfirmedNewPasswordPlaceholder.value, text: $vm.confirmedNewPasswordTextField)
-                }
-                .padding()
-                
+                description
                 Spacer()
-                RectangleButton(title: Localizable.changePasswordSaveButtonTitle.value, didButtonTapped: sendForm)
+                RectangleButton(title: Localizable.changePasswordSendRequestButtonTitle.value, didButtonTapped: sendForm)
             }
         }
-        .toast(shouldShow: $shouldShowToast, type: vm.toastType, message: vm.message)
+        .toast(shouldShow: $shouldShowToast, type: vm.toastType, message: vm.toastMessage)
         .padding(.vertical, Constants.General.verticalInsets)
     }
     
@@ -71,27 +68,33 @@ struct ChangePassword: View {
         }
     }
     
-    private func textField(placeholder: String, text: Binding<String>) -> some View {
-        RoundedRectangle(cornerRadius: Constants.TextField.cornerRadius)
-            .fill(Constants.TextField.color)
-            .frame(height: Constants.TextField.height)
+    private var description: some View {
+        RoundedRectangle(cornerRadius: Constants.Description.cornerRadius)
+            .fill(Constants.Description.color)
+            .frame(height: Constants.Description.height)
             .overlay {
-                SecureField(placeholder, text: text)
-                    .padding(.horizontal)
+                Text(Localizable.changePasswordDescriptionText.value)
+                    .padding(.horizontal, Constants.Description.horizontalInsets)
             }
+            .padding(.horizontal)
     }
     
     private func sendForm() {
-        vm.changePassword {
-            animateToastState(for: true)
-        }
+        vm.changePassword(successCompletion: {
+            print("Success 🥳")
+            toastVM.show()
+            DispatchQueue.main.async {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }, failureCompletion: {
+            withAnimation(.spring()) {
+                shouldShowToast = true
+            }
+            print("Failure 🫠")
+        })
     }
     
-    private func animateToastState(for showing: Bool) {
-        withAnimation(.spring()) {
-            shouldShowToast = showing
-        }
-    }
+    
 }
 
 struct ChangePassword_Previews: PreviewProvider {

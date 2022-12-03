@@ -15,10 +15,10 @@ struct AppSwitcher: View {
     var body: some View {
         ZStack {
             if vm.isAuthorized && vm.firstLogin {
-                UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: vm))
+                UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: vm), showLaunchScreen: $showLaunchScreen)
                     .environmentObject(vm)
             } else if vm.isAuthorized {
-                TabBarView()
+                TabBarView(showLaunchScreen: $showLaunchScreen)
                     .environmentObject(vm)
             } else {
                 WelcomeView(didGetStarted: vm.login)
@@ -28,6 +28,11 @@ struct AppSwitcher: View {
             if showLaunchScreen {
                 LaunchView(showLaunchScreen: $showLaunchScreen)
                     .transition(.opacity)
+            }
+        }
+        .onChange(of: vm.isAuthorized) { newValue in
+            if newValue {
+                showLaunchScreen = true
             }
         }
     }

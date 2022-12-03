@@ -25,6 +25,7 @@ struct UserCustomizationView: View {
     }
     
     @StateObject var vm: UserCustomizationViewModel
+    @Binding var showLaunchScreen: Bool
     
     @StateObject private var toastVM: ToastViewModel = ToastViewModel.shared
     @State private var shouldNavigateToNextStep: Bool = false
@@ -32,24 +33,31 @@ struct UserCustomizationView: View {
                                                         removal: .move(edge: .leading))
     
     var body: some View {
-        GeometryReader { geo in
-            VStack {
-                stepContent(for: vm.presentStep, imageHeight: geo.size.height / 2)
-                    .animation(.default, value: vm.presentStep)
-                    .transition(transition)
-                
-                RectangleButton(title: vm.presentStep.buttonTitle) {
-                    vm.performNextStep( {
-                        shouldNavigateToNextStep.toggle()
-                    }, {
-                        toastVM.show()
-                    })
+        ZStack {
+            GeometryReader { geo in
+                VStack {
+                    stepContent(for: vm.presentStep, imageHeight: geo.size.height / 2)
+                        .animation(.default, value: vm.presentStep)
+                        .transition(transition)
+                    
+                    RectangleButton(title: vm.presentStep.buttonTitle) {
+                        vm.performNextStep( {
+                            shouldNavigateToNextStep.toggle()
+                        }, {
+                            toastVM.show()
+                        })
+                    }
+                    .padding(.vertical, Constants.Button.topOffset)
                 }
-                .padding(.vertical, Constants.Button.topOffset)
+            }
+            .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
+            .navigate(destination: TabBarView(showLaunchScreen: $showLaunchScreen), when: $shouldNavigateToNextStep)
+            
+            if showLaunchScreen {
+                LaunchView(showLaunchScreen: $showLaunchScreen)
+                    .transition(.opacity)
             }
         }
-        .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
-        .navigate(destination: TabBarView(), when: $shouldNavigateToNextStep)
     }
     
     private var descriptionLabel: some View {
@@ -106,7 +114,7 @@ struct UserCustomizationView_Previews: PreviewProvider {
     static var userStateVM: UserStateViewModel = UserStateViewModel()
     
     static var previews: some View {
-        UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: userStateVM))
+        UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: userStateVM), showLaunchScreen: .constant(false))
             .environmentObject(userStateVM)
     }
 }
@@ -116,7 +124,7 @@ struct UserCustomizationView_SmallerDevicePreviews: PreviewProvider {
     static var userStateVM: UserStateViewModel = UserStateViewModel()
     
     static var previews: some View {
-        UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: userStateVM))
+        UserCustomizationView(vm: UserCustomizationViewModel(userStateVM: userStateVM), showLaunchScreen: .constant(false))
             .environmentObject(userStateVM)
             .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }

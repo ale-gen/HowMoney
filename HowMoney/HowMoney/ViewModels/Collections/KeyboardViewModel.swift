@@ -13,17 +13,20 @@ class KeyboardViewModel: ObservableObject {
         static let defaultTextValue: String = .zero
     }
     
+    var didStartedEditing: Bool
+    
     private(set) var textValue: String = Constants.defaultTextValue
     private var assetType: AssetType
     
     init(assetType: AssetType) {
         self.assetType = assetType
+        self.didStartedEditing = false
     }
     
     func didTapButton(_ button: KeyboardButtonType) {
         switch button {
         case let .number(stringNumber):
-            if textValue == Constants.defaultTextValue {
+            if textValue == Constants.defaultTextValue && !didStartedEditing {
                 textValue = stringNumber
                 return
             } else if !textValue.contains(.dot) || textValue.last == .dot {
@@ -42,12 +45,19 @@ class KeyboardViewModel: ObservableObject {
                     textValue.removeLast()
                 } else {
                     textValue = Constants.defaultTextValue
+                    didStartedEditing = false
+                    return
                 }
+            }
+            if textValue == Constants.defaultTextValue {
+                didStartedEditing = false
+                return
             }
         case let .decimalComma(char):
             guard !textValue.contains(char) && (textValue.count > .zero) else { return }
             textValue.append(char)
         }
+        didStartedEditing = true
     }
     
 }

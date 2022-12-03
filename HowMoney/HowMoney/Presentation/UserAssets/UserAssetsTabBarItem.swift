@@ -58,8 +58,8 @@ struct UserAssetsTabBarItem: View {
             static let delay: CGFloat = 0.2
         }
     }
-    
-    @StateObject var vm: ListViewModel<UserAsset> = ListViewModel(service: Services.userAssetService)
+
+    @StateObject var vm: UserAssetsListViewModel = UserAssetsListViewModel(service: Services.userAssetService)
     @State var selectedFilter: AssetFilter = .all
     @Binding var searchText: String
     
@@ -71,15 +71,14 @@ struct UserAssetsTabBarItem: View {
             VStack {
                 filterAssetTypePicker
                 
-                let filteredItems = vm.items.filter { selectedFilter.possibleAssetTypes.contains($0.asset.type) }
-                UserAssetsCollection(userAssets: filteredItems, didUserAssetDeleted: vm.deleteUserAsset)
+                let filteredItems = vm.userAssets.filter { selectedFilter.possibleAssetTypes.contains($0.key.type) }
+                UserAssetsCollectionByAsset(items: filteredItems, didUserAssetDeleted: vm.deleteUserAsset)
                     .transition(.opacity)
             }
-            .searchable(text: $searchText)
         }
         .loader(loader: $loaderView, shouldHideLoader: $loading)
         .onAppear {
-            vm.getItems {
+            vm.getUserAssets {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
                     loading.toggle()
                 }
