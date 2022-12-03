@@ -117,14 +117,9 @@
 
 // MARK: Change password
 "change.password.label" = "Change password...";
-"change.password.save.button.title" = "Save";
-"change.password.current.password.placeholder" = "Current password";
-"change.password.new.password.placeholder" = "New password";
-"change.password.confirmed.new.password.placeholder" = "Confirmed new password";
-"change.password.compatibility.validation.text" = "Passwords have to be identical";
-"change.password.empty.field.validation.text" = "Please enter all fields";
-"change.password.current.password.validation.text" = "Incorrect current password. Please try again.";
-"change.password.success.text" = "Your password is changed.";
+"change.password.description.text" = "If you want to change your password, please send a request to get an email with instruction.";
+"change.password.send.request.button.title" = "Send request";
+"change.password.success.text" = "Request was send.";
 
 // MARK: Notifications
 "notification.title" = "⚠️ Alert";

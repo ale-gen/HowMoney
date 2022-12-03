@@ -12,11 +12,16 @@ class UserStateViewModel: ObservableObject {
     @AppStorage("isAuthorized") var isAuthorized: Bool = false
     @AppStorage("firstLogin") var firstLogin: Bool = true
     
-    @Published var user: AuthUser? = nil
+    @Published var user: AuthUser? = nil {
+        didSet {
+            self.isResetPasswordEnabled = !(user?.id.contains("google") ?? true)
+        }
+    }
     @Published var localPreferenceCurrency: PreferenceCurrency = .usd
     @Published var localWeeklyReports: Bool = true
     @Published var localAlertsOnEmail: Bool = true
     
+    private(set) var isResetPasswordEnabled: Bool
     private let authService: any Service
     private var task: Task<(), Never>?
     
@@ -24,6 +29,7 @@ class UserStateViewModel: ObservableObject {
     
     init() {
         self.authService = Services.authService
+        self.isResetPasswordEnabled = false
     }
     
     func login() {

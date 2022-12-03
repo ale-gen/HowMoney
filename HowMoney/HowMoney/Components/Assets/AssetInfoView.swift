@@ -30,16 +30,19 @@ struct AssetInfoView: View {
     
     let asset: Asset
     
+    var imageHidden: Bool = false
     var titleColor: Color?
     var subtitleColor: Color?
     
     var body: some View {
         HStack {
-            Image(asset.name.lowercased())
-                .resizable()
-                .scaledToFit()
-                .frame(width: Constants.Icon.height, height: Constants.Icon.height)
-                .shadow(color: Constants.Icon.shadowColor, radius: Constants.Icon.shadow)
+            if !imageHidden {
+                Image(asset.name.lowercased())
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: Constants.Icon.height, height: Constants.Icon.height)
+                    .shadow(color: Constants.Icon.shadowColor, radius: Constants.Icon.shadow)
+            }
             
             VStack(alignment: .leading, spacing: Constants.spacing) {
                 Text(asset.friendlyName)

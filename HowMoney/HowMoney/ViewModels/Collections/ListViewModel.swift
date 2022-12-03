@@ -38,16 +38,6 @@ class ListViewModel<Element>: ObservableObject {
         }
     }
     
-    func deleteUserAsset(_ element: UserAsset, _ completion: @escaping () -> Void) {
-        deleteItem(element.asset.name, completion, successCompletion: { [weak self] in
-            DispatchQueue.main.async {
-                withAnimation {
-                    self?.items.removeAll(where: { ($0 as? UserAsset)?.id == element.id})
-                }
-            }
-        })
-    }
-    
     func deleteAlert(_ element: Alert, _ completion: @escaping () -> Void) {
         deleteItem(String(element.id), completion, successCompletion: { [weak self] in
             DispatchQueue.main.async {
@@ -58,7 +48,7 @@ class ListViewModel<Element>: ObservableObject {
         })
     }
     
-    private func deleteItem(_ itemId: String, _ completion: @escaping () -> Void, successCompletion: @escaping () -> Void) {
+    func deleteItem(_ itemId: String, _ completion: @escaping () -> Void, successCompletion: @escaping () -> Void) {
         task = Task {
             do {
                 let result = try await service.deleteData(itemId)

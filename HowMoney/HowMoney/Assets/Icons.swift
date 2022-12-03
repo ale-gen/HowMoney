@@ -32,6 +32,7 @@ enum Icons: String, IconsTranslation {
     case selectedTransactions = "clock.fill"
     case selectedProfile = "person.fill"
     case rightArrow = "chevron.right"
+    case downArrow = "chevron.down"
     case circleSuccess = "checkmark.circle.fill"
     case circleClose = "xmark.circle.fill"
     case close = "xmark"

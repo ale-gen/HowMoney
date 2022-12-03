@@ -12,25 +12,32 @@ struct UserAssetCell: View {
     private enum Constants {
         static let height: CGFloat = 60.0
         static let spacing: CGFloat = 2.0
+        static let leadingInset: CGFloat = 50.0
         
         enum PreferenceCurrencyValue {
-            static let font: Font = .system(size: 15.0, weight: .light)
+            static let font: Font = .system(size: 17.0, weight: .light)
             static let color: Color = .white
         }
         
         enum OriginValue {
-            static let font: Font = .caption2
+            static let font: Font = .system(size: 15.0, weight: .light)
             static let color: Color = .gray
         }
     }
     
     @EnvironmentObject var authUserVM: UserStateViewModel
     let userAsset: UserAsset
+    var imageHidden: Bool = false
     
     var body: some View {
         HStack {
-            AssetInfoView(asset: userAsset.asset)
-            
+            VStack(alignment: .leading) {
+                Text(String.empty)
+                Text(userAsset.origin)
+            }
+            .font(Constants.PreferenceCurrencyValue.font)
+            .foregroundColor(Constants.PreferenceCurrencyValue.color)
+            .padding(.leading, Constants.leadingInset)
             Spacer()
             
             VStack(alignment: .trailing, spacing: Constants.spacing) {

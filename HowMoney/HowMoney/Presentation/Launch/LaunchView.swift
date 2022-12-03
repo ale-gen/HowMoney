@@ -64,8 +64,8 @@ struct LaunchView: View {
                 if animatedLetterIndex % text.count == .zero {
                     animatedLetterIndex = 0
                     currentLoopsNumber += 1
-                    if currentLoopsNumber == Constants.animationLoopsNumber {
-                        showLaunchScreen.toggle()
+                    if currentLoopsNumber >= Constants.animationLoopsNumber {
+                        showLaunchScreen = false
                     }
                 }
             }

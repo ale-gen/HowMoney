@@ -55,7 +55,7 @@ enum UserAssetOperation {
 
 struct UserAsset: Identifiable, Hashable {
     
-    var id: UUID { return asset.id }
+    var id: UUID = UUID()
     let asset: Asset
     let originValue: Float
     let preferenceCurrencyValue: Float
@@ -66,7 +66,7 @@ struct UserAsset: Identifiable, Hashable {
     }
     
     static func ==(lhs: UserAsset, rhs: UserAsset) -> Bool {
-        return lhs.asset.id == rhs.asset.id
+        return lhs.id == rhs.id
     }
     
     static let polishZloty = Asset(name: "PLN", friendlyName: "Polish Zloty", symbol: "zł", type: .currency)

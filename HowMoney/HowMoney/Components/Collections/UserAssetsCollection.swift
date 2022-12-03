@@ -10,17 +10,10 @@ import SwiftUI
 struct UserAssetsCollection: View {
     
     private enum Constants {
-        static let horizontalInsets: CGFloat = 20.0
-        static let contentHorizontalInsets: CGFloat = 10.0
-        static let contentTopInsets: CGFloat = 20.0
-        enum Background {
-            static let color: Color = .black
-            static let cornerRadius: CGFloat = 15.0
-        }
-        enum Shadow {
-            static let color: Color = .black.opacity(0.9)
-            static let radius: CGFloat = 15.0
-        }
+        static let contentTrailingInsets: CGFloat = -40.0
+        static let contentLeadingInsets: CGFloat = -30.0
+        static let contentTopInsets: CGFloat = -10.0
+        static let cellHeight: CGFloat = 90.0
     }
     
     let userAssets: [UserAsset]
@@ -32,12 +25,8 @@ struct UserAssetsCollection: View {
     var body: some View {
         if userAssets.count > .zero {
             ZStack {
-                RoundedRectangle(cornerRadius: Constants.Background.cornerRadius)
-                    .fill(Constants.Background.color)
-                    .shadow(color: Constants.Shadow.color, radius: Constants.Shadow.radius)
-                
                 List(userAssets) { userAsset in
-                    UserAssetCell(userAsset: userAsset)
+                    UserAssetCell(userAsset: userAsset, imageHidden: true)
                         .listRowBackground(Color.black)
                         .onTapGesture {
                             withAnimation {
@@ -45,11 +34,16 @@ struct UserAssetsCollection: View {
                             }
                         }
                         .swipeActions { deleteButton(userAsset) }
-                        .confirmationDialog(Text(""), isPresented: $showConfirmationDialog) {
+                        .confirmationDialog(Text(String.empty), isPresented: $showConfirmationDialog) {
                             deleteConfirmationButton } message: {
                                 deleteConfirmationMessage
                             }
                 }
+                .padding(.top, Constants.contentTopInsets)
+                .padding(.trailing, Constants.contentTrailingInsets)
+                .padding(.leading, Constants.contentLeadingInsets)
+                .frame(maxWidth: .infinity)
+                .frame(height: Constants.cellHeight * CGFloat(userAssets.count))
             }
             .sheet(item: $selectedUserAsset) { userAsset in
                 UserAssetDetailsView(vm: UserAssetViewModel(userAsset: userAsset))

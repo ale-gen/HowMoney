@@ -137,13 +137,8 @@ enum Localizable: String, Translation {
     
     // MARK: Change password
     case changePasswordLabel = "change.password.label"
-    case changePasswordSaveButtonTitle = "change.password.save.button.title"
-    case changePasswordCurrentPasswordPlaceholder = "change.password.current.password.placeholder"
-    case changePasswordNewPasswordPlaceholder = "change.password.new.password.placeholder"
-    case changePasswordConfirmedNewPasswordPlaceholder = "change.password.confirmed.new.password.placeholder"
-    case changePasswordCompatibilityValidationText = "change.password.compatibility.validation.text"
-    case changePasswordEmptyFieldValidationText = "change.password.empty.field.validation.text"
-    case changePasswordCurrentPasswordValidationText = "change.password.current.password.validation.text"
+    case changePasswordDescriptionText = "change.password.description.text"
+    case changePasswordSendRequestButtonTitle = "change.password.send.request.button.title"
     case changePasswordSuccesText = "change.password.success.text"
     
     // MARK: Notifications
