@@ -10,6 +10,10 @@ import SwiftUI
 struct UserAssetDetailsView: View {
     
     private enum Constants {
+        enum Origin {
+            static let color: Color = .white.opacity(0.8)
+            static let leadingInset: CGFloat = 20.0
+        }
         enum Icon {
             static let height: CGFloat = 80.0
             static let shadow: CGFloat = 10.0
@@ -76,7 +80,7 @@ struct UserAssetDetailsView: View {
         NavigationView {
             GeometryReader { geo in
                 VStack(spacing: Constants.verticalSpacing) {
-                    assetTypeSwitcher
+                    topBar
                     assetBasicInfo
                     assetValue
                     priceChangeLabel
@@ -88,7 +92,7 @@ struct UserAssetDetailsView: View {
                 .padding(.top, Constants.topOffset)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
             }
-            .navigationTitle("")
+            .navigationTitle(String.empty)
             .navigationBarHidden(true)
         }
         .onAppear {
@@ -96,12 +100,20 @@ struct UserAssetDetailsView: View {
         }
     }
     
-    private var assetTypeSwitcher: some View {
+    private var topBar: some View {
         HStack {
+            Text(vm.userAsset.origin)
+                .foregroundColor(Constants.Origin.color)
+                .padding(.leading, Constants.Origin.leadingInset)
             Spacer()
-            CurrencySymbolToggleButton(isOn: $preferenceCurrencyRequired, canSwitch: vm.userAsset.asset.name == authUserVM.localPreferenceCurrency.name ? false : true, isOnImage: authUserVM.localPreferenceCurrency.symbol, isOffImage: vm.userAsset.asset.symbol ?? .empty)
+            assetTypeSwitcher
         }
         .padding(.horizontal, Constants.horizontalSpacing)
+    }
+    
+    private var assetTypeSwitcher: some View {
+        CurrencySymbolToggleButton(isOn: $preferenceCurrencyRequired, canSwitch: vm.userAsset.asset.name == authUserVM.localPreferenceCurrency.name ? false : true, isOnImage: authUserVM.localPreferenceCurrency.symbol, isOffImage: vm.userAsset.asset.symbol ?? .empty)
+        
     }
     
     private var assetBasicInfo: some View {
