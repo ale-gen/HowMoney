@@ -35,7 +35,7 @@ struct UserAssetsCollectionByAsset: View {
             ZStack {
                 background
                 
-                List(items.keys.sorted(by: { $0.friendlyName < $1.friendlyName })) { asset in
+                List(items.keys.sorted(by: { $0.friendlyName < $1.friendlyName }), id: \.self) { asset in
                     VStack {
                         groupingAssetCell(asset: asset)
                         .onTapGesture { changeExpandibility(for: asset) }

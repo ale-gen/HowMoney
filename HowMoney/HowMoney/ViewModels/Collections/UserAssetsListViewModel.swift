@@ -5,7 +5,7 @@
 //  Created by Aleksandra Generowicz on 02/12/2022.
 //
 
-import Foundation
+import SwiftUI
 
 class UserAssetsListViewModel: ListViewModel<UserAsset> {
     
@@ -26,5 +26,16 @@ class UserAssetsListViewModel: ListViewModel<UserAsset> {
             }
         }
         
+    }
+    
+    func deleteUserAsset(_ element: UserAsset, _ completion: @escaping () -> Void) {
+        deleteItem(element.asset.name, completion, successCompletion: { [weak self] in
+            DispatchQueue.main.async {
+                withAnimation {
+                    self?.items.removeAll(where: { $0.id == element.id})
+                    self?.userAssets = Dictionary(grouping: self?.items ?? [], by: { $0.asset }).mapValues { ($0, false)}
+                }
+            }
+        })
     }
 }
