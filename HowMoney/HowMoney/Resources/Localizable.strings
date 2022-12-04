@@ -128,3 +128,6 @@
 // MARK: Button titles
 "delete.button.title" = "Delete";
 "next.button.title" = "Next";
+
+// MARK: Search
+"search.placeholder" = "Search...";

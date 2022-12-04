@@ -19,15 +19,17 @@ struct TransactionsTabBarItem: View {
     
     @State private var loaderView: LoaderView? = LoaderView()
     @State private var loading: Bool = false
+    @State private var searchText: String = .empty
     
     var body: some View {
         VStack {
             SegmentedPickerView(items: TransactionDateRange.allCases.map { $0.shortName },
                                 didSelectItem: vm.didDateRangeChanged)
+            SearchBar(searchText: $searchText)
             
             if vm.items.count > .zero {
                 ScrollView(showsIndicators: false) {
-                    ForEach(vm.items) { transaction in
+                    ForEach(vm.items.filter { vm.getAsset(for: $0)?.friendlyName.lowercased().contains(searchText.lowercased()) ?? true || searchText.isEmpty}) { transaction in
                         if let transactionVM = vm.prepareTransactionViewModel(for: transaction) {
                             TransactionCell(vm: transactionVM)
                         }
