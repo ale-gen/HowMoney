@@ -20,7 +20,7 @@ class TabBarContentViewRouter: ObservableObject {
             case .home:
                 return AnyView(HomeTabBarItem())
             case .wallet:
-                return AnyView(UserAssetsTabBarItem(searchText: .constant(.empty)))
+                return AnyView(UserAssetsTabBarItem())
             case .transactions:
                 return AnyView(TransactionsTabBarItem())
             case .profile:

@@ -149,4 +149,7 @@ enum Localizable: String, Translation {
     case deleteButtonTitle = "delete.button.title"
     case nextButtonTitle = "next.button.title"
     
+    // MARK: Search
+    case searchPlaceholder = "search.placeholder"
+    
 }

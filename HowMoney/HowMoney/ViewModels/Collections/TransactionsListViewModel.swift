@@ -28,6 +28,10 @@ class TransactionsListViewModel: ListViewModel<Transaction> {
         return TransactionViewModel(transaction: transaction, asset: asset)
     }
     
+    func getAsset(for transaction: Transaction) -> Asset? {
+        return assets.first(where: { $0.name == transaction.assetName })
+    }
+    
     @MainActor func getAssets(_ completion: @escaping () -> Void) {
         assetTask = Task {
             do {

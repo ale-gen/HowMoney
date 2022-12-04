@@ -61,17 +61,18 @@ struct UserAssetsTabBarItem: View {
     
     @StateObject var vm: UserAssetsListViewModel = UserAssetsListViewModel(service: Services.userAssetService)
     @State var selectedFilter: AssetFilter = .all
-    @Binding var searchText: String
     
     @State private var loaderView: LoaderView? = LoaderView()
     @State private var loading: Bool = false
+    @State private var searchText: String = .empty
     
     var body: some View {
         GeometryReader { geo in
             VStack {
                 filterAssetTypePicker
+                SearchBar(searchText: $searchText)
                 
-                let filteredItems = vm.userAssets.filter { selectedFilter.possibleAssetTypes.contains($0.key.type) }
+                let filteredItems = vm.userAssets.filter { selectedFilter.possibleAssetTypes.contains($0.key.type) && ($0.key.friendlyName.lowercased().contains(searchText.lowercased()) || searchText.isEmpty) }
                 UserAssetsCollectionByAsset(items: filteredItems, didUserAssetDeleted: vm.deleteUserAsset, refreshParentView: fetchData)
                     .transition(.opacity)
             }
@@ -104,7 +105,7 @@ struct UserAssetTabBar_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            UserAssetsTabBarItem(searchText: .constant(""))
+            UserAssetsTabBarItem()
         }
         .environmentObject(UserStateViewModel())
     }
