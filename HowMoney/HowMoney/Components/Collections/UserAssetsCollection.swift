@@ -18,7 +18,9 @@ struct UserAssetsCollection: View {
     
     let userAssets: [UserAsset]
     var didUserAssetDeleted: ((UserAsset, @escaping () -> Void) -> Void)?
+    var refreshParentView: (() -> Void)?
     @State var selectedUserAsset: UserAsset?
+    
     @State private var userAssetForDeletion: UserAsset?
     @State private var showConfirmationDialog: Bool = false
     
@@ -45,7 +47,9 @@ struct UserAssetsCollection: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: Constants.cellHeight * CGFloat(userAssets.count))
             }
-            .sheet(item: $selectedUserAsset) { userAsset in
+            .sheet(item: $selectedUserAsset, onDismiss: {
+                refreshParentView?()
+            }) { userAsset in
                 UserAssetDetailsView(vm: UserAssetViewModel(userAsset: userAsset))
             }
         } else {

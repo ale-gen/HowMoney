@@ -34,9 +34,11 @@ class UserStateViewModel: ObservableObject {
     
     func login() {
         authService.login { [weak self] user in
-            self?.user = user
-            withAnimation(.easeOut) {
-                self?.isAuthorized.toggle()
+            DispatchQueue.main.async {
+                self?.user = user
+                withAnimation(.easeOut) {
+                    self?.isAuthorized.toggle()
+                }
             }
         }
     }

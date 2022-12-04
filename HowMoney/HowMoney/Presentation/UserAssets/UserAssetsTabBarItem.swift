@@ -58,7 +58,7 @@ struct UserAssetsTabBarItem: View {
             static let delay: CGFloat = 0.2
         }
     }
-
+    
     @StateObject var vm: UserAssetsListViewModel = UserAssetsListViewModel(service: Services.userAssetService)
     @State var selectedFilter: AssetFilter = .all
     @Binding var searchText: String
@@ -72,18 +72,12 @@ struct UserAssetsTabBarItem: View {
                 filterAssetTypePicker
                 
                 let filteredItems = vm.userAssets.filter { selectedFilter.possibleAssetTypes.contains($0.key.type) }
-                UserAssetsCollectionByAsset(items: filteredItems, didUserAssetDeleted: vm.deleteUserAsset)
+                UserAssetsCollectionByAsset(items: filteredItems, didUserAssetDeleted: vm.deleteUserAsset, refreshParentView: fetchData)
                     .transition(.opacity)
             }
         }
         .loader(loader: $loaderView, shouldHideLoader: $loading)
-        .onAppear {
-            vm.getUserAssets {
-                DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
-                    loading.toggle()
-                }
-            }
-        }
+        .onAppear { fetchData() }
     }
     
     private var filterAssetTypePicker: some View {
@@ -95,6 +89,14 @@ struct UserAssetsTabBarItem: View {
     
     private func didFilterTapped(_ index: Int) {
         selectedFilter = AssetFilter.allCases[index]
+    }
+    
+    private func fetchData() {
+        vm.getUserAssets {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Constants.Animation.delay) {
+                loading.toggle()
+            }
+        }
     }
 }
 

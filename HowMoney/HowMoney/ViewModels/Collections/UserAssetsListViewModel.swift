@@ -29,7 +29,8 @@ class UserAssetsListViewModel: ListViewModel<UserAsset> {
     }
     
     func deleteUserAsset(_ element: UserAsset, _ completion: @escaping () -> Void) {
-        deleteItem(element.asset.name, completion, successCompletion: { [weak self] in
+        let queryParameters = element.asset.name + "?description=\(element.origin)"
+        deleteItem(queryParameters, completion, successCompletion: { [weak self] in
             DispatchQueue.main.async {
                 withAnimation {
                     self?.items.removeAll(where: { $0.id == element.id})

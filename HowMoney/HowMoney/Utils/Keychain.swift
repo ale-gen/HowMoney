@@ -34,12 +34,40 @@ class Keychain {
         let status = SecItemAdd(query as CFDictionary, nil)
         
         guard status != errSecDuplicateItem else {
+            return try update(account: account, token: token)
+        }
+        guard status == errSecSuccess else {
+            throw KeychainError.unknown(status)
+        }
+        print("✅ Token saved!")
+    }
+    
+    static func update(account: String, token: String) throws {
+        guard let tokenData = token.data(using: .utf8) else {
+            throw KeychainError.badData
+        }
+        
+        let query: [String: AnyObject] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrAccount as String: account as AnyObject,
+            kSecAttrService as String: service as AnyObject,
+            kSecValueData as String: tokenData as AnyObject
+        ]
+        
+        let attributes: [String: AnyObject] = [
+            kSecAttrAccount as String: account as AnyObject,
+            kSecValueData as String: tokenData as AnyObject
+        ]
+        
+        let status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        
+        guard status != errSecDuplicateItem else {
             throw KeychainError.duplicateItem
         }
         guard status == errSecSuccess else {
             throw KeychainError.unknown(status)
         }
-        print("Token saved! ✅")
+        print("✅ Token updated!")
     }
     
     static func get(account: String) throws -> Data {

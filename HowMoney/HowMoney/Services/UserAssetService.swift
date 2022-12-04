@@ -47,7 +47,9 @@ class UserAssetService: Service {
         for parameter in parameters {
             urlString += "/\(parameter)"
         }
-        guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
+        guard let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? .empty) else {
+            throw NetworkError.invalidURL
+        }
         
         let token = try Keychain.get(account: email)
         let request = createRequest(url: url, token: token, method: .delete)

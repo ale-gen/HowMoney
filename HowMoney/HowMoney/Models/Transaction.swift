@@ -45,7 +45,8 @@ enum TransactionDateRange: CaseIterable {
     }
 }
 
-struct Transaction: Hashable {
+struct Transaction: Hashable, Identifiable {
+    let id: UUID = UUID()
     let assetName: String
     let value: Float
     let date: Date

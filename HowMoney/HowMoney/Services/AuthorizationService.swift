@@ -16,7 +16,18 @@ struct AuthorizationService: Service {
     private let urlString = "\(String.baseUrl)\(NetworkEndpoints.userPreferences.rawValue)"
     
     func login(_ completion: @escaping (AuthUser) -> Void) {
-        Keychain.logout()
+        let credentialsManager = CredentialsManager(authentication: Auth0.authentication())
+        guard !credentialsManager.hasValid() && !credentialsManager.canRenew() else {
+            credentialsManager.credentials { result in
+                switch result {
+                case .success(let credentials):
+                    authenticateUser(with: credentials, completion)
+                case .failure(let error):
+                    print("❌ Cannot authenticate recent user because of error: \(error)")
+                }
+            }
+            return
+        }
         Auth0
             .webAuth()
             .parameters(["prompt": "login"])
@@ -24,12 +35,10 @@ struct AuthorizationService: Service {
             .start { result in
                 switch result {
                 case let .success(credentials):
-                    guard let user = AuthUser(from: credentials.idToken) else { return }
-                    print(credentials.accessToken)
-                    if !saveToken(credentials.accessToken, for: user) { return }
-                    completion(user)
+                    guard credentialsManager.store(credentials: credentials) else { return }
+                    authenticateUser(with: credentials, completion)
                 case let .failure(error):
-                    print(error)
+                    print("❌ Cannot authenticate new user because of error: \(error)")
                 }
             }
     }
@@ -78,9 +87,16 @@ struct AuthorizationService: Service {
             try Keychain.save(account: user.email, token: accessToken)
             return true
         } catch {
-            print("Token wasn't saved ⚠️")
+            print("⚠️ Token wasn't saved")
             return false
         }
+    }
+    
+    private func authenticateUser(with credentials: Credentials, _ completion: @escaping (AuthUser) -> Void) {
+        guard let user = AuthUser(from: credentials.idToken) else { return }
+        print(credentials.accessToken)
+        if !saveToken(credentials.accessToken, for: user) { return }
+        completion(user)
     }
     
 }

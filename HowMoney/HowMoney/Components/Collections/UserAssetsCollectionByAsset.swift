@@ -27,6 +27,7 @@ struct UserAssetsCollectionByAsset: View {
     
     var items: Dictionary<Asset, ([UserAsset], Bool)>
     var didUserAssetDeleted: ((UserAsset, @escaping () -> Void) -> Void)?
+    var refreshParentView: (() -> Void)?
     
     @State private var selectedAssetToExpand: Asset?
     
@@ -40,7 +41,9 @@ struct UserAssetsCollectionByAsset: View {
                         groupingAssetCell(asset: asset)
                         .onTapGesture { changeExpandibility(for: asset) }
                         if selectedAssetToExpand == asset {
-                            UserAssetsCollection(userAssets: (items[asset]?.0 ?? []).sorted(by: { $0.origin < $1.origin }), didUserAssetDeleted: didUserAssetDeleted)
+                            UserAssetsCollection(userAssets: (items[asset]?.0 ?? []).sorted(by: { $0.origin < $1.origin }),
+                                                 didUserAssetDeleted: didUserAssetDeleted,
+                                                 refreshParentView: refreshParentView)
                         }
                     }
                     .listRowBackground(Color.black)

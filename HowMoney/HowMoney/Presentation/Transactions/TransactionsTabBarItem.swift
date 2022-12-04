@@ -27,7 +27,7 @@ struct TransactionsTabBarItem: View {
             
             if vm.items.count > .zero {
                 ScrollView(showsIndicators: false) {
-                    ForEach(vm.items, id: \.self) { transaction in
+                    ForEach(vm.items) { transaction in
                         if let transactionVM = vm.prepareTransactionViewModel(for: transaction) {
                             TransactionCell(vm: transactionVM)
                         }

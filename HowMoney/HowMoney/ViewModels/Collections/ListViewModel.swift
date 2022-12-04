@@ -48,10 +48,10 @@ class ListViewModel<Element>: ObservableObject {
         })
     }
     
-    func deleteItem(_ itemId: String, _ completion: @escaping () -> Void, successCompletion: @escaping () -> Void) {
+    func deleteItem(_ parameters: String, _ completion: @escaping () -> Void, successCompletion: @escaping () -> Void) {
         task = Task {
             do {
-                let result = try await service.deleteData(itemId)
+                let result = try await service.deleteData(parameters)
                 if result {
                     successCompletion()
                     ToastViewModel.shared.update(message: Localizable.userAssetsDeletionSuccesssToastMessageText.value, type: .success)
