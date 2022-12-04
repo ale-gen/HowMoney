@@ -28,6 +28,7 @@
 
 // MARK: Authorization
 "authorization.sign.out.button.title" = "Sign out";
+"authorization.login.biometrics.title.alert" = "Touch to Login";
 
 // MARK: Home
 "wallet.total.balance.title" = "Total balance";

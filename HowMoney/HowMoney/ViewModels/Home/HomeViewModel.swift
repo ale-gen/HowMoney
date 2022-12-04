@@ -23,7 +23,7 @@ class HomeViewModel: ObservableObject {
     }
     
     func prepareCardViewModels() -> [CardViewModel] {
-        var viewModels =  walletBalances.map { wallet in
+        var viewModels = walletBalances.map { wallet in
             countWalletChange(for: wallet)
             return CardViewModel(title: wallet.type.title,
                                  mainValue: Float(wallet.value),

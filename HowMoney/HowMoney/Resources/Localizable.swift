@@ -47,6 +47,7 @@ enum Localizable: String, Translation {
     
     // MARK: Authorization
     case authorizationSignOutButtonTitle = "authorization.sign.out.button.title"
+    case authorizationLoginBiometricsTitleAlert = "authorization.login.biometrics.title.alert"
     
     // MARK: Home
     case walletTotalBalanceTitle = "wallet.total.balance.title"

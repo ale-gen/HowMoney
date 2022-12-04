@@ -15,6 +15,7 @@ struct ToastView: View {
             static let errorMaxHeight: CGFloat = 100.0
             static let cornerRadius: CGFloat = 20.0
             static let closeIconColor: Color = .white
+            static let bottomInsets: CGFloat = 20.0
         }
         enum Background {
             static let color: Color = Color.black.opacity(0.4)
@@ -78,6 +79,7 @@ struct ToastView: View {
         }
         .frame(maxHeight: toastType == .success ? Constants.General.succesMaxHeight : Constants.General.errorMaxHeight)
         .cornerRadius(Constants.General.cornerRadius, [.allCorners])
+        .padding(.bottom, Constants.General.bottomInsets)
     }
 }
 

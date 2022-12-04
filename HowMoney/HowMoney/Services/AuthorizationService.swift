@@ -16,7 +16,8 @@ struct AuthorizationService: Service {
     private let urlString = "\(String.baseUrl)\(NetworkEndpoints.userPreferences.rawValue)"
     
     func login(_ completion: @escaping (AuthUser) -> Void) {
-        let credentialsManager = CredentialsManager(authentication: Auth0.authentication())
+        var credentialsManager = CredentialsManager(authentication: Auth0.authentication())
+        credentialsManager.enableBiometrics(withTitle: Localizable.authorizationLoginBiometricsTitleAlert.value)
         guard !credentialsManager.hasValid() && !credentialsManager.canRenew() else {
             credentialsManager.credentials { result in
                 switch result {
