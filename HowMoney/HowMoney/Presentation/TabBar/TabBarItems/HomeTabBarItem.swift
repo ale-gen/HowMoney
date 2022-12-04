@@ -12,7 +12,7 @@ struct HomeTabBarItem: View {
     private enum Constants {
         static let verticalInsets: CGFloat = 20.0
         static let maxHeight: CGFloat = 250.0
-        static let spacing: CGFloat = 20.0
+        static let spacing: CGFloat = 10.0
         static let background: Color = .black
         
         enum Section {

@@ -10,10 +10,10 @@ import SwiftUI
 struct EmptyStateView: View {
     
     private enum Constants {
-        static let spacing: CGFloat = 20.0
+        static let spacing: CGFloat = 10.0
         
         enum Image {
-            static let height: CGFloat = 160.0
+            static let height: CGFloat = 120.0
             static let width: CGFloat = height
         }
         enum Title {
