@@ -72,4 +72,9 @@ class AlertService: Service {
         /* */
     }
     
+    func resetPassword() async throws -> Bool {
+        /* */
+        return false
+    }
+    
 }

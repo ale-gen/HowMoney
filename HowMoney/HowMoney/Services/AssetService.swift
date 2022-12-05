@@ -48,4 +48,9 @@ class AssetService: Service {
         /* */
     }
     
+    func resetPassword() async throws -> Bool {
+        /* */
+        return false
+    }
+    
 }
