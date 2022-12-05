@@ -51,7 +51,6 @@ struct HomeTabBarItem: View {
                 AlertsCollection(vm: alertsVM, didAlertDeleted: alertsVM.deleteAlert, scrollAxis: .vertical)
                     .navigationTitle(Localizable.alertsCollectionTitle.value)
                     .navigationBarTitleDisplayMode(.inline)
-                    .background(Constants.background.edgesIgnoringSafeArea(.all))
             }
         }
         .loader(loader: $loaderView, shouldHideLoader: $loading)
@@ -65,7 +64,6 @@ struct HomeTabBarItem: View {
                 }
                 group.leave()
             }, {
-                // TODO: Show toast with error
                 group.leave()
             })
             

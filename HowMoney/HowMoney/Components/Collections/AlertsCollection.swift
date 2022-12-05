@@ -39,12 +39,9 @@ struct AlertsCollection: View {
             ZStack {
                 if scrollAxis == .vertical {
                     ZStack {
-                        RoundedRectangle(cornerRadius: Constants.Background.cornerRadius)
-                            .fill(Constants.Background.color)
-                            .shadow(color: Constants.Shadow.color, radius: Constants.Shadow.radius)
-                        
                         List(vm.items, id: \.self) { alert in
                             alertCell(alert)
+                                .listRowBackground(Color.clear)
                         }
                         .padding(.top, Constants.topOffset)
                     }
@@ -59,7 +56,6 @@ struct AlertsCollection: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .background(.black)
         } else {
             VStack {
                 Spacer()
@@ -72,7 +68,6 @@ struct AlertsCollection: View {
     
     private func alertCell(_ alert: Alert) -> some View {
         AlertCell(alert: alert)
-            .listRowBackground(Color.black)
             .frame(minWidth: Constants.minWidth)
             .conditionalModifier(scrollAxis == .vertical, { $0.swipeActions { deleteButton(alert) }
                   .confirmationDialog(Text(""), isPresented: $showConfirmationDialog) {

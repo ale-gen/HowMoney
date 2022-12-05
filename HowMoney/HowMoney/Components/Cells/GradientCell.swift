@@ -19,7 +19,7 @@ struct GradientCell: View {
             static let secondStopOpacity: CGFloat = 0.4
         }
         enum Rectangle {
-            static let color: Color = .black.opacity(0.25)
+            static let color: Color = .white.opacity(0.05)
         }
     }
     
@@ -42,6 +42,6 @@ struct GradientCell: View {
 
 struct GradientCell_Previews: PreviewProvider {
     static var previews: some View {
-        GradientCell(gradientColor: .lightGreen)
+        GradientCell(gradientColor: .blue)
     }
 }
