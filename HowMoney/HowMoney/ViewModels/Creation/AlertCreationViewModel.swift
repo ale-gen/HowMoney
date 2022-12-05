@@ -25,7 +25,8 @@ class AlertCreationViewModel: CreationViewModel {
             return
         }
         guard let keyboardViewModel = keyboardViewModel,
-              let value = Float(keyboardViewModel.textValue)
+              let value = Float(keyboardViewModel.textValue),
+              value > .zero
         else {
             ToastViewModel.shared.update(message: Localizable.alertsCreationTargetValueValidation.value, type: .error)
             failureCompletion()
