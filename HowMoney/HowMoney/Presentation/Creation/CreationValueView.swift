@@ -64,14 +64,14 @@ struct CreationValueView: View {
     private func sendForm() {
         vm.create(successCompletion: {
             print("Success 🥳")
-            ToastViewModel.shared.show()
-            DispatchQueue.main.async {
+            toastVM.show()
+            DispatchQueue.main.sync {
                 presentationMode.wrappedValue.dismiss()
                 isCreated = true
             }
         }, failureCompletion: {
             print("Failure 🫠")
-            ToastViewModel.shared.show()
+            toastVM.show()
         })
     }
 }

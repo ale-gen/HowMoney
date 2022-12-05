@@ -46,7 +46,7 @@ class CreationViewModel: ObservableObject {
     }
     
     func prepareKeyboardViewModel() -> KeyboardViewModel {
-        let keyboardVM = KeyboardViewModel(assetType: selectedAsset?.type ?? .currency)
+        let keyboardVM = KeyboardViewModel(assetType: context == .asset ? (selectedAsset?.type ?? .currency) : .currency)
         self.keyboardViewModel = keyboardVM
         return keyboardVM
     }

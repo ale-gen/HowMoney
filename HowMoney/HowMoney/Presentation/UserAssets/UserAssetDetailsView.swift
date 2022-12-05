@@ -128,7 +128,7 @@ struct UserAssetDetailsView: View {
                 Text(vm.userAsset.asset.friendlyName)
                     .font(Constants.Title.font)
                     .foregroundColor(Constants.Title.color)
-                Text(vm.userAsset.asset.name)
+                Text(vm.userAsset.asset.name.uppercased())
                     .font(Constants.Subtitle.font)
                     .foregroundColor(Constants.Subtitle.color)
             }
