@@ -14,10 +14,11 @@ struct AuthorizationService: Service {
     
     private let session = URLSession.shared
     private let urlString = "\(String.baseUrl)\(NetworkEndpoints.userPreferences.rawValue)"
+    private let resetPasswordUrlString = "\(String.baseUrl)\(NetworkEndpoints.resetPassword.rawValue)"
     
     func login(_ completion: @escaping (AuthUser) -> Void) {
         var credentialsManager = CredentialsManager(authentication: Auth0.authentication())
-        credentialsManager.enableBiometrics(withTitle: Localizable.authorizationLoginBiometricsTitleAlert.value)
+//        credentialsManager.enableBiometrics(withTitle: Localizable.authorizationLoginBiometricsTitleAlert.value)
         guard !credentialsManager.hasValid() && !credentialsManager.canRenew() else {
             credentialsManager.credentials { result in
                 switch result {
@@ -47,6 +48,25 @@ struct AuthorizationService: Service {
     func logout(_ completion: @escaping () -> Void) {
         Keychain.logout()
         completion()
+    }
+    
+    func resetPassword() async throws -> Bool {
+        guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
+        guard let url = URL(string: resetPasswordUrlString) else { throw NetworkError.invalidURL }
+        
+        let token = try Keychain.get(account: email)
+        let request = createRequest(url: url, token: token, method: .post)
+        let (_, response) = try await session.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse {
+            switch httpResponse.statusCode {
+            case 200..<300:
+                return true
+            default:
+                throw NetworkError.unknown
+            }
+        }
+        return false
     }
     
     func getData(_ parameters: Any...) async throws -> [UserPreferences] {

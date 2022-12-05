@@ -31,7 +31,7 @@ struct ChangePassword: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
-    @StateObject var vm: ChangePasswordViewModel = ChangePasswordViewModel()
+    @StateObject var vm: ChangePasswordViewModel = ChangePasswordViewModel(service: Services.authService)
     @State private var shouldShowToast: Bool = false
     @State private var toastVM: ToastViewModel = ToastViewModel.shared
     

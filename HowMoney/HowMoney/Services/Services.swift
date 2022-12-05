@@ -31,5 +31,6 @@ protocol Service: RequestProtocol {
     
     func login(_ completion: @escaping (AuthUser) -> Void)
     func logout(_ completion: @escaping () -> Void)
+    func resetPassword() async throws -> Bool
     
 }

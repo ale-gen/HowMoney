@@ -60,6 +60,11 @@ class WalletService: Service {
         /* */
     }
     
+    func resetPassword() async throws -> Bool {
+        /* */
+        return false
+    }
+    
     private func getWalletBalances(_ completion: () -> Void) async throws -> [Wallet] {
         guard let email = AuthUser.loggedUser?.email else { throw NetworkError.unauthorized }
         let urlString = "\(String.baseUrl)\(NetworkEndpoints.walletByAssetType.rawValue)"
