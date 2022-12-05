@@ -31,7 +31,8 @@ class UserAssetCreationViewModel: CreationViewModel  {
             return
         }
         guard let keyboardViewModel = keyboardViewModel,
-              let value = Float(keyboardViewModel.textValue)
+              let value = Float(keyboardViewModel.textValue),
+              value > .zero
         else {
             ToastViewModel.shared.update(message: Localizable.userAssetsCreationValueValidationToastMessageText.value, type: .error)
             failureCompletion()

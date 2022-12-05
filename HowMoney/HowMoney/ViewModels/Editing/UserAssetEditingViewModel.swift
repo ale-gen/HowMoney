@@ -41,7 +41,8 @@ class UserAssetEditingViewModel: ObservableObject {
     func updateUserAsset(successCompletion: @escaping () -> Void,
                          failureCompletion: @escaping () -> Void) {
         guard let keyboardViewModel = keyboardViewModel,
-              let value = Float(keyboardViewModel.textValue)
+              let value = Float(keyboardViewModel.textValue),
+              validateInput(value)
         else {
             toast.message = Localizable.userAssetsEditingValueValidationToastMessageText.value
             toast.type = .error
@@ -70,6 +71,20 @@ class UserAssetEditingViewModel: ObservableObject {
                 toast.message = Localizable.toastViewFailedOperationMessageText.value
                 toast.type = .error
                 failureCompletion()
+            }
+        }
+    }
+    
+    private func validateInput(_ value: Float) -> Bool {
+        guard value > .zero else { return false }
+        switch operation {
+        case .add, .update:
+            return true
+        case .substract:
+            if value <= userAsset.originValue {
+                return true
+            } else {
+                return false
             }
         }
     }
