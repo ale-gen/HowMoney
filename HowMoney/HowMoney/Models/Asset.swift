@@ -19,7 +19,7 @@ enum AssetType: String {
         case .cryptocurrency:
             return 8
         case .metal:
-            return 8
+            return 6
         }
     }
     
