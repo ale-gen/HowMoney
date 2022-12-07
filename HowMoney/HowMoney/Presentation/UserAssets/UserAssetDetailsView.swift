@@ -84,6 +84,7 @@ struct UserAssetDetailsView: View {
                     assetBasicInfo
                     assetValue
                     priceChangeLabel
+                    actualExchangeRate
                     graph
                     operationOptions
                     Spacer()
@@ -96,7 +97,7 @@ struct UserAssetDetailsView: View {
             .navigationBarHidden(true)
         }
         .onAppear {
-            vm.fetchPriceHistory()
+            vm.fetchPriceHistory { vm.fetchPreferenceCurrencyPrice() }
         }
     }
     
@@ -159,6 +160,10 @@ struct UserAssetDetailsView: View {
             .opacity(Constants.PriceChangeLabel.opacity))
     }
     
+    private var actualExchangeRate: some View {
+        Text("\(Localizable.userAssetDetailsCurrentExchangeRate.value) \(vm.actualExchangeRate, specifier: "%.2f")\(vm.preferenceCurrencySymbol ?? .empty)")
+    }
+    
     private var graph: some View {
         LineChart(data: vm.userAssetPriceHistory)
             .padding(.vertical, Constants.Chart.contentPadding)
@@ -202,7 +207,7 @@ struct UserAssetDetailsView: View {
 
 struct UserAssetDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!))
+        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!, preferenceCurrency: .usd))
             .background(.black)
             .environmentObject(UserStateViewModel())
     }
@@ -210,7 +215,7 @@ struct UserAssetDetailsView_Previews: PreviewProvider {
 
 struct UserAssetDetailsViewSmallerDevices_Previews: PreviewProvider {
     static var previews: some View {
-        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!))
+        UserAssetDetailsView(vm: UserAssetViewModel(userAsset: UserAsset.UserAssetsMock.first!, preferenceCurrency: .usd))
             .background(.black)
             .environmentObject(UserStateViewModel())
             .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))

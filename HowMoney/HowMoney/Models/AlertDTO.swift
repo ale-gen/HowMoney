@@ -13,4 +13,5 @@ struct AlertDTO: Decodable {
     let originAssetName: String
     let originAssetType: String
     let currency: String
+    let active: Bool
 }

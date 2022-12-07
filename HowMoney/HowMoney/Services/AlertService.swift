@@ -33,7 +33,7 @@ class AlertService: Service {
         let request = createRequest(url: url, token: token, method: .get)
         let (data, _) = try await session.data(for: request)
         guard let alerts = try? JSONDecoder().decode([AlertDTO].self, from: data) else { throw NetworkError.invalidData }
-        return alerts.map { Alert.parse(from: $0) }
+        return alerts.map { Alert.parse(from: $0) }.filter { $0.isActive }
     }
     
     func updateData(_ model: Alert) async throws -> Alert? {

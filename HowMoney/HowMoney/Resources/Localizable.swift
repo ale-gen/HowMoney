@@ -75,6 +75,7 @@ enum Localizable: String, Translation {
     case userAssetsCreateNewButtonTitle =  "user.assets.create.new.button.title"
     
     // MARK: User asset details
+    case userAssetDetailsCurrentExchangeRate = "user.asset.details.current.exchange.rate"
     case userAssetDetailsPriceUpdateTime = "user.asset.details.price.update.time"
     case userAssetDetailsAddOperationTitle = "user.asset.details.add.operation.title"
     case userAssetDetailsSubstractOperationTitle = "user.asset.details.substract.operation.title"

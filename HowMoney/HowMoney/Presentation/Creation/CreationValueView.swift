@@ -23,6 +23,7 @@ struct CreationValueView: View {
     }
     
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var userStateVM: UserStateViewModel
     @StateObject var vm: CreationViewModel
     @Binding var isCreated: Bool
     
@@ -53,7 +54,7 @@ struct CreationValueView: View {
             HStack {
                 Spacer()
                 Text(textValue)
-                Text(vm.selectedAsset?.symbol ?? .empty)
+                Text(vm.context == .asset ? (vm.selectedAsset?.symbol ?? .empty) : userStateVM.localPreferenceCurrency.symbol)
                 Spacer()
             }
             .foregroundColor(Constants.ValueLabel.color)

@@ -30,7 +30,7 @@ struct TabBarView: View {
                 contentViewRouter.navigateToContent(newValue)
             }
             .onAppear {
-//                LocalNotificationProvider.shared.requestAuthorization()
+                LocalNotificationProvider.shared.requestAuthorization()
             }
             .navigate(destination: selectedContext.destinationView,
                       when: $showCreationView,

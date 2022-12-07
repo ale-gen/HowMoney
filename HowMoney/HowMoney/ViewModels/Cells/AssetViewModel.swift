@@ -21,10 +21,10 @@ class AssetViewModel: ObservableObject {
     @Published var assetPriceChangeImage: Image? = nil
     @Published var assetDailyPriceChangeImage: Image? = nil
     
+    private(set) var actualPrice: Float?
     private let service: any Service
     private var firstPrice: Float?
     private var previousDayPrice: Float?
-    private var actualPrice: Float?
     private var task: Task<(), Never>?
     
     var priceChange: Float {

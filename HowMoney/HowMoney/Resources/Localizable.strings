@@ -55,6 +55,7 @@
 "user.assets.create.new.button.title" = "Create new asset";
 
 // MARK: User asset details
+"user.asset.details.current.exchange.rate" = "Current exchange rate:";
 "user.asset.details.price.update.time" = "(24h)";
 "user.asset.details.add.operation.title" = "Cash in";
 "user.asset.details.substract.operation.title" = "Cash out";

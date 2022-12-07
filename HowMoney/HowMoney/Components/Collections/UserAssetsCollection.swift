@@ -16,6 +16,7 @@ struct UserAssetsCollection: View {
         static let cellHeight: CGFloat = 90.0
     }
     
+    @EnvironmentObject var userStateVM: UserStateViewModel
     let userAssets: [UserAsset]
     var didUserAssetDeleted: ((UserAsset, @escaping () -> Void) -> Void)?
     var refreshParentView: (() -> Void)?
@@ -50,7 +51,10 @@ struct UserAssetsCollection: View {
             .sheet(item: $selectedUserAsset, onDismiss: {
                 refreshParentView?()
             }) { userAsset in
-                UserAssetDetailsView(vm: UserAssetViewModel(userAsset: userAsset))
+                UserAssetDetailsView(vm: UserAssetViewModel(userAsset: userAsset, preferenceCurrency: userStateVM.localPreferenceCurrency))
+            }
+            .onAppear {
+                userStateVM.getPreferences { /* */ }
             }
         } else {
             VStack {
