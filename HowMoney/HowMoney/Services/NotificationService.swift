@@ -11,7 +11,7 @@ class NotificationService {
     
     public var onReceive: ((Notification) -> Void)?
     
-    private let baseWebsocketUrl: String = ""
+    private let baseWebsocketUrl: String = "howmoney.eastus.cloudapp.azure.com:8000"
     private var webSocketTask: URLSessionWebSocketTask?
     
     init() {
@@ -19,7 +19,7 @@ class NotificationService {
     }
     
     func connect() {
-        let url = URL(string: "wss://\(baseWebsocketUrl)/ws/socket-server/")!
+        let url = URL(string: "ws://\(baseWebsocketUrl)/ws/socket-server/")!
         let config = URLSessionConfiguration.default
         config.shouldUseExtendedBackgroundIdleMode = true
         let session = URLSession(configuration: config)

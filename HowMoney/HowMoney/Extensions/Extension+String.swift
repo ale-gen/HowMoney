@@ -10,7 +10,7 @@ import Foundation
 extension String {
     
     static var baseUrl: String {
-        return ""
+        return "https://howmoney.eastus.cloudapp.azure.com:5001"
     }
     
     static var empty: String {
