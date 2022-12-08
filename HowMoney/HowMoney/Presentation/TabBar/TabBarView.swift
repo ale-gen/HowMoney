@@ -25,6 +25,7 @@ struct TabBarView: View {
                 contentViewRouter.currentContent
                 TabBar(tabs: [.home, .wallet, .plus, .transactions, .profile], selection: $selection, localSelection: selection, selectedContext: $selectedContext, showCreationView: $showCreationView)
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
             .toast(shouldShow: $toastVM.isShowing, type: toastVM.toast.type, message: toastVM.toast.message)
             .onChange(of: selection) { newValue in
                 contentViewRouter.navigateToContent(newValue)
