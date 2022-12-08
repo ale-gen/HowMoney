@@ -54,7 +54,7 @@ struct CreationValueView: View {
             HStack {
                 Spacer()
                 Text(textValue)
-                Text(vm.context == .asset ? (vm.selectedAsset?.symbol ?? .empty) : userStateVM.localPreferenceCurrency.symbol)
+                Text(vm.currencySymbol)
                 Spacer()
             }
             .foregroundColor(Constants.ValueLabel.color)

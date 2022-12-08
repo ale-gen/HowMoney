@@ -11,8 +11,12 @@ class AlertCreationViewModel: CreationViewModel {
     
     private var targetCurrency: PreferenceCurrency
     
+    override var currencySymbol: String {
+        targetCurrency.symbol
+    }
+    
     override init(service: any Service) {
-        targetCurrency = .usd
+        targetCurrency = PreferenceCurrency.allCases[.zero]
         super.init(service: service)
         self.context = .alert
     }

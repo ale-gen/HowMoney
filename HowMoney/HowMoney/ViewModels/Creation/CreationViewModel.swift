@@ -22,6 +22,10 @@ class CreationViewModel: ObservableObject {
     var task: Task<(), Never>?
     var context: CreationContext?
     
+    var currencySymbol: String {
+        return selectedAsset?.symbol ?? .empty
+    }
+    
     init(service: any Service) {
         self.service = service
     }

@@ -18,7 +18,7 @@ struct AuthorizationService: Service {
     
     func login(_ completion: @escaping (AuthUser) -> Void) {
         var credentialsManager = CredentialsManager(authentication: Auth0.authentication())
-//        credentialsManager.enableBiometrics(withTitle: Localizable.authorizationLoginBiometricsTitleAlert.value)
+        credentialsManager.enableBiometrics(withTitle: Localizable.authorizationLoginBiometricsTitleAlert.value)
         guard !credentialsManager.hasValid() && !credentialsManager.canRenew() else {
             credentialsManager.credentials { result in
                 switch result {
