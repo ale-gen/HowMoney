@@ -30,46 +30,38 @@ struct CardCarousel: View {
     var body: some View {
         let cardWidth: CGFloat = geo.size.width * 0.8
         let horizontalPadding: CGFloat = (geo.size.width - cardWidth) / 2
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: .zero) {
-                GeometryReader { geo -> Color in
-                    DispatchQueue.main.async {
-                        let totalScrollViewWidth: CGFloat = cardWidth * cardsNumber * Constants.spacing * (cardsNumber - 1)
-                        offsetX = (geo.frame(in: .global).minX - horizontalPadding) * (-1)
-                        let maxOffsetX = totalScrollViewWidth - 2 * horizontalPadding - geo.size.width
-                        if maxOffsetX == Constants.maxOffsetX {
-                            self.maxOffsetX = maxOffsetX
+        ZStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: .zero) {
+                    GeometryReader { geo -> Color in
+                        DispatchQueue.main.async {
+                            let totalScrollViewWidth: CGFloat = cardWidth * cardsNumber * Constants.spacing * (cardsNumber - 1)
+                            offsetX = (geo.frame(in: .global).minX - horizontalPadding) * (-1)
+                            let maxOffsetX = totalScrollViewWidth - 2 * horizontalPadding - geo.size.width
+                            if maxOffsetX == Constants.maxOffsetX {
+                                self.maxOffsetX = maxOffsetX
+                            }
+                            
                         }
-                        
+                        return Color.clear
                     }
-                    return Color.clear
-                }
-                .frame(width: .zero)
-                
-                HStack(spacing: Constants.spacing) {
-                    ForEach(cardViewModels, id: \.self) { cardVM in
-                        Card(title: cardVM.title, mainValue: cardVM.mainValue, subtitle: cardVM.subtitle, subValue: cardVM.subValue, currency: cardVM.currency, additionalValue: cardVM.additionalValue, isIncreased: cardVM.isIncreased, gradientColors: cardVM.gradientColors, screenWidth: geo.size.width, width: cardWidth)
+                    .frame(width: .zero)
+                    
+                    HStack(spacing: Constants.spacing) {
+                        ForEach(cardViewModels, id: \.self) { cardVM in
+                            ZStack {
+                                Card(title: cardVM.title, mainValue: cardVM.mainValue, subtitle: cardVM.subtitle, subValue: cardVM.subValue, currency: cardVM.currency, additionalValue: cardVM.additionalValue, isIncreased: cardVM.isIncreased, gradientColors: cardVM.gradientColors, screenWidth: geo.size.width, width: cardWidth)
+                            }
+                        }
                     }
+                    .padding(.horizontal, horizontalPadding)
                 }
-                .padding(.horizontal, horizontalPadding)
+            }
+            
+            if cardViewModels.count < .one {
+                ProgressView()
             }
         }
-    }
-    
-    private func totalBalanceCard(width: CGFloat, screenWidth: CGFloat) -> some View {
-        Card(title: "Total balance", mainValue: 123355, subtitle: "MonthlyProfit", subValue: 123, currency: .eur, additionalValue: 24, isIncreased: true, gradientColors: [.lightBlue, .lightGreen], screenWidth: screenWidth, width: width)
-    }
-    
-    private func currencyBalanceCard(width: CGFloat, screenWidth: CGFloat) -> some View {
-        Card(title: "Balance for currencies", mainValue: 123355, subtitle: "MonthlyProfit", subValue: 123, currency: .eur, additionalValue: 24, isIncreased: true, gradientColors: [.lightBlue, .lightGreen], screenWidth: screenWidth, width: width)
-    }
-    
-    private func cryptoBalanceCard(width: CGFloat, screenWidth: CGFloat) -> some View {
-        Card(title: "Balance for cryptos", mainValue: 123355, subtitle: "MonthlyProfit", subValue: 123, currency: .eur, additionalValue: 24, isIncreased: true, gradientColors: [.lightBlue, .lightGreen], screenWidth: screenWidth, width: width)
-    }
-    
-    private func metalBalanceCard(width: CGFloat, screenWidth: CGFloat) -> some View {
-        Card(title: "Balance for metals", mainValue: 123355, subtitle: "MonthlyProfit", subValue: 123, currency: .eur, additionalValue: 24, isIncreased: true, gradientColors: [.lightBlue, .lightGreen], screenWidth: screenWidth, width: width)
     }
     
 }
